@@ -19,6 +19,8 @@ The members of struct are public by default.<br>
 The members of class are private by default.<br>
 Struct inherit publicly while class inherit privately.<br>
 
+| Access specifier | Scope |
+|------------------|--------------------|
 | Public | Can be accessed from anywhere |
 | Private | Can be accessed within the class and in friend functions/class |
 | Protected | Within the class, friend functions/class and in derived classes |
