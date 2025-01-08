@@ -5,9 +5,8 @@ In C++ struct can contain both member functions and member variables.<br>
 <br>
 ## Const Objects
 const Base obj;<br>
-Ones created, we cannot modify the member variables of const object.<br>
+Ones created, we cannot modify the member variables of const object. Member variables can be initialized in constructor body/ initializer list<br>
 We cannot call member functions which can modify the member variables.<br>
-<br>
 Const objects can call only const member functions.<br>
 Non-const objects can call both const and non-const member functions.<br>
 <br>
