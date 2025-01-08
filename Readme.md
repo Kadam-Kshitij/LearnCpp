@@ -5,12 +5,13 @@ In C++ struct can contain both member functions and member variables.<br>
 <br>
 ## Const Objects
 const Base obj;<br>
-Ones created, we cannot modify the member variables of const object. Member variables can be initialized in constructor body/ initializer list<br>
-We cannot call member functions which can modify the member variables.<br>
-Const objects can call only const member functions.<br>
-Non-const objects can call both const and non-const member functions.<br>
 <br>
+Ones created, we cannot modify the member variables of const object. Member variables can be initialized in constructor body/ initializer list<br>
+const object cannot call member functions which can modify the member variables.<br>
+const objects can call only const member functions ( void foo() const )<br>
+Non-const objects can call both const and non-const member functions.<br>
 If a member function does not modify the member variables but is not defined as const, then const objects cannot access the function.<br>
+<br>
 It is possible to overload two functions with same name and signature but dirrerent constness.<br>
 Const object will call the const function and non const objects will call the non const function.<br>
 <br>
