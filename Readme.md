@@ -17,13 +17,11 @@ Const object will call the const function and non const objects will call the no
 ## Access Specifiers
 The members of struct are public by default.<br>
 The members of class are private by default.<br>
-<br>
 Struct inherit publicly while class inherit privately.<br>
 <br>
-Access specifier<br>
-Public : Can be accessed from anywhere<br>
-Private : Can be accessed within the class and in friend functions/class<br>
-Protected : Within the class, friend functions/class and in derived classes<br>
+| Public | Can be accessed from anywhere |
+| Private | Can be accessed within the class and in friend functions/class |
+| Protected | Within the class, friend functions/class and in derived classes |
 <br>
 Data members can be returned by const lvalue reference to prevent expensive copying.<br>
 const int& foo(){ return m_x; } // m_x is a data member<br>
