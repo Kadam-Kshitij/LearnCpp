@@ -57,13 +57,14 @@ Order of initialization happens in the order in which they are defined in the cl
 ```cpp
 class Base
 {
-    int y;<br>
-    int x;<br>
-public:<br>
-    Base( const int& valx, const int& valy ) : x{ valx }, y{ x }<br>
-    {<br>
-    }<br>
-};<br>
+    int y;
+    int x;
+public:
+    Base( const int& valx, const int& valy ) : x{ valx }, y{ x }
+    {
+    }
+};
+```
 In this case y will be assigned first a garbage value of x,<br>
 and then x will be assigned valx value.<br>
 <br>
