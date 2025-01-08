@@ -55,7 +55,7 @@ Uses<br>
 3) Increases speed - Variables are initialized directly rather than default initialization and then assigning values in constructor body.<br>
 <br>
 Order of initialization happens in order in which they are defined in class, and not in order in which they are defined in member initialization list.<br>
-<br>
+
 ```
 class Base
 {
@@ -63,17 +63,9 @@ class Base
     int x;
 public:
     Base( const int& valx, const int& valy ) : x{ valx }, y{ x }
-    {<br>
-    }<br>
-};<br>
-```<br>
-
-```cpp
-int main() {
-  int y = SOME_MACRO_REFERENCE;
-  int x = 5 + 6;
-  cout << "Hello World! " << x << std::endl();
-}
+    {
+    }
+};
 ```
 
 In this case y will be assigned first a garbage value of x, and then x will be assigned valx value. This will cause problem.<br>
