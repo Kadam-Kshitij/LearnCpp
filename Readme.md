@@ -49,13 +49,14 @@ Here implicit conversion will happen<br>
 <br>
 ## Member initializer list
 Derived( const int& x, const int& y ) : Base{ x }, m_y{ y }<br>
-Uses -<br>
+Uses<br>
 1) Call base constructors<br>
 2) Initialize reference and const member variables.<br>
-3) Increases speed - Variables are initialized directly rather than default<br>
-initialization and then assigning values in constructor body.<br>
+3) Increases speed - Variables are initialized directly rather than default initialization and then assigning values in constructor body.<br>
+<br>
 Order of initialization happens in the order in which they are defined in the class,<br>
 and not in the order in which they are defined in the member initialization list.<br>
+```
 class Base<br>
 {<br>
     int y;<br>
