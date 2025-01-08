@@ -25,10 +25,10 @@ Struct inherit publicly while class inherit privately.<br>
 | Private | Can be accessed within the class and in friend functions/class |
 | Protected | Within the class, friend functions/class and in derived classes |
 
-Data members can be returned by const lvalue reference to prevent expensive copying.<br>
-const int& foo(){ return m_x; } // m_x is a data member<br>
-The lifetime of a data member will be equal to lifetime of the object.<br>
-Const member functions cannot return non-const reference to data members.<br>
+Data members can be returned by const lvalue reference to prevent expensive copying. The lifetime of a data member will be equal to lifetime of the object.<br>
+`const int& foo(){ return m_x; } // m_x is a data member `<br>
+`int& foo(){ return m_x; } // In this case if calling function modifies the reference, the actual class variable will be modified`<br>
+const member functions cannot return non-const reference to data members.<br>
 <br>
 If class has public member functions,
 
