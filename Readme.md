@@ -41,11 +41,6 @@ public:<br>
 Then we can use aggregate initialization Base obj{ 34, 56 }; to initialize x and y.<br>
 This will not work if x, y were private. Making data member private makes the class a non-aggregate.<br>
 <br>
-During constructor call, implicit conversions can happen.<br>
-Base( int a, int b )	// Constructor<br>
-Base obj( true, 'a' );<br>
-Here implicit conversion will happen<br>
-<br>
 ## Member initializer list
 `Derived( const int& x, const int& y ) : Base{ x }, m_y{ y }`<br>
 Uses<br>
@@ -102,6 +97,12 @@ A constructor which delegates( calls another constructor ) is not allowed to do 
 One constructor may call another constructor and that constructor can again call the first. Leading to a infinite loop and stack may get filled up.<br>
 
 Constructors can be overloaded.<br>
+During constructor call, implicit conversions can happen.
+
+```cpp
+Base( int a, int b )	// Constructor
+Base obj( true, 'a' );	// Call
+```
 
 ## Copy constructor
 Used to create a new object from a already existing object.
