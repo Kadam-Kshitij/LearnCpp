@@ -104,14 +104,14 @@ One constructor may call another constructor and that constructor can again call
 Constructors can be overloaded.<br>
 
 ## Copy constructor
+Used to create a new object from a already existing object.
 `Base( const Base& obj ){}`<br>
-const is not mandatory, but should be used to avoid accidentally modifying the paramter.<br>
-& is mandatory. If not used will cause CTE.<br>
+const is not mandatory, but should be used to avoid accidentally modifying the paramter. & is mandatory. If not used will cause CTE.<br>
 Compiler provides a copy constructor if not provided by user.<br>
 We can request for a compiler provided copy constructor using<br>
 
 ```cpp
-Base( const Base& obj ) = default;<br>
+Base( const Base& obj ) = default;
 ```
 
 If we dont want to create copies, we can delete the copy constructor.<br>
