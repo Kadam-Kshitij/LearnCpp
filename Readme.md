@@ -28,17 +28,18 @@ Struct inherit publicly while class inherit privately.<br>
 Data members can be returned by const lvalue reference to prevent expensive copying.<br>
 const int& foo(){ return m_x; } // m_x is a data member<br>
 The lifetime of a data member will be equal to lifetime of the object.<br>
-<br>
 Const member functions cannot return non-const reference to data members.<br>
 <br>
-Data Hiding - Make data members private<br>
-<br>
-If class has public member functions,<br>
-class Base{<br>
-public:<br>
-	int x, y;<br>
-};<br>
-Then we can use aggregate initialization Base obj{ 34, 56 }; to initialize x and y.<br>
+If class has public member functions,
+
+```cpp
+class Base{
+public:
+	int x, y;
+};
+```
+
+Then we can use aggregate initialization ` Base obj{ 34, 56 }; ` to initialize x and y.<br>
 This will not work if x, y were private. Making data member private makes the class a non-aggregate.<br>
 <br>
 ## Member initializer list
