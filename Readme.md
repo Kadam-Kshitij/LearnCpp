@@ -56,7 +56,7 @@ Uses<br>
 <br>
 Order of initialization happens in order in which they are defined in class, and not in order in which they are defined in member initialization list.<br>
 <br>
-```cpp<br>
+```
 class Base
 {
     int y;
@@ -67,6 +67,15 @@ public:
     }<br>
 };<br>
 ```<br>
+
+```cpp
+int main() {
+  int y = SOME_MACRO_REFERENCE;
+  int x = 5 + 6;
+  cout << "Hello World! " << x << std::endl();
+}
+```
+
 In this case y will be assigned first a garbage value of x, and then x will be assigned valx value. This will cause problem.<br>
 <br>
 ## Constructor
