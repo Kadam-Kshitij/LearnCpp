@@ -54,7 +54,8 @@ Uses<br>
 2) Initialize reference and const member variables.<br>
 3) Increases speed - Variables are initialized directly rather than default initialization and then assigning values in constructor body.<br>
 <br>
-Order of initialization happens in the order in which they are defined in the class, and not in the order in which they are defined in the member initialization list.<br>
+Order of initialization happens in order in which they are defined in class, and not in order in which they are defined in member initialization list.<br>
+<br>
 ```cpp
 class Base
 {
