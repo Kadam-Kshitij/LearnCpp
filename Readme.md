@@ -86,7 +86,7 @@ Base( int x, int y = 0 )
 Delegating constructors - One constructor can call another constructor via the initializer list<br>
 
 ```cpp
-Base( int x ) : Base{ x, 0 }<
+Base( int x ) : Base{ x, 0 }
 {
 }
 Base( int x, int y ) : m_x{ x }, m_y{ y }
@@ -127,7 +127,7 @@ Uses<br>
 1) Function call with pass by value. When constructor is passed by value to a function, the arg is copied into the parameter using copy constructor.<br>
 2) Function return with pass by value 		****<br>
 3) Creating new object from already existing object.<br>
-<br>
+
 ## Explicit keyword
 Prevent implicit conversions from different types to class type<br>
 Suppose a function takes class object by value as parameter, but we send int as argument during function call,<br>
