@@ -1,6 +1,6 @@
 # Chapter 14 - Introduction to Classes
 
-In C struct cannot have member functions.
+In C struct cannot have member functions. <br>
 In C++ struct can contain both member functions and member variables.
 
 
