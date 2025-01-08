@@ -71,19 +71,31 @@ public:
 In this case y will be assigned first a garbage value of x, and then x will be assigned valx value. This will cause problem.<br>
 <br>
 ## Constructor
-Default constructor - Has no parameters.<br>
-Constructors can be overloaded.<br>
-If no default constructor is provided by user, the compiler providees one.<br>
+Default constructor - Has no parameters. If no default constructor is provided by user, the compiler providees one.<br>
 If any type of constructor is specified by user, default constructor is not provided by compiler.<br>
+
 We can tell the compiler to provide a default constructor using<br>
+
+```cpp
 Base() = default; // generates an explicitly defaulted default constructor<br>
+```
+
 Constructors can have default values<br>
+
+```cpp
 Base( int x, int y = 0 )<br>
+```
+
 Delegating constructors - One constructor can call another constructor via the initializer list<br>
+
+```cpp
 Base( int x ) : Base{ x, 0 }<br>
+```
+
 A constructor which delegates( calls another constructor ) is not allowed to do any initialization.<br>
 One constructor may call another constructor and that constructor can again call the first. Leading to a infinite loop and stack may get filled up.<br>
-<br>
+Constructors can be overloaded.<br>
+
 ## Copy constructor
 Base( const Base& obj )<br>
 const is not mandatory, but should be used to avoid accidentally modifying the paramter.<br>
