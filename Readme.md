@@ -4,6 +4,7 @@ In C struct cannot have member functions. <br>
 In C++ struct can contain both member functions and member variables.<br>
 <br>
 ## Const Objects
+const Base obj;<br>
 Ones created, we cannot modify the member variables of const object.<br>
 We cannot call member functions which can modify the member variables.<br>
 <br>
