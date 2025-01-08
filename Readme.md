@@ -1,15 +1,15 @@
 # Chapter 14 - Introduction to Classes
 
 In C struct cannot have member functions. <br>
-In C++ struct can contain both member functions and member variables.
-
-
-Const Objects --->
-Ones created, we cannot modify the member variables of const object.
-We cannot call member functions which can modify the member variables.
-
-Const objects can call only const member functions.
-Non-const objects can call both const and non-const member functions.
+In C++ struct can contain both member functions and member variables.<br>
+<br>
+<br>
+## Const Objects
+Ones created, we cannot modify the member variables of const object.<br>
+We cannot call member functions which can modify the member variables.<br>
+<br>
+Const objects can call only const member functions.<br>
+Non-const objects can call both const and non-const member functions.<br>
 
 If a member function does not modify the member variables but is not defined as const,
 then const objects cannot access the function.
