@@ -7,7 +7,7 @@ In C++ struct can contain both member functions and member variables.<br>
 `const Base obj;`<br>
 Ones created, we cannot modify the member variables of const object. Member variables can be initialized in constructor body/ initializer list<br>
 const object cannot call member functions which can modify the member variables.<br>
-const objects can call only const member functions `void foo() const )`<br>
+const objects can call only const member functions `void foo() const {}`<br>
 Non-const objects can call both const and non-const member functions.<br>
 If a member function does not modify the member variables but is not defined as const, then const objects cannot access the function.<br>
 <br>
@@ -47,7 +47,7 @@ Base obj( true, 'a' );<br>
 Here implicit conversion will happen<br>
 <br>
 ## Member initializer list
-Derived( const int& x, const int& y ) : Base{ x }, m_y{ y }<br>
+`Derived( const int& x, const int& y ) : Base{ x }, m_y{ y }`<br>
 Uses<br>
 1) Call base constructors<br>
 2) Initialize reference and const member variables.<br>
@@ -70,7 +70,7 @@ public:
 In this case y will be assigned first a garbage value of x, and then x will be assigned valx value. This will cause problem.<br>
 <br>
 ## Constructor
-Default constructor - Has no parameters. If no default constructor is provided by user, the compiler providees one.<br>
+Default constructor - Has no parameters. `Base() {}` If no default constructor is provided by user, the compiler providees one.<br>
 If any type of constructor is specified by user, default constructor is not provided by compiler.<br>
 
 We can tell the compiler to provide a default constructor. This is usefull when we have a user defined constructor but still need the default constructor<br>
@@ -104,18 +104,25 @@ One constructor may call another constructor and that constructor can again call
 Constructors can be overloaded.<br>
 
 ## Copy constructor
-Base( const Base& obj )<br>
+`Base( const Base& obj ){}`<br>
 const is not mandatory, but should be used to avoid accidentally modifying the paramter.<br>
 & is mandatory. If not used will cause CTE.<br>
 Compiler provides a copy constructor if not provided by user.<br>
-When constructor is passed by value to a function, the arg is copied into the parameter using copy constructor.<br>
 We can request for a compiler provided copy constructor using<br>
+
+```cpp
 Base( const Base& obj ) = default;<br>
+```
+
 If we dont want to create copies, we can delete the copy constructor.<br>
-Base( const Base& obj ) = delete;<br>
+
+```cpp
+Base( const Base& obj ) = delete;
+```
+
 <br>
-Use cases -<br>
-1) Function call with pass by value<br>
+Uses<br>
+1) Function call with pass by value. When constructor is passed by value to a function, the arg is copied into the parameter using copy constructor.<br>
 2) Function return with pass by value 		****<br>
 3) Creating new object from already existing object.<br>
 <br>
