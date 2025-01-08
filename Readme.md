@@ -53,6 +53,7 @@ Uses<br>
 1) Call base constructors<br>
 2) Initialize reference and const member variables.<br>
 3) Increases speed - Variables are initialized directly rather than default initialization and then assigning values in constructor body.<br>
+<br>
 Order of initialization happens in the order in which they are defined in the class, and not in the order in which they are defined in the member initialization list.<br>
 ```cpp
 class Base
@@ -65,8 +66,7 @@ public:
     }
 };
 ```
-In this case y will be assigned first a garbage value of x,<br>
-and then x will be assigned valx value.<br>
+In this case y will be assigned first a garbage value of x, and then x will be assigned valx value. This will cause problem.<br>
 <br>
 ## Constructor
 Default constructor - Has no parameters.<br>
