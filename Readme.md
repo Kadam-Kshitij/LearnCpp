@@ -74,26 +74,34 @@ In this case y will be assigned first a garbage value of x, and then x will be a
 Default constructor - Has no parameters. If no default constructor is provided by user, the compiler providees one.<br>
 If any type of constructor is specified by user, default constructor is not provided by compiler.<br>
 
-We can tell the compiler to provide a default constructor using<br>
+We can tell the compiler to provide a default constructor. This is usefull when we have a user defined constructor but still need the default constructor<br>
 
 ```cpp
-Base() = default; // generates an explicitly defaulted default constructor<br>
+Base() = default; // generates an explicitly defaulted default constructor
 ```
 
-Constructors can have default values<br>
+Constructors can have default values
 
 ```cpp
-Base( int x, int y = 0 )<br>
+Base( int x, int y = 0 )
+{
+}
 ```
 
 Delegating constructors - One constructor can call another constructor via the initializer list<br>
 
 ```cpp
-Base( int x ) : Base{ x, 0 }<br>
+Base( int x ) : Base{ x, 0 }<
+{
+}
+Base( int x, int y ) : m_x{ x }, m_y{ y }
+{
+}
 ```
 
 A constructor which delegates( calls another constructor ) is not allowed to do any initialization.<br>
 One constructor may call another constructor and that constructor can again call the first. Leading to a infinite loop and stack may get filled up.<br>
+
 Constructors can be overloaded.<br>
 
 ## Copy constructor
