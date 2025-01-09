@@ -135,3 +135,25 @@ then the int will get converted to class object.<br>
 Similarly a function is returning class object by value, but the function is actually returing int,<br>
 then implicit conversion from int to class will happen.<br>
 If explicit keyword is used, then such implicit conversions are not allowed.<br>
+
+
+# Chapter 19 - Dynamic memory allocation
+```cpp
+int* ptr = new int{ 34 };	// Allocate memory for int
+delete ptr;			// Delete allocated memory
+```
+
+## Dangling pointer
+Pointer pointing to a deallocated memory is know as dangling pointer
+
+```cpp
+int main()
+{
+    int* ptr = new int{ 56 };
+    std::cout << *ptr << std::endl; // 56
+    delete ptr;
+
+    // Here ptr is a dangling pointer
+    std::cout << *ptr << std::endl; // 0
+}
+```
