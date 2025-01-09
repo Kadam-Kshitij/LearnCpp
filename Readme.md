@@ -364,7 +364,7 @@ public:
 class Derived : public Base
 {
 public:
-    void foo( int a )
+    void foo( double a )
     {
         std::cout << "foo derived\n";
     }
@@ -376,5 +376,41 @@ int main()
     Derived obj;
     int a = 3;
     obj.foo( a );   // Calls the derived class foo
+}
+```
+
+Example - by adding using Base::foo; we can make the base class foo available in Derived class for overloading
+
+```cpp
+class Base
+{
+public:
+    void foo( int a )
+    {
+        std::cout << "foo base\n";
+    }
+    void foo( double a )
+    {
+        std::cout << "foo double\n";
+    }
+};
+
+class Derived : public Base
+{
+public:
+    using Base::foo;	// This will make base class functions available in Derived class for overloading
+    void foo( double a )
+    {
+        std::cout << "foo derived\n";
+    }
+};
+
+
+int main()
+{
+    Derived obj;
+    int a = 3;
+    obj.foo( a );       // Calls the base class foo
+    obj.foo( 3.8f );    // Calls the derived class foo
 }
 ```
