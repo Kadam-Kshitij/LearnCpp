@@ -414,3 +414,48 @@ int main()
     obj.foo( 3.8f );    // Calls the derived class foo
 }
 ```
+
+## Multiple Inheritance
+If both base class have the same named function, call will be ambigious leading to CTE.<br>
+This can be solved using Base class name with scope resolution operator. But the complexily will increase with increase in inheritance levels.<br>
+
+```cpp
+class Base1
+{
+public:
+    void foo()
+    {
+        std::cout << "foo base1\n";
+    }
+};
+
+class Base2
+{
+public:
+    void foo()
+    {
+        std::cout << "foo base2\n";
+    }
+};
+
+class Derived : public Base1, public Base2
+{
+};
+
+
+int main()
+{
+    Derived obj;
+    obj.foo();
+}
+```
+
+## Diamond problem
+B1<-B2 , B1<-B3 , B2<-D, B3<-D.<br>
+B1 constructor will be called twice due to B2 and B3.<br>
+To prevent this make B2 and B3 virtual as follows<br>
+	class B2 : virtual public B<br>
+	class B3 : virtual public B<br>
+	class D : public B2, public B3<br>
+Now D can directly call class B1 constructor<br>
+	D( int x ) : B1{x}, B2{x}, B3{x} {}<br>
