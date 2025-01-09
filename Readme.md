@@ -415,6 +415,46 @@ int main()
 }
 ```
 
+Similarly we can change the access of public and protected Base class members in Derived class. Private base class members cannot be accessed in Derived class.
+
+```cpp
+class Base
+{
+public:
+    void foo()
+    {
+        std::cout << "foo base\n";
+    }
+
+protected:
+    void goo()
+    {
+        std::cout << "goo base\n";
+    }
+};
+
+class Derived : public Base
+{
+public:
+    using Base::goo;    // This will make goo public in Derived class
+
+private:
+    using Base::foo;	// This will make foo private in Derived class
+};
+
+
+int main()
+{
+    Derived obj;
+    obj.goo();      // Ok, goo is public in derived class
+    // obj.foo();   // CTE - foo is private in derived class
+
+    Base& bobj = obj;
+    bobj.foo();     // Ok, foo is public in base class
+    // bobj.goo();  // CTE - goo is protected in base class
+}
+```
+
 ## Multiple Inheritance
 If both base class have the same named function, call will be ambigious leading to CTE.<br>
 This can be solved using Base class name with scope resolution operator. But the complexily will increase with increase in inheritance levels.<br>
@@ -446,7 +486,7 @@ class Derived : public Base1, public Base2
 int main()
 {
     Derived obj;
-    obj.foo();
+    obj.foo();	// CTE - ambigious call to foo
 }
 ```
 
