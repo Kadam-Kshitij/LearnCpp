@@ -240,3 +240,5 @@ int main()
     delete[] ptr;
 }
 ```
+Instead we can just use one dimentional array and using simple maths perform operations
+`int* ptr{ new int[4*3] }`
