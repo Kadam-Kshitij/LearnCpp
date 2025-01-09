@@ -207,3 +207,36 @@ Use `delete[] ptr;` to delete array of memory.<br>
     std::cout << **pptr << std::endl;
 ```
 
+Two dimentional array
+
+```cpp
+int main()
+{
+    int row = 4, column = 3;
+
+    int** ptr = new int*[row];
+    for( int i = 0; i < row; ++i )
+    {
+        ptr[i] = new int[column];
+        for( int j = 0; j < column; ++j )
+        {
+            ptr[i][j] = i + j;
+        }
+    }
+
+    for( int i = 0; i < row; ++i )
+    {
+        for( int j = 0; j < column; ++j )
+        {
+            std::cout << ptr[i][j] << ", ";
+        }
+        std::cout << std::endl;
+    }
+
+    for( int i = 0; i < row; ++i )
+    {
+        delete[] ptr[i];
+    }
+    delete[] ptr;
+}
+```
