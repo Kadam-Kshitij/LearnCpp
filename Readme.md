@@ -1,5 +1,7 @@
 # Compilation Process
-.cpp files
+
+```
+.cpp files<br>
     |
     |
     |   Pre-processing ( include files, remove comments, expand macros )
@@ -32,6 +34,7 @@
    \ /
     '
 Executable
+```
 
 # Chapter 14 - Introduction to Classes
 
