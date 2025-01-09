@@ -442,7 +442,6 @@ private:
     using Base::foo;	// This will make foo private in Derived class
 };
 
-
 int main()
 {
     Derived obj;
@@ -452,8 +451,14 @@ int main()
     Base& bobj = obj;
     bobj.foo();     // Ok, foo is public in base class
     // bobj.goo();  // CTE - goo is protected in base class
+
+    // Second Way
+    obj.Base::foo();    // Ok
 }
 ```
+
+## Delete function in derived class
+We can also delete base class member in derived class by writting `void foo() const = delete;`
 
 ## Multiple Inheritance
 If both base class have the same named function, call will be ambigious leading to CTE.<br>
