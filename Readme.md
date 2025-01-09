@@ -254,3 +254,16 @@ Void pointers cannot be dereferenced. Cannot perform arithmattic operations on i
     // Need to cast before dereferencing.
     std::cout << *static_cast< int* >( ptr ) << std::endl;
 ```
+
+# Chapter 24 - Inheritance
+Order of constructor call - Most Base class constructor is called first follwed by derived class.<br>
+Base <- D1 <- D2 <- D3<br>
+In the above case order of constructor call is Base, D1, D2, D3.
+
+In case of Multiple inheritance
+1) class Derived : public Base2, public Base1<br>
+   In this case constructor call order is Base2, Base1, Derived  
+2) class Derived : public Base1, public Base2<br>
+   In this case constructor call order is Base1, Base2, Derived
+
+Order of destructor is exactly opposite to the constructor call.<br>
