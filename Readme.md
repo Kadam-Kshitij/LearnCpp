@@ -145,6 +145,7 @@ delete ptr;			// Delete allocated memory
 
 ## Dangling pointer
 Pointer pointing to a deallocated memory is know as dangling pointer
+Dereferencing a dangling pointer leads to undefined behavior.
 
 ```cpp
 int main()
@@ -158,7 +159,7 @@ int main()
 }
 ```
 
-Set delete pointers t onullptr unless they are going out of scope immediately
+Set deleted pointers to nullptr unless they are going out of scope immediately
 
 ```cpp
 int main()
@@ -182,4 +183,9 @@ We can add std::nothrow between new and allocation type. This will ensure no exc
         // Error handling
     }
 ```
+
+## Null pointers
+Pointer is not allocated to any memory location. Dereferencing a null pointer will lead to crash.<br>
+Deleting a null pointer causes nothing.<br>
+
 
