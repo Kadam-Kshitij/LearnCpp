@@ -157,3 +157,15 @@ int main()
     std::cout << *ptr << std::endl; // 0
 }
 ```
+
+Set delete pointers t onullptr unless they are going out of scope immediately
+
+```cpp
+int main()
+{
+    int* ptr = new int{ 56 };
+    std::cout << *ptr << std::endl; // 56
+    delete ptr;
+    ptr = nullptr;
+}
+```
