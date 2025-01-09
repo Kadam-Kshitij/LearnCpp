@@ -1,3 +1,38 @@
+# Compilation Process
+.cpp files
+    |
+    |
+    |   Pre-processing ( include files, remove comments, expand macros )
+    |
+    |
+   \ /
+    '
+.ii files
+    |
+    |
+    |   Compiler ( Complie code and convert to assembly language code )
+    |
+    |
+   \ /
+    '
+.s files ( assembly language )
+    |
+    |
+    |   Assembler ( Convert to machine language object files )
+    |
+    |
+   \ /
+    '
+.o files ( object files )
+    |
+    |
+    |   Link different object files/ library files together
+    |
+    |
+   \ /
+    '
+Executable
+
 # Chapter 14 - Introduction to Classes
 
 In C struct cannot have member functions. <br>
