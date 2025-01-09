@@ -458,7 +458,8 @@ int main()
 ```
 
 ## Delete function in derived class
-We can also delete base class member in derived class by writting `void foo() const = delete;`
+We can also delete base class member in derived class by writting `void foo() const = delete;`<br>
+But we can call the base class function as, `objD.Base::foo();` Or we can upcast to Base& and call the foo function in Base in both the above cases.
 
 ## Multiple Inheritance
 If both base class have the same named function, call will be ambigious leading to CTE.<br>
