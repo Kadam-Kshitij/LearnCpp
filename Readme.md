@@ -344,3 +344,37 @@ int main()
     obj.goo();          // goo
 }
 ```
+
+Example - First derived class will be checked for function foo. If found the base class functions will not be considered
+
+```cpp
+class Base
+{
+public:
+    void foo( int a )
+    {
+        std::cout << "foo base\n";
+    }
+    void foo( double a )
+    {
+        std::cout << "foo double\n";
+    }
+};
+
+class Derived : public Base
+{
+public:
+    void foo( int a )
+    {
+        std::cout << "foo derived\n";
+    }
+};
+
+
+int main()
+{
+    Derived obj;
+    int a = 3;
+    obj.foo( a );   // Calls the derived class foo
+}
+```
