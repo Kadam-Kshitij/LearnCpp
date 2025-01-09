@@ -278,9 +278,8 @@ Initializer list can be used to call Base class constructors<br>
 Depending upon the type of inheritance ( public, protected, private ) the access of base class members changes in the derived class.<br>
 Following table summarizes the same
 
-|  | public	|	protected |	private |			
-| ( Type of inhe. ) | | | |
-|-------------------|-------------|---------------|
+|  | public	|	protected |	private |
+|-------------------|-------------|---------------|-------|
 |public |            public |      protected |  X |
 |protected |         protected |   protected |  X |
 |private |           private |     private |    X |
