@@ -167,5 +167,19 @@ int main()
     std::cout << *ptr << std::endl; // 56
     delete ptr;
     ptr = nullptr;
+    // Further statements
 }
 ```
+
+## new operator and std::nothrow
+Allocating memory using new might fail in rare circumstances and will lead to bad_alloc exception being thrown. If exception is not hadled properly will lead to crash.<br>
+We can add std::nothrow between new and allocation type. This will ensure no exception is thrown, and nullptr will be returned instead of address.
+
+```cpp
+    int* ptr = new ( std::nothrow )int{ 56 };
+    if( !ptr )
+    {
+        // Error handling
+    }
+```
+
