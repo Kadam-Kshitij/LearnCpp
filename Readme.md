@@ -256,6 +256,7 @@ Void pointers cannot be dereferenced. Cannot perform arithmattic operations on i
 ```
 
 # Chapter 24 - Inheritance
+## Order of constructor call
 Order of constructor call - Most Base class constructor is called first follwed by derived class.<br>
 Base <- D1 <- D2 <- D3<br>
 In the above case order of constructor call is Base, D1, D2, D3.
@@ -267,3 +268,19 @@ In case of Multiple inheritance
    In this case constructor call order is Base1, Base2, Derived
 
 Order of destructor is exactly opposite to the constructor call.<br>
+
+## Initializing Base class from derived class
+Initializer list can be used to call Base class constructors<br>
+`Base( int a ) : _a{ a }`
+`Derived( int a, int b ) : Base{ a }, _b{ b }`
+
+## Access specifiers and inheritance
+Depending upon the type of inheritance ( public, protected, private ) the access of base class members changes in the derived class.<br>
+Following table summarizes the same
+
+|  | public	|	protected |	private |			
+| ( Type of inhe. ) | | | |
+|-------------------|-------------|---------------|
+|public |            public |      protected |  X |
+|protected |         protected |   protected |  X |
+|private |           private |     private |    X |
