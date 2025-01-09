@@ -188,4 +188,22 @@ We can add std::nothrow between new and allocation type. This will ensure no exc
 Pointer is not allocated to any memory location. Dereferencing a null pointer will lead to crash.<br>
 Deleting a null pointer causes nothing.<br>
 
+## Dynamically allocating arrays
+Use `int* ptr = new int[4];` to dynamically allocate array of memory.<br>
+Use `delete[] ptr;` to delete array of memory.<br>
+
+## Destructor
+1) Has the same name as class with ~ symbol at the start.
+2) Does not take any arguments.
+3) No return type.
+4) Class can have only one destructor. No Overloading possible.
+5) Automaically called when object of the class is deleted or goes out of scope.
+
+## Pointers to pointers
+
+```cpp
+    int* ptr = new int{ 6 };
+    int** pptr = &ptr;
+    std::cout << **pptr << std::endl;
+```
 
