@@ -242,3 +242,15 @@ int main()
 ```
 Instead we can just use one dimentional array and using simple maths perform operations
 `int* ptr{ new int[4*3] }`
+
+## Void pointers
+Void pointers can point to any data type. But needs to be first cast into appropriate pointer type before dereferencing.<br>
+Void pointers cannot be dereferenced. Cannot perform arithmattic operations on it. Deleting void pointer will lead to undefined behavior.<br>
+
+```cpp
+    void* ptr;
+    int a = 23;
+    ptr = &a;   // Ok
+    // Need to cast before dereferencing.
+    std::cout << *static_cast< int* >( ptr ) << std::endl;
+```
