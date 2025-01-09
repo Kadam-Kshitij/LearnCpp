@@ -283,3 +283,23 @@ Following table summarizes the same
 |public |            public |      protected |  X |
 |protected |         protected |   protected |  X |
 |private |           private |     private |    X |
+
+## Adding new functionality in Derived class
+If we have same name function in Base and derived class, then we can use
+Base::foo() in derived class to call the Base class function.
+
+```cpp
+void foo()
+{
+    // Some additional functionality
+    Base::foo();	// Calls the base class foo function
+}
+```
+
+To call Base class function using the Derived class object we can use,
+
+```cpp
+Derived obj;
+obj.Base::foo();         // Calls Base foo
+obj.foo();		 // Calls Derived foo
+```
