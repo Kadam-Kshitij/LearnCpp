@@ -289,7 +289,7 @@ If we have same name function in Base and derived class, then we can use
 Base::foo() in derived class to call the Base class function.
 
 ```cpp
-void foo()
+void Derived::foo()
 {
     // Some additional functionality
     Base::foo();	// Calls the base class foo function
@@ -302,4 +302,45 @@ To call Base class function using the Derived class object we can use,
 Derived obj;
 obj.Base::foo();         // Calls Base foo
 obj.foo();		 // Calls Derived foo
+```
+
+## Changing inherited members access
+```cpp
+public:
+	using Base::foo;
+```
+
+This will make foo public in Derived class which might have been private/protected in Base<br>
+
+Example
+```cpp
+class Base
+{
+public:
+    void foo()
+    {
+        std::cout << "base\n";
+    }
+    void goo()
+    {
+        std::cout << "goo\n";
+    }
+};
+
+class Derived : public Base
+{
+private:
+    void foo()
+    {
+        std::cout << "derived\n";
+    }
+};
+
+int main()
+{
+    Derived obj;
+    // obj.foo();       // CTE - foo is private
+    obj.Base::foo();   // OK base
+    obj.goo();          // goo
+}
 ```
