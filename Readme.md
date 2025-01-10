@@ -36,6 +36,35 @@
 Executable
 ```
 
+# Chapter 11 - Function Overloading
+
+```cpp
+void foo( float f )
+{
+    std::cout << "Float\n";
+}
+
+void foo( double f )
+{
+    std::cout << "Double\n";
+}
+
+int main()
+{
+   foo( 12.3 );     // Double
+   foo( 12.3f );    // Float
+}
+```
+
+Functions can be overloaded using type of parameter, number of parameters. But not by return type.<br>
+Following is an ambigious match
+
+```cpp
+void foo( int i )
+void foo( const int& i )
+```
+
+
 # Chapter 14 - Introduction to Classes
 
 In C struct cannot have member functions. <br>
