@@ -234,6 +234,81 @@ And double free error will occur when the destructor is called.<br>
 Used to Differentiate between member variable and function argument which have the same name.<br>
 this->x = x;<br>
 
+## Friend
+Friend function has access to private and protected members of class as if it is a member function of the class.<br>
+Function can be friend to multiple class at a time.<br>
+A friend class is a class that can access the private and protected members of another class.<br>
+We can also make only single member function of a class as friend of another class.
+
+```cpp
+	friend class Base;
+	friend void foo( const Base& obj );
+	friend void Base::foo( const Base& obj );
+```
+
+```cpp
+class Base
+{
+    int a{ 76 };
+public:
+    friend void print( const Base& obj );
+};
+
+void print( const Base& obj )
+{
+    std::cout << obj.a << std::endl;    // Has access to private member of Base
+}
+```
+
+```cpp
+int main()
+{
+    Base obj;
+    print( obj );
+}
+
+class Base;
+
+class Friend2
+{
+public:
+    void foo( const Base& obj );
+};
+
+class Base
+{
+    int a{ 34 };
+public:
+    friend class Friend;
+    friend void Friend2::foo( const Base& obj );
+};
+
+class Friend
+{
+public:
+    void foo( const Base& obj )
+    {
+        std::cout << obj.a << std::endl;
+    }
+};
+
+
+void Friend2::foo( const Base& obj )
+{
+    std::cout << obj.a << std::endl;
+}
+
+int main()
+{
+    Base objb;
+    Friend objf;
+    objf.foo( objb );
+
+    Friend2 objf2;
+    objf2.foo( objb );
+}
+```
+
 # Chapter 19 - Dynamic memory allocation
 ```cpp
 int* ptr = new int{ 34 };	// Allocate memory for int
