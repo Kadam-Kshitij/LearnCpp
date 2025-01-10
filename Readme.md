@@ -310,6 +310,40 @@ int main()
 }
 ```
 
+# Static member variables
+static members are only declared inside the class.
+They need to be explicitly defined outside the class.
+
+Static member variables are shared accross all objects of the class.<br>
+Static members are not associated with the class objects. Rather they are with the class.<br>
+They are created at the start of program and destroyed when the program ends.<br>
+They can be accessed even when class object is not created.<br>
+They can be directly accessed using class name and scope resolution operator `std::cout << Base::var << std::endl;`
+When we declare a static member variable inside a class type, we’re telling the compiler about the existence of a static member variable, but not actually defining it (much like a forward declaration). Because static member variables are essentially global variables, you must explicitly define (and optionally initialize) the static member outside of the class, in the global scope.
+
+```cpp
+class Base {
+public:
+    static int x;
+};
+int Base::x = 23;
+```
+
+Class cannot contain data member as its own type
+
+```cpp
+class A{
+    A a;
+};
+```
+
+This will give CTE - incomplete type. But it can contain static A a or A* a;<br>
+
+`static const int s_value{ 4 };` A static const int can be defined and initialized directly.<br>
+Static members are defined in the cpp file and not in the h file of the class to prevent multiple copies.<br>
+
+
+
 # Chapter 19 - Dynamic memory allocation
 ```cpp
 int* ptr = new int{ 34 };	// Allocate memory for int
@@ -371,6 +405,7 @@ Use `delete[] ptr;` to delete array of memory.<br>
 3) No return type.
 4) Class can have only one destructor. No Overloading possible.
 5) Automaically called when object of the class is deleted or goes out of scope.
+6) Destructors can call member functions.
 
 ## Pointers to pointers
 
