@@ -258,15 +258,15 @@ void print( const Base& obj )
 {
     std::cout << obj.a << std::endl;    // Has access to private member of Base
 }
-```
 
-```cpp
 int main()
 {
     Base obj;
     print( obj );
 }
+```
 
+```cpp
 class Base;
 
 class Friend2
@@ -291,7 +291,6 @@ public:
         std::cout << obj.a << std::endl;
     }
 };
-
 
 void Friend2::foo( const Base& obj )
 {
