@@ -203,6 +203,36 @@ Similarly a function is returning class object by value, but the function is act
 then implicit conversion from int to class will happen.<br>
 If explicit keyword is used, then such implicit conversions are not allowed.<br>
 
+# Chapter 15 - More on classes
+## this pointer
+this pointer points to the object which called the class member variable.<br>
+It is of the same type as the object it is pointing to and is const. ( Base* const )<br>
+<br>
+If we print<br>
+&obj in main or<br>
+this in class member function, it will print the same address which is the address of the class object.<br>
+<br>
+It is sent internally by the compiler as an argument to the class member function.<br>
+<br>
+this pointer is not availabe inside the static members since, static members are not associated to the object but to the class.<br>
+<br>
+this pointer is available inside the constructor as well. The object is created and then<br>
+<br>
+It is a rvalue, not a lvalue. So we cannot print its address like &this<br>
+or change its pointing location as this = new Base;<br>
+<br>
+this is not available inside friend function<br>
+<br>
+sizeof is size of pointer<br>
+<br>
+delete this in the destructor will call the destructor infinite number of times.<br>
+delete can be used only with objects created with new. Otherwise the output is undefined behavior. ( invalid pointer )<br>
+<br>
+delete in constructor or function will cause the memory to be deleted. So the values at that location will be garbage values.<br>
+And double free error will occur when the destructor is called.<br>
+<br>
+Used to Differentiate between member variable and function argument which have the same name.<br>
+this->x = x;<br>
 
 # Chapter 19 - Dynamic memory allocation
 ```cpp
