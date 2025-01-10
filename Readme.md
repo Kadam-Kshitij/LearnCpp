@@ -233,6 +233,8 @@ And double free error will occur when the destructor is called.<br>
 <br>
 Used to Differentiate between member variable and function argument which have the same name.<br>
 this->x = x;<br>
+For non-const member functions, this is a const pointer to a non-const value (meaning this cannot be pointed at something else, but the object pointing to may be modified).<br>
+With const member functions, this is a const pointer to a const value (meaning the pointer cannot be pointed at something else, nor may the object being pointed to be modified).<br>
 
 ## Friend
 Friend function has access to private and protected members of class as if it is a member function of the class.<br>
