@@ -761,3 +761,35 @@ int main()
     }
 }
 ```
+
+Template function specialization example
+
+```cpp
+template< typename T >
+T foo( T x )
+{
+    std::cout << "foo " << x <<std::endl;
+    return x + 2;
+}
+
+template<>
+std::string foo< std::string >( std::string x )
+{
+    std::cout << "foo " << x <<std::endl;
+    return x + " two";
+}
+
+int main()
+{
+    int ret = foo< int >( 9 );
+    std::cout << "ret = " << ret << std::endl;
+
+    std::string retstr = foo< std::string >( "Hello" );
+    std::cout << "retstr = " << retstr << std::endl;
+}
+
+//foo 9
+//ret = 11
+//foo Hello
+//retstr = Hello two
+```
