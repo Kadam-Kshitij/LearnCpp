@@ -69,7 +69,11 @@ lvalue - An expression which has a specific memory location.<br>
 lvalue reference - Reference to an lvalue.<br>
 lvalue reference needs to be initialized.<br>
 Reference ones initialized cannot refer to another expression<br>
-What will happen when address of reference is added.<br>
+What will happen when address of reference is added ???<br>
+Lvalue references can only bind to modifiable lvalues.
+const lvalue reference can bind to modifiable lvalue, non modifiable lvalue and rvalues.<br>
+bind a temporary object to a const lvalue reference increases the lifespan of temporary object to match lefespan of the refernce.<br>
+Lvalue references to const can even bind to values of a different type, so long as those values can be implicitly converted to the reference type. Binds to temporary object.<br>
 
 ```cpp
     int& ref;			// CTE
@@ -84,6 +88,16 @@ What will happen when address of reference is added.<br>
     int b = 34;
     int& ref = b;
     ref = a;			// Here b will be assigned value of a
+
+    const int& ref{ 34 };	// Ok - const lvalue reference can bind to rvalue
+    std::cout << ref << std::endl;	// 34
+
+    const double& r1 { 5 }; 	// Ok, Binds to temporary object
+
+    char ch = 'a';
+    const int& ref{ ch };   	// Ok - ref is bound to temporary object.
+    ch = '+';
+    std::cout << ref << std::endl;	// Prints 97
 ```
 
 
