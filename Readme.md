@@ -713,3 +713,51 @@ To prevent this make B2 and B3 virtual as follows<br>
 	class D : public B2, public B3<br>
 Now D can directly call class B1 constructor<br>
 	D( int x ) : B1{x}, B2{x}, B3{x} {}<br>
+
+ # Chapter 26
+Class template specialization with type and non-type parameters.<br>
+The non-type parameter should be a constexpr.<br>
+Non-type parameter can be one of the following - <br>
+1) Int
+2) Enum
+3) Pointer or ref to class object
+4) Pointer or ref to function
+5) Pointer or ref to class member function
+6) std::nullptr_t
+7) Float since C++20
+
+ ```cpp
+template< typename T, int size >
+class Container {
+    T arr[size];
+public:
+    T& operator[]( int index );
+};
+
+template< typename T, int size >
+T& Container<T,size>::operator[]( int index )
+{
+    return arr[index];
+}
+
+int main()
+{
+    // int a =3;
+    // const int b = a; // Not Ok
+
+    // const int b = 4; // Ok
+
+    constexpr int s = 12;
+
+    Container< int, s > obj;
+    for( int i = 0; i < s; ++i )
+    {
+        obj[i] = i;
+    }
+
+    for( int i = 0; i < s; ++i )
+    {
+        std::cout << obj[i] << ", ";
+    }
+}
+```
