@@ -65,6 +65,7 @@ void foo( const int& i )
 ```
 
 # Chapter 12 - Reference and Poiters
+## Reference
 lvalue - An expression which has a specific memory location.<br>
 lvalue reference - Reference to an lvalue.<br>
 lvalue reference needs to be initialized.<br>
@@ -74,6 +75,8 @@ Lvalue references can only bind to modifiable lvalues.
 const lvalue reference can bind to modifiable lvalue, non modifiable lvalue and rvalues.<br>
 bind a temporary object to a const lvalue reference increases the lifespan of temporary object to match lefespan of the refernce.<br>
 Lvalue references to const can even bind to values of a different type, so long as those values can be implicitly converted to the reference type. Binds to temporary object.<br>
+The same applies when passing as reference to a function.<br>
+TODO - string_view, constexpr reference.
 
 ```cpp
     int& ref;			// CTE
@@ -100,6 +103,36 @@ Lvalue references to const can even bind to values of a different type, so long 
     std::cout << ref << std::endl;	// Prints 97
 ```
 
+## Pointers
+Multiple pointers can be declared on the same line `int* ptr1, * ptr2, * ptr3;`
+Pointer which is not initialized is called wild pointer. Dereferencing wild pointer leads to undefined behavior.<br>
+Pointers which have been deleted are known as dangling pointers. Dereferencing a dangling pointer leads to undefined behaviour.<br>
+Size of pointer - 4 bytes on 32 bit machine and 8 bytes on 64 bit machine.<br>
+Null pointers are pointer which point to nothing. Dereferencing a null pointer leads to undefined behavior.<br>
+
+## const Pointers
+```cpp
+Const Pointers ----->
+int x = 10;
+int y = 20;
+
+const int* ptr1 = &x;	// Pointer to const data
+// *ptr1 = 20;	// CTE
+ptr1 = &y;		// Ok
+
+int* const ptr2 = &x;	// Const pointer
+// ptr2 = &y;	// CTE
+*ptr2 = 30;		// OK
+
+const int* const ptr3 = &x;	// Const pointer to const data
+// *ptr3 = 30;	// CTE
+// ptr3 = &y;	// CTE
+
+const int z = 30;
+const int* ptr4 = &z;
+// int* ptr5 = &z;			// CTE - invalid conversion from ‘const int*’ to ‘int*’
+// int* const ptr6 = &z;	// CTE - invalid conversion from ‘const int*’ to ‘int*’
+```
 
 
 # Chapter 14 - Introduction to Classes
