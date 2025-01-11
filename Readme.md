@@ -36,6 +36,24 @@
 Executable
 ```
 
+# Chapter 8
+## Switch statement
+If break/return statements are not used in case statement, the next case statements will be executed as well.<br>
+If there is a initialiation ( int y = 90; ) in a case statement it will throw CTE.<br>
+Defination and assignment is allowed. ( int y; y = 10; )<br>
+
+## Program termination ----->
+1) std::abort() - Abnormal termination without cleanup
+2) std::exit( EXIT_FAILURE ) - Normal termination with cleanup
+3) std::quick_exit( EXIT_SUCCESS ) - Normal termination without complete cleanup
+4) std::_Exit( EXIT_SUCCESS ) - Normal termination without cleanup
+5) std::atexit( <function_name> ) - Register function to be called when exit is called. In case of multiple function, order of calling is reverse of adding them.
+6) std::at_quick_exit( <function_name> ) - Register function to be called when std::quick_exit() is called.
+
+## Random number generation 
+Random number between [91,120]<br>
+`int random = rand() % 30 + 91;`
+
 # Chapter 11 - Function Overloading
 
 ```cpp
@@ -133,6 +151,8 @@ const int* ptr4 = &z;
 // int* ptr5 = &z;			// CTE - invalid conversion from ‘const int*’ to ‘int*’
 // int* const ptr6 = &z;	// CTE - invalid conversion from ‘const int*’ to ‘int*’
 ```
+
+nullptr has type std::nullptr_t (defined in header <cstddef>).<br>
 
 
 # Chapter 14 - Introduction to Classes
