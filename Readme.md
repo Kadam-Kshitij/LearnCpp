@@ -39,7 +39,7 @@ Executable
 # Chapter 8
 ## Switch statement
 If break/return statements are not used in case statement, the next case statements will be executed as well.<br>
-If there is a initialiation ( int y = 90; ) in a case statement it will throw CTE.<br>
+If there is a initialiation ( int y = 90; ) in a case statement it will throw CTE. Except if it is within a scope { }<br>
 Defination and assignment is allowed. ( int y; y = 10; )<br>
 
 ## Program termination ----->
