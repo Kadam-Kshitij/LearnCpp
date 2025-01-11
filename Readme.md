@@ -64,6 +64,29 @@ void foo( int i )
 void foo( const int& i )
 ```
 
+# Chapter 12 - Reference and Poiters
+lvalue - An expression which has a specific memory location.<br>
+lvalue reference - Reference to an lvalue.<br>
+lvalue reference needs to be initialized.<br>
+Reference ones initialized cannot refer to another expression<br>
+What will happen when address of reference is added.<br>
+
+```cpp
+    int& ref;			// CTE
+    int& ref = a;		// Ok
+
+    const int x = 89;
+    int& ref = x;		// CTE
+    const int& ref = x;		// OK
+
+    int& ref{ 4 };		// CTE - Cannot bind to a rvalue
+
+    int b = 34;
+    int& ref = b;
+    ref = a;			// Here b will be assigned value of a
+```
+
+
 
 # Chapter 14 - Introduction to Classes
 
