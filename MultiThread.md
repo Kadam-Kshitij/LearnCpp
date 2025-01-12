@@ -9,6 +9,11 @@
 | th.detach() | Detach thread th to run independantly |
 | th.joinable() | Check if a thread is already joined or detached |
 | std::thread( func, std::ref( a ) ) | Send reference to a thread |
+| th.get_id() | Returns the threads id. Return type is std::thread::id |
+| std::this_thread::sleep_for( std::chrono::seconds( num ) ); | Sleep current thread for num seconds |
+| std::this_thread::get_id(); | Get current thread id |
+
+
 
 
 ## Mutex
