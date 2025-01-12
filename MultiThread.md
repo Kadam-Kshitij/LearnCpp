@@ -1,4 +1,6 @@
 ## Threads
+
+| Command | Description |
 |-----------------|---------------------|
 | std::thread th( func, arg1, arg2, ... ) | Create a new thread and call function func with arguments |
 | th.join() | Block the calling thread till thread th completes |
