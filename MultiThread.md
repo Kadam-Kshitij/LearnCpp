@@ -2,8 +2,36 @@
 
 | Command | Description |
 |-----------------|---------------------|
+| #include <thread> | Header file |
 | std::thread th( func, arg1, arg2, ... ) | Create a new thread and call function func with arguments |
+| std::thread th; th = std::thread( func, arg ); | Same as above |
 | th.join() | Block the calling thread till thread th completes |
 | th.detach() | Detach thread th to run independantly |
 | th.joinable() | Check if a thread is already joined or detached |
 | std::thread( func, std::ref( a ) ) | Send reference to a thread |
+
+
+## Mutex
+| Command | Description |
+|-----------------|---------------------|
+| #include <mutex> | Header file |
+| std::mutex mu; | Create a new mutex |
+| mu.lock() | Lock mutex. Thread is blovked if mutex is already acquired by another thread. |
+| mu.unlock() | Unlock mutex |
+| std::lock_guard< std::mutex > lock( mu ); |  Locks the mutex when the std::lock_guard is created and automatically unlocks it when the guard goes out of scope |
+| std::unique_lock< std::mutex > lock( mu ); | Provides more flexibility than std::lock_guard, including the ability to unlock and re-lock the mutex manually |
+| mu.try_lock() | Attempts to lock the mutex. Returns true if successful, false if the mutex is already locked |
+
+
+## Condition Variable
+| Command | Description |
+|-----------------|---------------------|
+| #include <condition_variable> | Header file |
+| std::condition_variable cv | Create a new condition variable |
+| cv.wait( lock, [](){} )  | Condition is checked ones. If true, continues else wait till notified. Again condition is checked when notified. Continues if true, else waiting continues |
+| cv.notify_one() | Notify one thread waiting on the cv |
+| cv.notify_all() | Notify all thread waiting on the cv |
+| cv.wait_for( lock, time ) | Wait for specific time |
+| cv.wait_until( lock, time ) | Wait till a particular time |
+
+
