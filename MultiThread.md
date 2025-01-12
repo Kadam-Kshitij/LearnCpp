@@ -34,4 +34,9 @@
 | cv.wait_for( lock, time ) | Wait for specific time |
 | cv.wait_until( lock, time ) | Wait till a particular time |
 
+## Barrier
+| Command | Description |
+|-----------------|---------------------|
+| std::barrier barrier( num ) | Create a new barrier |
+| barrier.arrive_and_wait() | A thread arrives at the barrier and waits for others to reach it. Once all threads arrive, they can proceed |
 
