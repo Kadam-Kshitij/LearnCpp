@@ -50,18 +50,18 @@
 void foo( std::promise< int >& p )
 {
     sleep( 2 );
-    p.set_value( 23 );
+    p.set_value( 23 );    // Set value in promise and unlock any thread waiting on associated future
 }
 
 int main()
 {
-    std::promise< int > p;
-    std::future< int > f = p.get_future();
+    std::promise< int > p;    // Declare a new promise
+    std::future< int > f = p.get_future();    // Retrieve the future associated with the promise
 
     std::thread th( foo, std::ref( p ) );
 
     std::cout << "Main thread waiting..." << std::endl;
-    int ret = f.get();
+    int ret = f.get();    // Block till value is set in promise and retrive
     std::cout << ret << std::endl;
 
     th.join();
