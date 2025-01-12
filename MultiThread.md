@@ -1,5 +1,4 @@
 ## Threads
-
 | Command | Description |
 |-----------------|---------------------|
 | #include <thread> | Header file |
@@ -13,9 +12,6 @@
 | std::this_thread::sleep_for( std::chrono::seconds( num ) ); | Sleep current thread for num seconds |
 | std::this_thread::get_id(); | Get current thread id |
 
-
-
-
 ## Mutex
 | Command | Description |
 |-----------------|---------------------|
@@ -26,6 +22,8 @@
 | std::lock_guard< std::mutex > lock( mu ); |  Locks the mutex when the std::lock_guard is created and automatically unlocks it when the guard goes out of scope |
 | std::unique_lock< std::mutex > lock( mu ); | Provides more flexibility than std::lock_guard, including the ability to unlock and re-lock the mutex manually |
 | mu.try_lock() | Attempts to lock the mutex. Returns true if successful, false if the mutex is already locked |
+| mu.try_lock_for( time ) | Try to lock mutex for specified time, else return false |
+| mu.try_lock_until( time ) | Try to lock mutex until specified time, else return false |
 
 
 ## Condition Variable
@@ -39,9 +37,38 @@
 | cv.wait_for( lock, time ) | Wait for specific time |
 | cv.wait_until( lock, time ) | Wait till a particular time |
 
-## Barrier
+## Barrier C++20 and above
 | Command | Description |
 |-----------------|---------------------|
 | std::barrier barrier( num ) | Create a new barrier |
 | barrier.arrive_and_wait() | A thread arrives at the barrier and waits for others to reach it. Once all threads arrive, they can proceed |
 
+## Future and promise
+```cpp
+#include <future>
+
+void foo( std::promise< int >& p )
+{
+    sleep( 2 );
+    p.set_value( 23 );
+}
+
+int main()
+{
+    std::promise< int > p;
+    std::future< int > f = p.get_future();
+
+    std::thread th( foo, std::ref( p ) );
+
+    std::cout << "Main thread waiting..." << std::endl;
+    int ret = f.get();
+    std::cout << ret << std::endl;
+
+    th.join();
+
+    return 0;
+}
+
+//Main thread waiting...
+//23
+```
