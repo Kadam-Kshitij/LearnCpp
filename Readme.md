@@ -36,6 +36,28 @@
 Executable
 ```
 
+# Chapter 1
+## Standard I/O
+std::cout has a buffer which is flushed periodically.<br>
+endl vs "\n"<br>
+Both causes the output to new line. But endl also flushes the cout buffer which takes time.<br>
+C++ periodically flushes after some time. So use \n to increse code speed.<br>
+"\n" also occupy 1 byte of memory<br>
+
+# Chapter 2
+## Header Guards
+Used to prevent including same header file twice which can cause CTE
+
+```cpp
+#ifndef ___UNIQUE_NAME___
+#define ___UNIQUE_NAME___
+...
+#endif // ___UNIQUE_NAME___
+
+Another way is by using
+#pragma ones
+```
+
 # Chapter 8
 ## Switch statement
 If break/return statements are not used in case statement, the next case statements will be executed as well.<br>
