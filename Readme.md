@@ -148,6 +148,10 @@ class Base {
 };
 ```
 
+```cpp
+foo( a, b );	// Arguments
+void foo( int a, int b )	// Parameters
+
 # Chapter 8
 ## Switch statement
 If break/return statements are not used in case statement, the next case statements will be executed as well.<br>
