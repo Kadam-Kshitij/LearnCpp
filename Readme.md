@@ -56,6 +56,34 @@ int main()
     std::cout << "hello\n";             // Prints after 4 seconds
 }
 ```
+## Namesapce
+ a namespace is a container for organizing code into logical groups and preventing name conflicts.<br>
+ An anonymous namespace is a namespace with no name. Members of an anonymous namespace can only be accessed within the same source file.<br>
+ ```cpp
+namespace A {
+void foo()
+{
+    std::cout << "A\n";
+}
+}
+
+namespace B {
+namespace C {   // nested namespace
+void foo()
+{
+    std::cout << "B\n";
+}
+}
+}
+
+int main()
+{
+    A::foo();   // A
+    B::C::foo();   // B
+}
+```
+
+
 
 ## Avoid using namespace std
 If we define a function named cout in our file and then use it wihout std::, compiler will not know which cout to use.\n
