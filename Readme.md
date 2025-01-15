@@ -192,6 +192,7 @@ class Base {
 ```cpp
 foo( a, b );	// Arguments
 void foo( int a, int b )	// Parameters
+```
 
 # Chapter O
 ## Bitset
