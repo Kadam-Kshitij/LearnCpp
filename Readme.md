@@ -57,7 +57,7 @@ int main()
 }
 ```
 ## Namesapce
- a namespace is a container for organizing code into logical groups and preventing name conflicts.<br>
+ A namespace is a container for organizing code into logical groups and preventing name conflicts.<br>
  An anonymous namespace is a namespace with no name. Members of an anonymous namespace can only be accessed within the same source file.<br>
  ```cpp
 namespace A {
@@ -83,11 +83,24 @@ int main()
 }
 ```
 
-
-
 ## Avoid using namespace std
+if `using namespace std` is used at the start of the file and<br>
 If we define a function named cout in our file and then use it wihout std::, compiler will not know which cout to use.\n
 Also a variable defined today might clash with a new variable defined later in the std namespace.\n
+```cpp
+using namespace std;
+
+void cout()
+{
+    std::cout << "A\n";
+}
+
+
+int main()
+{
+    cout(); // Ambigious call
+}
+```
 
 # Chapter 2
 ## Header Guards
