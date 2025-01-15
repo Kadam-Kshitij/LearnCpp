@@ -194,6 +194,20 @@ foo( a, b );	// Arguments
 void foo( int a, int b )	// Parameters
 ```
 
+# Chapter 6
+If either (or both) of the operands are floating point values, the division operator performs floating point division.<br>
+Remainder operand only works with integers.<br>
+int case of x%y where x, y could be -ve, the output is always of the sign of x.<br>
+Prefer the pre-increment/decrement operator as they are faster than the corresponding post operators.<br>
+
+In Case of function call foo( x, ++x ) we will get undefined behavior.<br>
+Because C++ does not specify the order in which the args are evaluated.<br>
+If first operant is evaluated first foo( 5, 6 ) will be called else foo( 6, 6 ) will be called.<br>
+Same with x + ++x;
+
+Comma operator - x,y - Evaluate x, then y and return y.<br>
+Comma operator has very low precedance.<br>
+
 # Chapter O
 ## Bitset
 ```cpp
@@ -286,6 +300,28 @@ Following is an ambigious match
 ```cpp
 void foo( int i )
 void foo( const int& i )
+```
+
+# Chapter 9
+## Assert and static_assert
+assert condition is checked when program runs. If false, the program terminates.<br>
+static_assert condition is checked at compile time. If false, CTE occurs.<br>
+assert should not be part of release build. Add statement #define NDEBUG at the top to remove assert from release build.<br>
+
+```cpp
+#include <cassert>
+
+// If condition fails CTE occurs
+// The condition must be a constant expression.
+static_assert( sizeof(int) == 4, "Msg" );
+
+int main()
+{
+    int y{ 0 };
+    
+    // If condition fails, program is terminated
+    assert( ( 0 != y ) && "msg" );
+}
 ```
 
 # Chapter 12 - Reference and Poiters
