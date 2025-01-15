@@ -44,6 +44,23 @@ Both causes the output to new line. But endl also flushes the cout buffer which 
 C++ periodically flushes after some time. So use \n to increse code speed.<br>
 "\n" also occupy 1 byte of memory<br>
 
+```cpp
+int main()
+{
+    std::cout << "hello" << std::endl;  // Prints immediately
+    std::cout << "hello\n";             // Prints after 2 seconds
+    sleep(2);
+    std::cout << "hello\n" << std::flush;   // Prints after 2 seconds
+    std::cout << "hello\n";             // Prints after 4 seconds
+    sleep(2);
+    std::cout << "hello\n";             // Prints after 4 seconds
+}
+```
+
+## Avoid using namespace std
+If we define a function named cout in our file and then use it wihout std::, compiler will not know which cout to use.\n
+Also a variable defined today might clash with a new variable defined later in the std namespace.\n
+
 # Chapter 2
 ## Header Guards
 Used to prevent including same header file twice which can cause CTE
@@ -56,6 +73,79 @@ Used to prevent including same header file twice which can cause CTE
 
 Another way is by using
 #pragma ones
+```
+
+## Preprocessor directives
+
+```cpp
+#include <abc.h>
+#define ABC	// Object like macros without substitution text. Used for conditional compilation
+#define ABC "def"	// Object like macros with substitution text. Used to replace text
+
+#ifdef, #ifndef, #else, #elif #endif	// Conditional compilation
+#if 0	// Dont compile
+#if 1 	// Compile
+#undef <macro> // Undefine a macro
+```
+
+Macro text gets replaced in the code where ever used during preprocessing.<br>
+Scope of defines - Point where they are defined in the file till the end of file.<br>
+
+```cpp
+#define FOO "9"     // const char*
+#define GOO 9       // int
+#define myStr std::string
+
+int main()
+{
+    std::string str = FOO;	
+    std::cout << str << "\n";
+
+    int x = GOO;
+    std::cout << str << "\n";
+
+    myStr s{ "hello World" };
+    std::cout << s << "\n";
+}
+```
+
+```cpp
+void foo()
+{
+    // Ok because macros are processed by preprocessor.
+    // Preprocessor does not understand C++ concepts.
+#define FOO "Alex"
+}
+
+
+int main()
+{
+    std::cout << FOO << std::endl;
+}
+```
+
+TODO : Function like macros
+#define MAX(a,b) ((a)>(b)?(a):(b))
+
+## Forward declaration
+```cpp
+// Forward declare
+void foo( int a );
+class Base;
+
+int main()
+{
+    foo( 34 );
+    Base* ptr{ nullptr };
+}
+
+void foo( int a )
+{
+    std::cout << "Foo" << a << "\n";
+}
+
+class Base {
+};
 ```
 
 # Chapter 8
