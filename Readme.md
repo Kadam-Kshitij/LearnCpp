@@ -193,6 +193,54 @@ class Base {
 foo( a, b );	// Arguments
 void foo( int a, int b )	// Parameters
 
+# Chapter O
+## Bitset
+```cpp
+#include <bitset>
+
+int main()
+{
+    std::bitset<8> bit{0b10101010};
+    // std::bitset<8> bit{7}; // OK
+    std::cout << bit << std::endl;  // 10101010
+
+    bit.set(0);
+    std::cout << bit << std::endl;  // 10101011
+
+    bit.flip(0);
+    std::cout << bit << std::endl;  // 10101010
+
+    bit.reset(1);
+    std::cout << bit << std::endl;  // 10101000
+
+    for( int i = 0; i < 8; ++i )
+    {
+        if( bit.test(i) )
+        {
+            std::cout << i << std::endl;    // 3, 5, 7
+        }
+    }
+
+    bit = bit | std::bitset<8>( 0b11111111 );
+    std::cout << bit << std::endl;  // 11111111
+
+    bit = bit & std::bitset<8>( 0 );
+    std::cout << bit << std::endl;  // 00000000
+
+    bit = ~bit;
+    std::cout << bit << std::endl;  // 11111111
+
+    bit = bit ^ std::bitset<8>( 0b00111100 );
+    std::cout << bit << std::endl;  // 11000011
+
+    bit = bit >> 3;
+    std::cout << bit << std::endl;  // 00011000
+
+    bit = bit << 3;
+    std::cout << bit << std::endl;  // 11000000
+}
+```
+
 # Chapter 8
 ## Switch statement
 If break/return statements are not used in case statement, the next case statements will be executed as well.<br>
