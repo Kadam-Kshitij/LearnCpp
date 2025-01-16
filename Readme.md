@@ -996,6 +996,39 @@ int main()
 }
 ```
 
+## Overload parenthesis operator
+Functors are classes that operate like functions. Multiplefunctors can be created. Allows class object to be called like a dunction call.<br>
+```cpp
+class Base {
+    int num{};
+public:
+    int operator()( const int& val )
+    {
+        num = val;
+        return num;
+    }
+
+    void operator()()
+    {
+        std::cout << "No input function\n";
+    }
+
+    void print() const
+    {
+        std::cout << num << std::endl;
+    }
+};
+
+int main()
+{
+    Base obj;
+    int ret = obj( 23 );
+    obj.print();    // 23
+    obj();          // No input function
+    std::cout << ret << std::endl;  // 23
+}
+```
+
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
