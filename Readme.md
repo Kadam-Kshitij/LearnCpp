@@ -208,6 +208,50 @@ void foo( int a, int b )	// Parameters
 |double:         |8 bytes|
 |long double:    |16 bytes|
 
+n-bit signed variable has a range of -(2n-1) to (2n-1)-1.<br>
+An n-bit unsigned variable has a range of 0 to (2n)-1.<br>
+Overflow leads to undefined behavior.<br>
+
+Fixed width intergers - std::int8_t, std::uint8_t, std::int16_t, std::uint16_t, std::int32_t, std::uint32_t, std::int64_t, std::uint64_t<br>
+The size if guaranted on any architecture.They are part of header cstdint<br>
+
+sizeof() return std::size_t type. It is defined in cstddef header file.<br>
+If we create an object which is larger than the max size which size_t can hold, then sizeof will not be able to return proper size.<br>
+
+Float has 6-7 digits of precision. Double has 15-16 digits of precision.<br>
+Size of float is 4, double is 8. Range of float is less than double
+TODO - setprecision and cout of float 
+
+```cpp
+int main()
+{
+    bool a = true;
+    std::cout << a << std::endl;    // 1
+    std::cout << std::boolalpha;
+    std::cout << a << std::endl;    // true
+    std::cout << std::noboolalpha;
+    std::cout << a << std::endl;    // 1
+    std::cout << std::boolalpha;
+
+    bool b{ 0 };
+    bool c{ 1 };
+    bool d{ 4 };
+    std::cout << b << c << d << std::endl;  // falsetruetrue
+
+    bool e;
+    // To allow true and false as input.
+    // Else 0 and 1 are treated as valid inputs for bool
+    // Any incorrect input/numeric value is treated as false
+    std::cin >> std::boolalpha;     
+    std::cin >> e;
+    std::cout << e << std::endl;
+}
+```
+
+If we input more number of inputs than required for std::cin, then the remaing inputs are buffered in the cin buffer and used for following std::cin inputs.<br>
+std::cin.get( ch ); is used to read a single character including whitespaces/newline. std::cin skips whitespaces.<br>
+
+
 # Chapter 5
 const variables cannot be changed ones initialized.<br>
 
