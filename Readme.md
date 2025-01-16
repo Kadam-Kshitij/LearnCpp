@@ -228,6 +228,7 @@ int main()
 ```
 
 ```cpp
+#include <bitset>
 int main()
 {
     int oct{ 023 }, hex{ 0x1B };
@@ -239,6 +240,7 @@ int main()
     std::cout << dec << std::endl;      // Prints in hex, 1c
     std::cout << std::oct << dec << std::endl;  // 34
     std::cout << std::dec << dec << std::endl;  // 28
+    std::cout << std::bitset<8>( dec ) << std::endl;    // 00011100
 }
 ```
 
