@@ -244,6 +244,29 @@ int main()
 }
 ```
 
+# const and constexpr
+The const keyword is used to declare variables whose values cannot be changed after initialization.<br>
+However, it does not guarantee compile-time evaluation. The value of a const variable can be determined at runtime.<br>
+The constexpr keyword, introduced in C++11, is used to declare variables or functions that are evaluated at compile-time.<br>
+
+# constexpr functions
+```cpp
+constexpr int foo( const int x, const int y )
+{
+    return ( x > y ? x : y );
+}
+
+int main()
+{
+    constexpr int a = 34;
+    const int b = 12;
+    // int b = 12;  // CTE
+    constexpr int ret{ foo( a, b ) };
+    std::cout << ret << std::endl;
+}
+```
+
+
 # Chapter 6
 If either (or both) of the operands are floating point values, the division operator performs floating point division.<br>
 Remainder operand only works with integers.<br>
