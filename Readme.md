@@ -1029,6 +1029,36 @@ int main()
 }
 ```
 
+## Overload typecast
+Used to convert user defined types to other types.<br>
+No return type as the return type is same as only one type of return value is allowed.<br>
+Implicit conversions are not allowed if explicit keyword ismentioned.<br>
+```cpp
+class Money {
+    int rupee{ 4 };
+    int paise{ 50 };
+public:
+    explicit operator int() const
+    {
+        return rupee * 100 + paise;
+    }
+};
+
+void display( int i )
+{
+    std::cout << i << std::endl;
+}
+
+
+int main()
+{
+    Money money;
+    // display( money ); // This will work if explicit was not mentioned
+    display( ( int )money );    // 450
+    display( static_cast< int >( money ) ); // 450
+}
+```
+
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
