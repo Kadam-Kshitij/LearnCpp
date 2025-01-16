@@ -194,6 +194,26 @@ foo( a, b );	// Arguments
 void foo( int a, int b )	// Parameters
 ```
 
+# Chapter 5
+const variables cannot be changed ones initialized.<br>
+
+```cpp
+void foo( float f )
+{
+    std::cout << "Foo\n" << f;
+}
+
+void foo( double d ) = delete;
+
+int main()
+{
+    // 1.2 is double and 1.2f is float
+    // foo( 1.2 );     // CTE - Use of deleted function. 
+    foo( 1.2f );    // OK
+}
+```
+
+
 # Chapter 6
 If either (or both) of the operands are floating point values, the division operator performs floating point division.<br>
 Remainder operand only works with integers.<br>
