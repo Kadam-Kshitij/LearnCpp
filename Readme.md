@@ -945,6 +945,58 @@ Void pointers cannot be dereferenced. Cannot perform arithmattic operations on i
     std::cout << *static_cast< int* >( ptr ) << std::endl;
 ```
 
+# Chapter 21 - Operator Overloading
+## Overload subscript operator
+```cpp
+#include <vector>
+
+class Base {
+    std::vector< int > vec;
+public:
+    Base()
+    {
+        for( int i = 0; i < 10; ++i )
+        {
+            vec.push_back( i );
+        }
+    }
+
+    // For non-const objecs
+    int& operator[]( const int index )
+    {
+        return vec[index];
+    }
+
+    // For const objects
+    const int& operator[]( const int index ) const
+    {
+        return vec[index];
+    }
+};
+
+int main()
+{
+    Base obj;
+    obj[5] = 100;	// Allowed
+
+    for( int i = 0; i < 10; ++i )
+    {
+        std::cout << obj[i] << ", ";
+    }
+    std::cout << std::endl;
+
+    const Base objc;
+    // objc[5] = 100;   // Not allowed
+
+    for( int i = 0; i < 10; ++i )
+    {
+        std::cout << objc[i] << ", ";
+    }
+    std::cout << std::endl;
+}
+```
+
+
 # Chapter 24 - Inheritance
 ## Order of constructor call
 Order of constructor call - Most Base class constructor is called first follwed by derived class.<br>
