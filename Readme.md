@@ -213,6 +213,34 @@ int main()
 }
 ```
 
+```cpp
+// Scientific notation
+int main()
+{
+    double light{ 3.0e8 };
+    double lightN{ 3.0e-8 };
+    std::cout << light << std::endl;
+    std::cout << lightN << std::endl;
+}
+
+//3e+08
+//3e-08
+```
+
+```cpp
+int main()
+{
+    int oct{ 023 }, hex{ 0x1B };
+    std::cout << oct << std::endl;  // 19
+    std::cout << hex << std::endl;  // 27
+
+    int dec{ 28 };
+    std::cout << std::hex << dec << std::endl;  // 1c
+    std::cout << dec << std::endl;      // Prints in hex, 1c
+    std::cout << std::oct << dec << std::endl;  // 34
+    std::cout << std::dec << dec << std::endl;  // 28
+}
+```
 
 # Chapter 6
 If either (or both) of the operands are floating point values, the division operator performs floating point division.<br>
