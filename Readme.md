@@ -194,6 +194,20 @@ foo( a, b );	// Arguments
 void foo( int a, int b )	// Parameters
 ```
 
+# Chapter 4
+## sizeof
+| Type | Size |
+|-------|---------|
+|bool:           |1 bytes|
+|char:           |1 bytes|
+|short:          |2 bytes|
+|int:            |4 bytes|
+|long:           |8 bytes|
+|long long:      |8 bytes|
+|float:          |4 bytes|
+|double:         |8 bytes|
+|long double:    |16 bytes|
+
 # Chapter 5
 const variables cannot be changed ones initialized.<br>
 
@@ -263,6 +277,20 @@ int main()
     // int b = 12;  // CTE
     constexpr int ret{ foo( a, b ) };
     std::cout << ret << std::endl;
+}
+```
+
+```cpp
+int main()
+{
+    constexpr int val{ 23 };
+
+    const int a{ 53 };
+    constexpr int val2{ a };
+
+    // CTE
+//    int b{ 53 };
+//    constexpr int val3{ b };
 }
 ```
 
