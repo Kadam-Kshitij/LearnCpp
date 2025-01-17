@@ -1329,6 +1329,37 @@ int main()
 }
 ```
 
+## Overloading operator and function template
+```cpp
+class Money {
+    int money{};
+public:
+    Money( const int& m ) : money{ m }
+    {
+    }
+
+    int get() const { return money; }
+
+    bool operator>( const Money& m ) const
+    {
+        return money > m.get();
+    }
+};
+
+template< typename T >
+bool foo( const T& t1, const T& t2 )
+{
+    return t1 > t2;
+}
+
+int main()
+{
+    Money m1{ 134 };
+    Money m2{ 45 };
+    std::cout << foo( m1, m2 ) << std::endl;
+}
+```
+
 # Chapter 24 - Inheritance
 ## Order of constructor call
 Order of constructor call - Most Base class constructor is called first follwed by derived class.<br>
