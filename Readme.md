@@ -1158,6 +1158,90 @@ int main()
 //1250
 ```
 
+## Overload unary operator
+```cpp
+class Base {
+public:
+    int val{ 34 };
+
+    Base operator-()
+    {
+        Base ret;
+        ret.val = -this->val;
+        return ret;
+    }
+
+    int get() const
+    {
+        return val;
+    }
+};
+
+int main()
+{
+    Base obj;
+    Base obj2 = -obj;
+    std::cout << obj2.get() << std::endl;
+}
+```
+
+## Overload increment/decrement operator
+```cpp
+class Base {
+    int val{};
+public:
+    Base( const int& v ) : val{ v }
+    {
+    }
+
+    friend std::ostream& operator<<( std::ostream& os, const Base& b );
+
+
+    Base& operator++()
+    {
+        val += 1;
+        return *this;
+    }
+
+    Base operator++( int )
+    {
+        Base ret{ *this };
+        ++( *this );
+        return ret;
+    }
+
+    Base& operator--()
+    {
+        val -= 1;
+        return *this;
+    }
+
+    Base operator--( int )
+    {
+        Base ret{ *this };
+        --( *this );
+        return ret;
+    }
+};
+
+std::ostream& operator<<( std::ostream& os, const Base& b )
+{
+    os << b.val;
+    return os;
+}
+
+int main()
+{
+    Base obj{ 67 };
+    std::cout << obj << std::endl;      // 67
+    std::cout << ++obj << std::endl;    // 68
+    std::cout << --obj << std::endl;    // 67
+    std::cout << obj++ << std::endl;    // 67
+    std::cout << obj << std::endl;      // 68
+    std::cout << obj-- << std::endl;    // 68
+    std::cout << obj << std::endl;      // 67
+}
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
