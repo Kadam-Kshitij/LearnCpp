@@ -978,6 +978,59 @@ Call backs can be used to control how a particular part of the function should w
 Providing default values --> `void foo( int( *fptr )( int, float ) = hoo )`<br>
 <br>
 
+## Stack vs Heap
+Stack is small in size ( 1-8 MB ). Contains variables and function call stack.<br>
+If lot of function calls happen or in case of large data structures, the stack might get filled up causing segmentation fault.<br>
+Heap is large in size. Variables allocated dynamically using new, malloc, calloc are assigned on the heap.<br>
+Stack memory is allocated/deallocated automatically by compiler. Heap is done by used manually.<br>
+Heap is slower and costly.<br>
+Stack is contigious. Heap is randomly allocated.<br>
+
+## Command line args
+int main( int argc, char** argv )<br>
+int main( int argc, char* argv[] )<br>
+argc is number of args. Binary name is itself one arg.<br>
+argv[i] is the ith arg.<br>
+
+## Ellipsis
+```cpp
+#include <cstdarg>
+void foo( int c, ... )
+// A function can take any number of arguments.
+va_list v1;
+va_start( v1, c ); // First parameter is va_list to initialize. Second is last non-ellipsis argument.
+va_arg( v1, int ); // First parameter is va_list. Second parameter is type. Used to take out arg from the list.
+va_end( v1 );      // Cleanup the list.
+va_copy( v2, v1 ); // No need to start v2. Only end. If we have removed few args from v1 and then done a copy, it would be wrong. Puts random value.
+```
+
+## Lambdas
+Anyonomous functions that can be defined inside another function<br>
+Syntax -<br>
+[capture_clause](args)->return value{ commands };<br>
+
+capture_clause allows capturing nearby variables in <br>
+[&] - Capture all by reference<br>
+[=] - Capture all by value<br>
+[&, a] - Capture all by refernce and a by value<br>
+[=, &a] - Capture all by refernce and a by reference<br>
+[&a, =] - Illegal, default capture should be first<br>
+[a, &b] - Capture a by value and b by reference<br>
+Variables captured by value are const by default. Add mutable keyword to allow modification<br>
+[a]() mutable -> return_value {};<br>
+Variables captures by refence are not const except if the original var is const. So no mutable required.<br>
+<br>
+Lambdas are captures when they are defined.<br>
+If variable are captured by value then the values captured at the time of definition are used even if the variable changes value later.<br>
+```cpp
+int a = 45;
+auto lam = [=]()->int{ std::cout << "Lam" << a << std::endl; return a; };	
+a = 89;
+lam(); // Here output is Lam45
+```
+In case of capture by reference ,can lead to dangling reference if variable gets<br>
+deleted before lambda call.<br>
+
 # Chapter 21 - Operator Overloading
 ## Overload subscript operator
 ```cpp
