@@ -1129,7 +1129,17 @@ std::ostream& operator<<( std::ostream& os, const Money& m )
 
 std::istream& operator>>( std::istream& is, Money& m )
 {
-    is >> m.rupee >> m.paise;
+    int r, p;
+    if( is >> r >> p )  // Check if extraction succedded
+    {
+        m.rupee = r;
+        m.paise = p;
+    }
+    else
+    {
+        std::cout << "Extraction fails!!!\n";
+    }
+
     return is;
 }
 
