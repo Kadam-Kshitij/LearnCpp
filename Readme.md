@@ -1059,6 +1059,95 @@ int main()
 }
 ```
 
+## Overload using normal function
+```cpp
+class Money {
+    int rupee{ 4 };
+public:
+    int set( int val ) { rupee = val; }
+    int get() const { return rupee; }
+
+    bool operator>( const Money& obj ) const
+    {
+        return rupee > obj.get();
+    }
+};
+```
+
+## Overload using friend function
+```cpp
+class Money {
+    int rupee{ 4 };
+public:
+    int set( int val ) { rupee = val; }
+    int get() const { return rupee; }
+
+    friend bool operator>( const Money& m1, const Money& m2 );
+};
+
+bool operator>( const Money& m1, const Money& m2 )
+{
+    return m1.rupee > m2.rupee;
+}
+```
+
+## Overload by function outside the class
+```cpp
+class Money {
+    int rupee{ 4 };
+public:
+    int set( int val ) { rupee = val; }
+    int get() const { return rupee; }
+};
+
+bool operator>( const Money& m1, const Money& m2 )
+{
+    return m1.get() > m2.get();
+}
+```
+
+## Overload I/O operators
+Overloading code needs to be written in the left operand. Since we cannot modify ostream, istream we need to<br>
+overload outside the class as a normal function.<br>
+```cpp
+class Money {
+    int rupee{ 0};
+    int paise{ 0 };
+public:
+    int get() const { return rupee * 100 + paise; }
+    int set( const int valr, const int valp ) { rupee = valr; paise = valp; }
+
+    friend std::ostream& operator<<( std::ostream& os, const Money& m );
+    friend std::istream& operator>>( std::istream& is, Money& m );
+};
+
+std::ostream& operator<<( std::ostream& os, const Money& m )
+{
+    os << m.get();
+    return os;
+}
+
+std::istream& operator>>( std::istream& is, Money& m )
+{
+    is >> m.rupee >> m.paise;
+    return is;
+}
+
+int main()
+{
+    Money m1;
+    std::cout << m1 << std::endl;
+    std::cout << "Enter 2 number : " << std::endl;
+    std::cin >> m1;
+    std::cout << m1 << std::endl;
+}
+
+//450
+//Enter 2 number : 
+//12 50
+//1250
+```
+
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
