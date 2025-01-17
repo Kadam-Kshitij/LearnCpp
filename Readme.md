@@ -947,19 +947,19 @@ Void pointers cannot be dereferenced. Cannot perform arithmattic operations on i
 
 # Chapter 20
 ## Function pointers
-`int ( *foo )( int, float ) = &goo;`
-`int ( *foo )( int, float ) = goo;`
+`int ( *foo )( int, float ) = &goo;`<br>
+`int ( *foo )( int, float ) = goo;`<br>
 To call the function we can use two ways - <br>
-`foo( 23, 45 );        // Implicit dereference`
-`( *foo )( 23, 45 );   // Explicit dereference`
-`*foo( 23, 45 );       // Wrong. CTE.`
+`foo( 23, 45 );        // Implicit dereference`<br>
+`( *foo )( 23, 45 );   // Explicit dereference`<br>
+`*foo( 23, 45 );       // Wrong. CTE.`<br>
 Passing function pointer to other functions -<br>
-`void goo( int ( *fptr )( int, int ) )`
-`goo( foo );`
+`void goo( int ( *fptr )( int, int ) )`<br>
+`goo( foo );`<br>
 Another way is by using the std::function -<br>
-`#include <functional>`
-`std::function< float( int, float ) > fptr = hoo;`
-`fptr( 23, 6 );`
+`#include <functional>`<br>
+`std::function< float( int, float ) > fptr = hoo;`<br>
+`fptr( 23, 6 );`<br>
 <br>
 If function pointer is made NULL, it can lead to undefined behavior.<br>
 <br>
@@ -970,14 +970,13 @@ int ( Base::*fptr )( float ) = &Base::foo;
 ( ptr->*fptr )( 13.4 );
 ```
 
-Array of function pointers - `void( *fptr[] )( int, float ) = { foo, goo, hoo };`
-Call --> `( *fptr[i] )( 23, 57.3 );`
+Array of function pointers - `void( *fptr[] )( int, float ) = { foo, goo, hoo };`<br>
+Call --> `( *fptr[i] )( 23, 57.3 );`<br>
 Array of function pointers can be used for call back. ( Eg - Event loop )<br>
 Call backs can be used to control how a particular part of the function should work. Eg. sort ascending or descending<br>
-
-Providing default values --> `void foo( int( *fptr )( int, float ) = hoo )`
-
-
+<br>
+Providing default values --> `void foo( int( *fptr )( int, float ) = hoo )`<br>
+<br>
 
 # Chapter 21 - Operator Overloading
 ## Overload subscript operator
