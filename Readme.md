@@ -1881,8 +1881,32 @@ Normal functions, user defined constructors, operators are considered as throwin
 `noexcept( expression )` will return true or false depending upon the above conditiond.<br>
 
 | Function type | Can resolve exceptions via return statement | Behavior at end of catch block |
-|----------------|-----------------|
+|----------------|-----------------|--------------|
 | Constructor | No, must throw or rethrow | Implicit rethrow |
 | Destructor | Yes | Implicit rethrow |
 | Non-value returning function | Yes | Resolve exception |
 | Value returning function | Yes | Undefined behavior |
+
+```cpp
+class Base {
+public:
+    Base()
+    {
+        std::cout << "Base\n";
+        throw 1;
+    }
+};
+
+class Derived : public Base {
+public:
+    Derived() try : Base{}
+    {
+        std::cout << "Derived\n";
+    }
+    catch(...)
+    {
+        std::cout << "Derived catch\n";
+        throw;
+    }
+};
+```
