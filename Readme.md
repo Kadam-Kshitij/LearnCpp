@@ -1690,3 +1690,42 @@ int main()
 //foo Hello
 //retstr = Hello two
 ```
+
+# Chapter 27 - Exceptions
+Exceptions of funcdamental type can be caught by value. Non-fundamental type should be caught by const reference.<br>
+No type conversion is done for exceptions (so an int exception will not be converted to match a catch block with a double parameter).<br>
+When exception occurs, stack unwinding will take place till an appropriate catch block is found.<br>
+catch all block `catch(...)` should be placed at the last in sequence. Else CTE.<br>
+If a exception is not caught, terminate() is called and destructors are not called.<br>
+Exception can be added in operator overloading and also in constructors. All members created will get automatically destroyed. Destructor is not called.<br>
+```cpp
+void foo()
+{
+    try
+    {
+        int e = 2;
+        throw e;
+    }
+    catch(double d)	// Not caught. Stack unwinding continues
+    {
+        std::cout << "Double\n";
+    }
+}
+
+void goo()
+{
+    try
+    {
+        foo();
+    }
+    catch( int e )
+    {
+        std::cout << "Int " << e << "\n";
+    }
+}
+
+int main()
+{
+    goo();
+}
+```
