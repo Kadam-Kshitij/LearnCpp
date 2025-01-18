@@ -1832,3 +1832,50 @@ int main()
     }
 }
 ```
+
+It might happen that, we allocate memory using new and exception occurs before it is deleted. Flow tranfers to catch bloack skipping the delete.<br>
+In such case, allocate and delete the memory outside the try or else use smart pointers.<br>
+
+```cpp
+void goo()
+{
+    try
+    {
+        throw 1;
+    }
+    catch(...)
+    {
+        std::cout << "Catch goo\n";
+    }
+}
+
+// Program will terminate even if there is a catch in main
+// which can handle it
+void foo() noexcept
+{
+    goo();  // Can call functions which are not noexcept
+    std::cout << "Foo\n";
+    throw 1;
+}
+
+int main()
+{
+    try
+    {
+        foo();
+    }
+    catch(...)
+    {
+        std::cout << "catch\n";
+    }
+}
+
+//Catch goo
+//Foo
+//terminate called after throwing an instance of 'int'
+//The program has unexpectedly finished.
+```
+
+Destructors, implicit constructors, copy & move assignment are considered as non-throwing by default.<br>
+Normal functions, user defined constructors, operators are considered as throwing by default.<br>
+`noexcept( expression )` will return true or false depending upon the above conditiond.<br>
