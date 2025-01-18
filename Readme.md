@@ -1893,7 +1893,7 @@ public:
     Base()
     {
         std::cout << "Base\n";
-        throw 1;
+        // throw 1;
     }
 };
 
@@ -1908,5 +1908,37 @@ public:
         std::cout << "Derived catch\n";
         throw;
     }
+
+    int foo() const try
+    {
+        std::cout << "Foo\n";
+        throw 1;
+    }
+    catch(...)
+    {
+        std::cout << "Derived foo catch\n";
+        return 8;
+    }
 };
+
+int main()
+{
+    try
+    {
+        Derived obj;
+        std::cout << obj.foo() << "\n";
+        std::cout << "Main\n";
+    }
+    catch(...)
+    {
+        std::cout << "catch\n";
+    }
+}
+
+//Base
+//Derived
+//Foo
+//Derived foo catch
+//8
+//Main
 ```
