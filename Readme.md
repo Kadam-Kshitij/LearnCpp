@@ -1793,3 +1793,42 @@ int main()
     }
 }
 ```
+```cpp
+class Base {
+public:
+    virtual void foo() const
+    {
+        std::cout << "Base\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    void foo() const override
+    {
+        std::cout << "Derived\n";
+    }
+};
+
+int main()
+{
+    try
+    {
+        try
+        {
+            Derived obj;
+            throw obj;
+        }
+        catch( const Base& o )
+        {
+            o.foo();
+            // throw o;    // This will throw Base
+            throw;  // Throws the same which is received
+        }
+    }
+    catch( const Base& o )
+    {
+        o.foo();    // Derived. Prints Base if throw o is used above
+    }
+}
+```
