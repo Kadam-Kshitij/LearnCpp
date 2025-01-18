@@ -1764,3 +1764,32 @@ Same exception can be rethrown by using `throw;` in the derived class.<br>
 To define a function as non-throwing, we can use the noexcept specifier.<br>
 Note that noexcept doesn’t actually prevent the function from throwing exceptions or calling other functions that are potentially throwing.<br>
 If an unhandled exception would exit a noexcept function, std::terminate will be called (even if there is an exception handler that would otherwise handle such an exception somewhere up the stack). <br>
+```cpp
+#include <exception>
+
+class IException : public std::exception
+{
+    std::string str{};
+public:
+    IException( const std::string& err ) : str{ err }
+    {
+    }
+
+    const char* what() const noexcept
+    {
+        return str.c_str();
+    }
+};
+
+int main()
+{
+    try
+    {
+        throw IException( "Err str" );
+    }
+    catch( const IException& ex )
+    {
+        std::cout << ex.what() << std::endl;
+    }
+}
+```
