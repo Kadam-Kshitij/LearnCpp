@@ -1729,3 +1729,38 @@ int main()
     goo();
 }
 ```
+
+Class type exceptions should be caught using reference to prevent expensive copy.<br>
+In case of inheritance class chain, we should specify the derived class catch block first to prevent object slicing.<br>
+```cpp
+class Base {
+};
+
+class Derived : public Base {
+};
+
+int main()
+{
+    try
+    {
+        Derived obj;    // Derived
+        // Base obj;       // Base
+        throw obj;
+    }
+    catch( const Derived& obj )
+    {
+        std::cout << "Derived\n";
+    }
+    catch( const Base& obj )
+    {
+        std::cout << "Base\n";
+    }
+}
+```
+
+`std::exception` class is the base class from which all other class are derived.<br>
+If we throw a derived class exception whose copy constructor is deleted, then CTE will occur.<br>
+Same exception can be rethrown by using `throw;` in the derived class.<br>
+To define a function as non-throwing, we can use the noexcept specifier.<br>
+Note that noexcept doesn’t actually prevent the function from throwing exceptions or calling other functions that are potentially throwing.<br>
+If an unhandled exception would exit a noexcept function, std::terminate will be called (even if there is an exception handler that would otherwise handle such an exception somewhere up the stack). <br>
