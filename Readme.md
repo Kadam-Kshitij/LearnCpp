@@ -1879,3 +1879,10 @@ int main()
 Destructors, implicit constructors, copy & move assignment are considered as non-throwing by default.<br>
 Normal functions, user defined constructors, operators are considered as throwing by default.<br>
 `noexcept( expression )` will return true or false depending upon the above conditiond.<br>
+
+| Function type | Can resolve exceptions via return statement | Behavior at end of catch block |
+|----------------|-----------------|
+| Constructor | No, must throw or rethrow | Implicit rethrow |
+| Destructor | Yes | Implicit rethrow |
+| Non-value returning function | Yes | Resolve exception |
+| Value returning function | Yes | Undefined behavior |
