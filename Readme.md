@@ -1796,6 +1796,61 @@ int main()
 //45, 5
 ```
 
+Partial template class specialization
+```cpp
+template< typename T, int size >
+class Base {
+    T var;
+    int s{ size };
+public:
+    Base( T x ) : var{ x }
+    {
+    }
+
+    void print() const;
+};
+
+template< typename T, int size >
+void Base< T, size >::print() const
+{
+    std::cout << var << ", " << s << std::endl;
+}
+
+template< int size >
+class Base< int, size > {
+    int var;
+    int s{ size };
+public:
+    Base( int x ) : var{ x }
+    {
+    }
+
+    void print() const;
+};
+
+template< int size >
+void Base< int, size >::print() const
+{
+    std::cout << var << " / " << s << std::endl;
+}
+
+int main()
+{
+    Base< int, 5 > base{ 45 };
+    base.print();
+
+    Base< int, 10 > base2{ 45 };
+    base2.print();
+
+    Base< float, 5 > base3{ 45 };
+    base3.print();
+}
+
+//45 / 5
+//45, 10
+//45, 5
+```
+
 # Chapter 27 - Exceptions
 Exceptions of funcdamental type can be caught by value. Non-fundamental type should be caught by const reference.<br>
 No type conversion is done for exceptions (so an int exception will not be converted to match a catch block with a double parameter).<br>
