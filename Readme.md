@@ -824,6 +824,58 @@ This will give CTE - incomplete type. But it can contain static A a or A* a;<br>
 `static const int s_value{ 4 };` A static const int can be defined and initialized directly.<br>
 Static members are defined in the cpp file and not in the h file of the class to prevent multiple copies.<br>
 
+# Chapter 18 - Iterators
+```cpp
+// Selection sort
+// Smallest num is swapped with the first element
+// This continues from next element onwards
+int main()
+{
+    int arr[]{ 20, 60, 40, 10, 22, 45, 70 };
+    int len = sizeof( arr )/sizeof( arr[0] );
+
+    for( int i = 0; i < len - 1; ++i )
+    {
+        int smallest_index = i;
+        int smallest_num = arr[i];
+        for( int j = i+1; j < len; ++j )
+        {
+            if( arr[j] < smallest_num )
+            {
+                smallest_index = j;
+                smallest_num = arr[j];
+            }
+        }
+
+        int temp = arr[i];
+        arr[i] = arr[smallest_index];
+        arr[smallest_index] = temp;
+    }
+
+    for( int i = 0; i < len; ++i )
+    {
+        std::cout << arr[i] << ", ";
+    }
+}
+```
+
+```cpp
+// Sort using algorithm
+#include <algorithm>
+
+int main()
+{
+    int len = 6;
+    int arr[]{ 20, 60, 40, 10, 22, 45 };
+
+    std::sort( std::begin( arr ), std::end( arr ) );
+
+    for( int i = 0; i < len; ++i )
+    {
+        std::cout << arr[i] << ", ";
+    }
+}
+```
 
 
 # Chapter 19 - Dynamic memory allocation
