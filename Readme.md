@@ -1412,6 +1412,12 @@ int main()
 }
 ```
 
+# Overload assignment operator
+The copy assignment operator (operator=) is used to copy values from one object to another already existing object.<br>
+If a new object has to be created before the copying can occur, the copy constructor is used.<br>
+If a new object does not have to be created before the copying can occur, the assignment operator is used.<br>
+
+
 # Chapter 24 - Inheritance
 ## Order of constructor call
 Order of constructor call - Most Base class constructor is called first follwed by derived class.<br>
