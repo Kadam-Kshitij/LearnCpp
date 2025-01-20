@@ -494,6 +494,70 @@ int main()
 //false
 //true
 ```
+Function templates can contain multiple template type parameters and can be overloaded.<br>
+```cpp
+template< typename T>
+void foo( T x, T y )
+{
+    std::cout << "foo1" << std::endl;
+}
+
+template< typename T, typename U >
+void foo( T x, U y )
+{
+    std::cout << "foo2" << std::endl;
+}
+
+template< typename T, typename U, typename V >
+void foo( T x, U y, V z )
+{
+    std::cout << "foo3" << std::endl;
+}
+
+int main()
+{
+    foo( 1, 2 );    // foo1
+    foo( 1, 2.5 );  // foo2
+    foo( 1, 2, 4 ); // foo3
+}
+```
+
+However, when the compiler is doing template argument deduction, it won’t do any type conversions.<br>
+```cpp
+template< typename T>
+void foo( T x, T y )
+{
+    std::cout << x << ", " << y << std::endl;
+}
+
+int main()
+{
+    // foo( 1, 2.5 );  // CTE
+    foo( static_cast< double >( 1 ), 2.5 );
+    foo< int >( 1, 2.5 );
+    foo< double >( 1, 2.5 );
+}
+
+//1, 2.5
+//1, 2
+//1, 2.5
+```
+For non-type template parameters implicit conversions are allowed.<br>\
+Allowed conversions - Integral promotions, Integral conversions, User-defined conversions, Lvalue to rvalue conversions.<br> 
+```cpp
+template< int T >
+void foo()
+{
+    std::cout << "foo " << T << std::endl;
+}
+
+int main()
+{
+    foo<4>();   // foo 4
+    // foo();  // CTE
+    foo<'c'>(); // foo 99
+}
+```
 
 # Chapter 12 - Reference and Poiters
 ## Reference
