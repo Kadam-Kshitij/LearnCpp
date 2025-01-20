@@ -1416,6 +1416,77 @@ int main()
 The copy assignment operator (operator=) is used to copy values from one object to another already existing object.<br>
 If a new object has to be created before the copying can occur, the copy constructor is used.<br>
 If a new object does not have to be created before the copying can occur, the assignment operator is used.<br>
+Default copy assignment operator has a problem in case of dynamically allocaed members. The object in which it is copied will point to the same location as original object.<br>
+When any one of the object is destroyed, the pointer in other object will be dangling, since destructor of first object destroyes the pointer.<br>
+```cpp
+class Base {
+    int* ptr{ nullptr };
+public:
+    Base( int val )
+    {
+        ptr = new int{ val };
+    }
+    ~Base()
+    {
+        delete ptr;
+    }
+
+    void print() const
+    {
+        std::cout << *ptr << std::endl;
+    }
+
+    int get() const
+    {
+        return *ptr;
+    }
+
+    // Return by reference to enable chaning f1 = f2 = f3
+    Base& operator=( const Base& obj )
+    {
+        // To prevent case of self assignment.
+        // In case of self assignment obj2 = obj2, delete ptr will
+        // delete the data that needs to be copied.
+        if( this == &obj )
+            return *this;
+
+        delete ptr;
+        ptr = nullptr;
+
+        ptr = new int{ obj.get() };
+        return *this;
+    }
+};
+
+int main()
+{
+    Base obj{ 45 };
+    obj.print();
+
+    {
+        Base obj2{ 34 };
+        obj2.print();
+        obj2 = obj;
+        obj2.print();
+    }
+
+    obj.print();
+
+    {
+        Base obj3{ 34 };
+        obj3.print();
+        obj3 = obj3;
+        obj3.print();
+    }
+}
+
+//45
+//34
+//45
+//45
+//34
+//34
+```
 
 
 # Chapter 24 - Inheritance
