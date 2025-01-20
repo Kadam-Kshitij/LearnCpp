@@ -1487,7 +1487,110 @@ int main()
 //34
 //34
 ```
+```cpp
+class Base {
+    char* str{ nullptr };
+    int len{0};
 
+public:
+    Base( char* msg, int length ) : len{ length }
+    {
+        str = new char[len+1];
+
+        for( int i = 0; i < len; ++i )
+        {
+            str[i] = msg[i];
+        }
+        str[len] = '\0';
+    }
+
+    ~Base()
+    {
+        delete[] str;
+        str = nullptr;
+    }
+
+    Base( const Base& b )
+    {
+        performCopy( b );
+    }
+
+    void print() const
+    {
+        std::cout << str << std::endl;
+    }
+
+    int getLength() const
+    {
+        return len;
+    }
+    char* getString() const
+    {
+        return str;
+    }
+
+    Base& operator=( const Base& b )
+    {
+        if( &b == this )
+            return *this;
+
+        return performCopy( b );
+    }
+
+    Base& performCopy( const Base& b )
+    {
+        delete[] str;
+        str = nullptr;
+
+        len = b.getLength();
+        str = new char[len+1];
+        char* originalStr = b.getString();
+        for( int i = 0; i < len; ++i )
+        {
+            str[i] = originalStr[i];
+        }
+        str[len] = '\0';
+
+        return *this;
+    }
+};
+
+int main()
+{
+    char* str = "hello world";
+    Base obj{ str, strlen( str ) };
+    obj.print();
+
+    {
+        Base obj2{ obj };
+        obj2.print();
+    }
+
+    // Destructor will delete the string, which will also delete the string in obj
+    // if we use default copy assignment or copy constructor
+    obj.print();
+
+    {
+        char* str2 = "New Object";
+        Base obj3{ str2, strlen( str2 ) };
+        obj3.print();
+        obj3 = obj;
+        obj3.print();
+    }
+
+    obj.print();
+
+    std::cout << "End\n";
+}
+
+//hello world
+//hello world
+//hello world
+//New Object
+//hello world
+//hello world
+//End
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
