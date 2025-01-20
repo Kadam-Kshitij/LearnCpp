@@ -558,6 +558,24 @@ int main()
     foo<'c'>(); // foo 99
 }
 ```
+```cpp
+void foo( int x );
+void foo( int x = 9 ) { std::cout << "foo\n"; }
+
+void goo( int x = 9 );
+void goo( int x ) { std::cout << "goo\n"; }
+
+void hoo( int x );
+
+int main()
+{
+    foo();      // OK
+    goo();      // OK
+    // hoo();   // CTE
+}
+
+void hoo( int x = 9 ) { std::cout << "hoo\n"; }
+```
 
 # Chapter 12 - Reference and Poiters
 ## Reference
