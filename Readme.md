@@ -474,6 +474,27 @@ Also it outputs the buffer on differnt error stream.<br>
 command > file 2>&1 // Used to redirect both to file
 command > file 2> file2 // Used to redirect output to file and error to file2
 
+# Chapter 11 - Function Overload and Templates
+```cpp
+template< typename T >
+bool foo( T x, T y )
+{
+    return ( x > y ? true : false );
+}
+
+int main()
+{
+    int a = 7, b = 8;
+    std::cout << std::boolalpha << foo( a, b ) << std::endl;
+
+    float af = 9.3f, bf = 8.6f;
+    std::cout << std::boolalpha << foo( af, bf ) << std::endl;
+}
+
+//false
+//true
+```
+
 # Chapter 12 - Reference and Poiters
 ## Reference
 lvalue - An expression which has a specific memory location.<br>
