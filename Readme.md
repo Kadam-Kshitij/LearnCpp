@@ -927,6 +927,84 @@ This will give CTE - incomplete type. But it can contain static A a or A* a;<br>
 `static const int s_value{ 4 };` A static const int can be defined and initialized directly.<br>
 Static members are defined in the cpp file and not in the h file of the class to prevent multiple copies.<br>
 
+# Chapter 17 - 
+Passing arrays to a functions and decaying into a pointer.<br>
+arr[i] is actually *( arr + i ).<br>
+```cpp
+// Need to send length of array as seperate parameter
+void foo( const int arr[], int length )
+{
+    std::cout << sizeof( arr ) << std::endl;    // 8
+    for( int i= 0; i < length; ++i )
+    {
+        std::cout << arr[i] << ", ";
+    }
+    std::cout << std::endl;
+}
+
+// Array decays to a pointer
+void goo( const int* ptr, int length )
+{
+    for( int i= 0; i < length; ++i )
+    {
+        std::cout << *( ptr + i ) << ", ";
+    }
+    std::cout << std::endl;
+}
+
+int main()
+{
+    int arr[]{ 34, 89, 11, 88, 2 , 9 };
+    std::cout << sizeof( arr ) << std::endl;    // 24
+    foo( arr, sizeof( arr )/sizeof( arr[0] ) );
+    goo( arr, sizeof( arr )/sizeof( arr[0] ) );
+
+    for( int i = 0; i < sizeof( arr )/sizeof( arr[0] ); ++i )
+    {
+        std::cout << *( arr + i ) << ", ";
+    }
+    std::cout << std::endl;
+
+    for( auto& i : arr )
+    {
+        std::cout << i << ", ";
+    }
+}
+```
+Multidimentional arrays of cstrings
+```cpp
+int main()
+{
+    int alpha{ 'a' };
+    char** strings{ nullptr };
+
+    strings = new char*[5];
+
+    for( int i = 0; i < 5; ++i )
+    {
+        strings[i] = new char[i+2];
+        for( int j = 0; j < i+1; ++j )
+        {
+            strings[i][j] = alpha;
+            ++alpha;
+        }
+        strings[i][i+1] = '\0';
+    }
+
+    for( int i = 0; i < 5; ++i )
+    {
+        std::cout << strings[i] << std::endl;
+    }
+}
+
+//a
+//bc
+//def
+//ghij
+//klmno
+```
+
+
 # Chapter 18 - Iterators
 ```cpp
 // Selection sort
