@@ -2099,6 +2099,135 @@ int main()
 Compile-time polymorphism refers to forms of polymorphism that are resolved by the compiler. These include function overload resolution, as well as template resolution.<br>
 Runtime polymorphism refers to forms of polymorphism that are resolved at runtime. This includes virtual function resolution.<br>
 
+Do not call virtual functions from constructors/destructors.<br>
+If we call from the Base class constructor, the derived part is not yet created, so will resolve to base class function.<br>
+Similarly for the base class destructor as well.<br>
+```cpp
+class A {
+public:
+    A()
+    {
+        std::cout << "A\n";
+        foo();
+    }
+    ~A()
+    {
+        std::cout << "~A\n";
+        foo();
+    }
+
+    virtual void foo() const { std::cout << "A foo\n"; }
+};
+
+class B : public A {
+public:
+    B() : A{}
+    {
+        std::cout << "B\n";
+        foo();
+    }
+    ~B()
+    {
+        std::cout << "~B\n";
+        foo();
+    }
+    virtual void foo() const { std::cout << "B foo\n"; }
+};
+
+
+int main()
+{
+    B b;
+}
+
+//A
+//A foo
+//B
+//B foo
+//~B
+//B foo
+//~A
+//A foo
+```
+In case foo() in A is pure virtual, it will cause CTE - undefined reference to foo() error.<br>
+Resolving a virtual function takes time than a normal function resolution.<br>
+
+The override keyword can be used to tell the compiler that it is a overridden function. And throw CTE if not properly overridden.<br>
+```cpp
+class A {
+public:
+    virtual void foo() const { std::cout << "A foo\n"; }
+};
+
+class B : public A {
+public:
+    void foo() { std::cout << "B foo\n"; }
+};
+
+
+int main()
+{
+    B b;
+    A& ref = b;
+    // Not overridden, so calls the base foo only
+    ref.foo();  // A foo
+}
+```
+
+The final keyword is used to prevent anymore overridding.<br>
+```cpp
+class A {
+public:
+    virtual void foo() const { std::cout << "A foo\n"; }
+};
+
+class B : public A {
+public:
+    void foo() const override final { std::cout << "B foo\n"; }
+};
+
+class C : public B {
+public:
+    // CTE
+    // void foo() const override { std::cout << "C foo\n"; }
+};
+```
+```cpp
+class A {
+};
+
+class B final : public A {
+};
+
+// CTE - cannot derive from final B
+class C : public B {
+};
+```
+Virtual destructor
+```cpp
+class A {
+public:
+    virtual ~A() { std::cout << "~A\n"; }
+};
+
+class B : public A {
+public:
+    ~B() { std::cout << "~B\n"; }
+};
+
+
+int main()
+{
+    A* ptr = new B();
+    delete ptr;
+}
+// If virtual destructor is used
+//~B
+//~A
+
+// If not used
+// ~A
+```
 
  # Chapter 26
 Class template specialization with type and non-type parameters.<br>
