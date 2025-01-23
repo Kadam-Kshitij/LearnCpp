@@ -2238,6 +2238,185 @@ It makes each class object allocated bigger by the size of one pointer.<br>
 When a class object is created, *__vptr is set to point to the virtual table for that class. For example, when an object of type Base is created, *__vptr is set to point to the virtual table for Base. When objects of type D1 or D2 are constructed, *__vptr is set to point to the virtual table for D1 or D2 respectively.<br>
 ![Alt Text](https://www.learncpp.com/images/CppTutorial/Section12/VTable.gif)
 
+Object slicing<br>
+```cpp
+#include <functional>
+class Base {
+public:
+    virtual void foo() const
+    {
+        std::cout << "Base\n";
+    }
+};
+
+class Derived : public Base {
+public:
+    void foo() const override
+    {
+        std::cout << "Derived\n";
+    }
+};
+
+void goo( const Base obj )
+{
+    obj.foo();  // Base
+}
+
+int main()
+{
+    Derived obj;
+    Base objb = obj;    // Object Slicing
+    objb.foo();         // Base
+
+    goo( objb );
+
+    std::vector< Base > vec{ obj, objb };
+    vec[0].foo();   // Base
+
+    // Creating reference vector is not allowed.
+    // The elements of std::vector must be assignable,
+    // whereas references can’t be reassigned (only initialized).
+    // std::vector< Base& > vecref{ obj, objb };
+
+    // Solution 1
+    std::vector< Base* > vecptr{ &obj, &objb };
+    vecptr[0]->foo();   // Derived
+
+    // Solution 2
+    std::vector< std::reference_wrapper< Base > > vecrw{ obj, objb };
+    vecrw[0].get().foo();   // Derived
+}
+```
+Franken object<br>
+```cpp
+class Base {
+protected:
+    int x{};
+public:
+    Base( const int& val ) : x{ val } {}
+    virtual void foo() const
+    {
+        std::cout << "Base " << x << std::endl;
+    }
+};
+
+class Derived1 : public Base {
+public:
+    Derived1( const int& val ) : Base{ val } {}
+    void foo() const override
+    {
+        std::cout << "Derived1 " << x << std::endl;
+    }
+};
+
+class Derived2 : public Base {
+public:
+    Derived2( const int& val ) : Base{ val } {}
+    void foo() const override
+    {
+        std::cout << "Derived2 " << x << std::endl;
+    }
+};
+
+int main()
+{
+    Derived1 D1{11};
+    Derived2 D2{22};
+
+    D1.foo();   // Derived1 11
+    D2.foo();   // Derived1 22
+
+    Base& ref = D1;
+    // Only the base part of D1 is copied into D2
+    ref = D2;
+
+    D1.foo();   // Derived1 22
+    D2.foo();   // Derived1 22
+}
+```
+Dynamic Casting
+```cpp
+class Base {
+protected:
+    int x{};
+public:
+    Base( const int& val ) : x{ val } {}
+    virtual void foo() const
+    {
+        std::cout << "Base " << x << std::endl;
+    }
+};
+
+class Derived1 : public Base {
+public:
+    Derived1( const int& val ) : Base{ val } {}
+    void foo() const override
+    {
+        std::cout << "Derived1 " << x << std::endl;
+    }
+};
+
+class Derived2 : public Base {
+public:
+    Derived2( const int& val ) : Base{ val } {}
+    void foo() const override
+    {
+        std::cout << "Derived2 " << x << std::endl;
+    }
+};
+
+int main()
+{
+    Derived1* D1 = new Derived1{ 11 };
+    Derived2* D2 = new Derived2{ 22 };
+
+    Base* ptr1 = dynamic_cast< Base* >( D1 );
+
+    Derived2* ptrd2 = dynamic_cast< Derived2* >( ptr1 );
+    if( nullptr == ptrd2 )
+    {
+        std::cout << "Null D2\n";
+    }
+    else
+    {
+        std::cout << "D2\n";
+    }
+
+    Derived1* ptrd1 = dynamic_cast< Derived1* >( ptr1 );
+    if( nullptr == ptrd1
+            )
+    {
+        std::cout << "Null D1\n";
+    }
+    else
+    {
+        std::cout << "D1\n";
+    }
+
+
+    Base& refb = dynamic_cast< Base& >( *D1 );
+
+    try
+    {
+        Derived2& refd2 = dynamic_cast< Derived2& >( refb );
+        std::cout << "refd2\n";
+    }
+    catch( const std::exception& ex )
+    {
+        std::cout << ex.what() << std::endl;
+    }
+
+    try
+    {
+        Derived1& refd1 = dynamic_cast< Derived1& >( refb );
+        std::cout << "refd1\n";
+    }
+    catch( const std::exception& ex )
+    {
+        std::cout << ex.what() << std::endl;
+    }
+}
+```
 
 
  # Chapter 26
