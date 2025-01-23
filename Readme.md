@@ -1003,6 +1003,21 @@ int main()
 //ghij
 //klmno
 ```
+Print the lenght of the string.<br>
+```cpp
+int main()
+{
+    // char arr[5]{ "Hello" }; // CTE
+    char arr[50]{ "Hell" };
+    std::cout << arr << std::endl;
+
+    // 4, The length of string excluding the null terminator
+    std::cout << strlen( arr ) << std::endl;
+
+    // In C++17 and above, Prints 50
+    // std::cout << std::size( arr ) << std::endl;
+}
+```
 
 
 # Chapter 18 - Iterators
