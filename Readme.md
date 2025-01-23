@@ -2228,6 +2228,15 @@ int main()
 // If not used
 // ~A
 ```
+In C++, when a direct call is made to a non-member function or a non-virtual member function, the compiler can determine which function definition should be matched to the call. This is sometimes called early binding (or static binding), as it can be performed at compile-time. The compiler (or linker) can then generate machine language instructions that tells the CPU to jump directly to the address of the function.<br>
+Calls to overloaded functions and function templates can also be resolved at compile-time.<br>
+In some cases, a function call can’t be resolved until runtime. In C++, this is sometimes known as late binding. Calling a function via a function pointer is also known as an indirect function call.<br>
+The virtual table is a lookup table of functions used to resolve function calls in a dynamic/late binding manner.<br>
+First, every class that uses virtual functions (or is derived from a class that uses virtual functions) has a corresponding virtual table.<br>
+Second, the compiler also adds a hidden pointer that is a member of the base class.
+![Alt Text](https://www.learncpp.com/images/CppTutorial/Section12/VTable.gif)
+
+
 
  # Chapter 26
 Class template specialization with type and non-type parameters.<br>
