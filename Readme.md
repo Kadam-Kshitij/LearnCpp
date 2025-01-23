@@ -2233,7 +2233,9 @@ Calls to overloaded functions and function templates can also be resolved at com
 In some cases, a function call can’t be resolved until runtime. In C++, this is sometimes known as late binding. Calling a function via a function pointer is also known as an indirect function call.<br>
 The virtual table is a lookup table of functions used to resolve function calls in a dynamic/late binding manner.<br>
 First, every class that uses virtual functions (or is derived from a class that uses virtual functions) has a corresponding virtual table.<br>
-Second, the compiler also adds a hidden pointer that is a member of the base class.
+Second, the compiler also adds a hidden pointer that is a member of the base class.<br>
+It makes each class object allocated bigger by the size of one pointer.<br>
+When a class object is created, *__vptr is set to point to the virtual table for that class. For example, when an object of type Base is created, *__vptr is set to point to the virtual table for Base. When objects of type D1 or D2 are constructed, *__vptr is set to point to the virtual table for D1 or D2 respectively.<br>
 ![Alt Text](https://www.learncpp.com/images/CppTutorial/Section12/VTable.gif)
 
 
