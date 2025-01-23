@@ -2039,6 +2039,67 @@ To prevent this make B2 and B3 virtual as follows<br>
 Now D can directly call class B1 constructor<br>
 	D( int x ) : B1{x}, B2{x}, B3{x} {}<br>
 
+# Chapter 25
+Base reference and pointers of derived class are needed so that different derived class can be passed to functions using Base& or Base*. Also to create a single array of different derived class it is needed.<br>
+```cpp
+int main()
+{
+    Derived obj;
+    obj.foo();
+    Derived& ref = obj;
+    ref.foo();
+    Derived* ptr = &obj;
+    ptr->foo();
+
+    Base& refb = obj;
+    refb.foo();
+    Base* ptrb = &obj;
+    ptrb->foo();
+}
+
+//Derived
+//Derived
+//Derived
+//Base
+//Base
+```
+A virtual function is a special type of member function that, when called, resolves to the most-derived version of the function for the actual type of the object being referenced or pointed to.<br>
+```cpp
+class A {
+public:
+    virtual void foo() const { std::cout << "A\n"; }
+};
+
+class B : public A {
+public:
+    virtual void foo() const { std::cout << "B\n"; }
+};
+
+class C : public B {
+public:
+    virtual void foo() const { std::cout << "C\n"; }
+};
+
+int main()
+{
+    B b;
+    A& a = b;
+    a.foo();    // B
+
+    C c;
+    A& ac = c;
+    ac.foo();    // C
+
+    // Virtual function resolution only works when a member function
+    // is called through a pointer or reference to a class type object.
+    A obj{ c }; // Copies A portion of c into obj
+    obj.foo();  // A
+}
+```
+Compile-time polymorphism refers to forms of polymorphism that are resolved by the compiler. These include function overload resolution, as well as template resolution.<br>
+Runtime polymorphism refers to forms of polymorphism that are resolved at runtime. This includes virtual function resolution.<br>
+
+
  # Chapter 26
 Class template specialization with type and non-type parameters.<br>
 The non-type parameter should be a constexpr.<br>
