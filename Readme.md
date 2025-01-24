@@ -2530,6 +2530,42 @@ int main()
 }
 ```
 
+## Diamond problem
+```cpp
+class Base {
+public:
+    Base() { std::cout << "Base\n"; }
+};
+
+class Derived1 : public Base {
+public:
+    Derived1() : Base{} { std::cout << "Derived1\n"; }
+};
+
+class Derived2 : public Base {
+public:
+    Derived2() : Base{} { std::cout << "Derived2\n"; }
+};
+
+class Derived3 : public Derived1, public Derived2
+{
+public:
+    Derived3() : Derived1{}, Derived2{} { std::cout << "Derived3\n"; }
+};
+
+int main()
+{
+    Derived3 d3;
+}
+
+// Base call is constructed twice.
+//Base
+//Derived1
+//Base
+//Derived2
+//Derived3
+```
+
 
  # Chapter 26
 Class template specialization with type and non-type parameters.<br>
