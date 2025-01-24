@@ -2449,6 +2449,42 @@ int main()
 }
 ```
 
+## Overload << operator for derived class
+```cpp
+class Base {
+public:
+    friend std::ostream& operator<<( std::ostream& os, const Base& b );
+};
+
+std::ostream& operator<<( std::ostream& os, const Base& b )
+{
+    os << "Base";
+    return os;
+}
+
+class Derived : public Base {
+public:
+    friend std::ostream& operator<<( std::ostream& os, const Derived& d );
+};
+
+std::ostream& operator<<( std::ostream& os, const Derived& d )
+{
+    os << "Derived";
+    return os;
+}
+
+
+int main()
+{
+    Derived d;  // Derived
+    std::cout << d << std::endl;
+    Base b;     // Base
+    std::cout << b << std::endl;
+    Base& ref = d;  // Base
+    std::cout << ref << std::endl;
+}
+```
+
 
  # Chapter 26
 Class template specialization with type and non-type parameters.<br>
