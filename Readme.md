@@ -2565,6 +2565,84 @@ int main()
 //Derived2
 //Derived3
 ```
+Solution
+For the constructor of the most derived class, virtual base classes are always created before non-virtual base classes, which ensures all bases get created before their derived classes.<br>
+D1 and D2 still have call to Base constructor. They are used when creating D1 or D2 objects. Ignored when creating D3 object.<br>
+D3 is responsible to construct the Base.<br>
+All classes inheriting a virtual base class will have a virtual table, even if they would normally not have one otherwise, and thus instances of the class will be larger by a pointer.<br>
+```cpp
+class Base {
+public:
+    Base() { std::cout << "Base\n"; }
+};
+
+class Derived1 : virtual public Base {
+public:
+    Derived1() : Base{} { std::cout << "Derived1\n"; }
+};
+
+class Derived2 : virtual public Base {
+public:
+    Derived2() : Base{} { std::cout << "Derived2\n"; }
+};
+
+class Derived3 : public Derived1, public Derived2
+{
+public:
+    Derived3() : Base{}, Derived1{}, Derived2{} { std::cout << "Derived3\n"; }
+};
+
+int main()
+{
+    Derived3 d3;
+}
+
+//Base
+//Base
+//Derived1
+//Base
+//Derived2
+//Derived3
+```
+
+
+## Pure Virtual functions and abstract class
+Pure Virtual Function are virtual functions with any body.<br>
+`virtual void foo( int a ) = 0`
+Base class containing one or more pure virtual functions makes the class abstract. Abstract class cannot be instantialed.<br>
+If Derived class does not provide the implementation then it is also considered as abstract.<br>
+It is still possible to provide a body for the pure virtual function outside the class and the derived class can call the default implementation. Base class is still abstract.<br>
+```cpp
+class Base {
+public:
+    virtual void foo() const = 0;
+};
+
+void Base::foo() const
+{
+    std::cout << "Foo\n";
+}
+
+class Derived : public Base
+{
+public:
+    void foo() const
+    {
+        std::cout << "Foo Derived\n";
+        Base::foo();
+    }
+};
+
+int main()
+{
+    Derived d;
+    d.foo();
+}
+
+// Foo Derived
+// Foo
+```
+An interface class is a class that has no member variables, and where all of the functions are pure virtual!<br>
 
 
  # Chapter 26
