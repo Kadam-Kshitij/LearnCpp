@@ -2484,39 +2484,40 @@ int main()
     std::cout << ref << std::endl;
 }
 ```
-We cannot make operator<< virtual because only member functions can be made virtual. operator<< overload lies outside the class.<br>
-Function paramaeters are different for both the operator<< overloads.<br>
+We cannot make operator<< virtual. Because only member functions can be made virtual.<br>
+Also the parameters of operator<< are different. So cannot be overloaded.<br>
+
 ```cpp
 class Base {
 public:
     friend std::ostream& operator<<( std::ostream& os, const Base& b );
-    virtual std::string print() const
+    virtual std::ostream& print( std::ostream& os ) const
     {
-        return "Base";
+        os << "Base";
+        return os;
     }
 };
 
 std::ostream& operator<<( std::ostream& os, const Base& b )
 {
-    os << b.print();
-    return os;
+    return b.print( os );
 }
 
 class Derived : public Base {
 public:
     friend std::ostream& operator<<( std::ostream& os, const Derived& d );
-    std::string print() const override
+    std::ostream& print( std::ostream& os ) const override
     {
-        return "Derived";
+        os << "Derived";
+        return os;
     }
 };
 
 std::ostream& operator<<( std::ostream& os, const Derived& d )
 {
-    os << d.print();
-    return os;
-}
+    return d.print( os );
 
+}
 
 int main()
 {
