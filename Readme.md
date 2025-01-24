@@ -474,6 +474,37 @@ Also it outputs the buffer on differnt error stream.<br>
 command > file 2>&1 // Used to redirect both to file
 command > file 2> file2 // Used to redirect output to file and error to file2
 
+# Chapter 10 - Conversions
+Implicit type conversion is performed automatically by the compiler when one data type is required, but a different data type is supplied.<br>
+`int x { 3.5 }; // brace-initialization disallows conversions that result in data loss`
+A numeric promotion is the type conversion of certain narrower numeric types (such as a char) to certain wider numeric types (typically int or double) that can be processed efficientl.<br>
+Types - Integral promotions and Floating point promotions.<br>
+Numeric conversions cover additional type conversions between fundamental types.<br>
+1) Value-preserving conversions are safe numeric conversions where the destination type can exactly represent all possible values in the source type.int to long and short to double.<br>
+2) Reinterpretive conversions are unsafe numeric conversions where the converted value may be different than the source value, but no data is lost. Signed/unsigned conversions fall into this category.
+3) Lossy conversions are unsafe numeric conversions where data may be lost during the conversion. eg- double to int<br>
+
+If you need to perform a narrowing conversion, use static_cast to convert it into an explicit conversion.<br>
+
+When the source value of a narrowing conversion is constexpr, the specific value to be converted must be known to the compiler. In such cases, the compiler can perform the conversion itself, and then check whether the value was preserved. If the value was not preserved, the compiler can halt compilation with an error. If the value is preserved, the conversion is not considered to be narrowing <br>
+Conversions from a floating point type to an integral type do not have a constexpr exclusion clause, so these are always considered narrowing conversions<br>
+Conversions from a constexpr floating point type to a narrower floating point type are not considered narrowing even when there is a loss of precision!<br>
+```cpp
+#include <iostream>
+
+int main()
+{
+    constexpr int n1{ 5 };   // note: constexpr
+    unsigned int u1 { n1 };  // okay: conversion is not narrowing due to exclusion clause
+
+    constexpr int n2 { -5 }; // note: constexpr
+    unsigned int u2 { n2 };  // compile error: conversion is narrowing due to value change
+
+    return 0;
+}
+```
+
+
 # Chapter 11 - Function Overload and Templates
 ```cpp
 template< typename T >
