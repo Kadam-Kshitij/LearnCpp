@@ -692,11 +692,13 @@ int main()
 
 Functions can be overloaded using type of parameter, number of parameters. But not by return type.<br>
 Following is an ambigious match
-
 ```cpp
 void foo( int i )
 void foo( const int& i )
 ```
+If a parameter of a function is given default value, it should be leftmost parameter.<br>
+If a parameter is given a default value, all parameters to its right should be given default value.<br>
+`void foo(int a = 9, int b) // not allowed`
 
 ```cpp
 template< typename T >
