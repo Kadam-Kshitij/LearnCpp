@@ -149,6 +149,33 @@ int main()
     std::cout << s << "\n";
 }
 ```
+```cpp
+void foo()
+{
+#ifdef ABC
+    std::cout << "ABC Foo\n";
+#else
+    std::cout << "ABC Foo\n";   // Printed
+#endif
+}
+
+
+void goo()
+{
+#define ABC
+#ifdef ABC
+    std::cout << "ABC Goo\n";   // Printed
+#else
+    std::cout << "ABC Goo\n";
+#endif
+}
+
+int main()
+{
+    foo();
+    goo();
+}
+```
 
 ```cpp
 void foo()
