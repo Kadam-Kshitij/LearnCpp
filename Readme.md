@@ -801,6 +801,38 @@ int main()
 
 void hoo( int x = 9 ) { std::cout << "hoo\n"; }
 ```
+```cpp
+void foo( int a = 23 )
+{
+    std::cout << "foo1\n";
+}
+
+void foo( double a = 23.5 )
+{
+    std::cout << "foo2\n";
+}
+
+int main()
+{
+    foo();	// Ambigious match
+}
+```
+```cpp
+void foo( int a )
+{
+    std::cout << "foo\n";
+}
+
+// Delete all non-matching overloads
+template< typename T >
+void foo( T x ) = delete;
+
+int main()
+{
+    foo( 23 );
+    // foo( 23.5 ); // CTE - Use of delete function
+}
+```
 
 # Chapter 12 - Reference and Poiters
 ## Reference
