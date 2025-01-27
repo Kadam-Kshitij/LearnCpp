@@ -475,6 +475,125 @@ int main()
     std::cout << bit << std::endl;  // 11000000
 }
 ```
+# Chapter 7 
+`::foo()` represents foo in global namespace. Code not part of any namespace is part of global namespace.<br>
+`namespace Active = Foo::Goo; // active now refers to Foo::Goo`
+ Linkage determines whether multiple declarations of the same identifier refer to the same object or not.<br>
+ Local variables have no linkage.<br>
+ Variables can also be declared outside of a function. Such variables are called global variables.<br>
+
+Functions have external linkage by default.<br>
+```cpp
+#pragma ones
+
+#include <iostream>
+
+// If inline was not used, would cause multiple defination error.
+inline void hoo()
+{
+	std::cout << "Hoo\n";
+}
+```
+```cpp
+#include <iostream>
+#include <a.h>
+
+int a{ 66 };	// non-const global variables are external by default.
+extern const int b{ 77 };	// const globals can be defined as extern, making them external
+extern constexpr int c{ 88 };	// No use
+
+// Makes d linkage internal. Not available in other files
+// const and constexpr have internal linkage by default.
+static int d{ 99 };
+
+// Functions have external linkage by default
+void print()	
+{
+    std::cout << "Print " << a << ", " << b << ", " << c << std::endl;
+}
+
+// Making function static will change linkage of function to internal
+static void foo()	
+{
+    std::cout << "Foo\n";
+}
+```
+```cpp
+#include <iostream>
+#include <a.h>
+
+extern int a;	// this extern is a forward declaration of a variable named a that is defined somewhere else
+extern const int b;	// this extern is a forward declaration of a variable named b that is defined somewhere else
+// extern constexpr int c;	// Not allowed to forward declare constexpr
+extern int d;
+
+void print();
+void foo();		
+
+int main()
+{
+	print();
+	std::cout << a << ", " << b << std::endl;
+	a = 11;
+	print();
+	// std::cout << d;	// Undefined reference
+	// foo(); // Undefined reference
+}
+
+// Print 66, 77, 88
+// 66, 77
+// Print 11, 77, 88
+'''
+
+
+## Inline functions
+`inline void foo( int a, int b )`
+When a function call is made there is a overhead due to saving current address, jumping to new address, function parameters and so on. For small functions
+this overhead could be comparable to execution time of the function. For large functions this overhead is negligible.<br>
+The compiler will replace the code where call to inline function is made with the body of the function. This reduces execution time.<br>
+Should not be used in case lot of calls are made to the inline function. This increases the size of output binary.<br>
+Modern computers are smart and do inlining by themselves.<br>
+Inlining happens at compile time.<br>
+However this has depricated and now inline has a new meaning.<br>
+In modern C++, the term inline has evolved to mean “multiple definitions are allowed”.<br>
+
+## Local static variables
+Using the static keyword on a local variable changes its duration from automatic duration to static duration.<br>
+```cpp
+
+void foo()
+{
+    static int a{ 34 };	// This initializer is only executed once.
+    std::cout << a << ", ";
+    a += 10;
+}
+
+int main()
+{
+    for( int i = 0; i < 10; ++i )
+        foo();
+}
+// 34, 44, 54, 64, 74, 84, 94, 104, 114, 124
+```
+
+## Inline namespaces
+Can be used in case of versions of software to prevent breaking older codes.
+```cpp
+inline namespace V1 {
+    void foo() { std::cout << "V1" << std::endl; }
+}
+
+namespace V2 {
+    void foo() { std::cout << "V2" << std::endl; }
+}
+
+int main()
+{
+    V1::foo();  // V1
+    V2::foo();  // V2
+    foo();      // V1
+}
+```
 
 # Chapter 8
 ## Switch statement
@@ -493,34 +612,6 @@ Defination and assignment is allowed. ( int y; y = 10; )<br>
 ## Random number generation 
 Random number between [91,120]<br>
 `int random = rand() % 30 + 91;`
-
-# Chapter 11 - Function Overloading
-
-```cpp
-void foo( float f )
-{
-    std::cout << "Float\n";
-}
-
-void foo( double f )
-{
-    std::cout << "Double\n";
-}
-
-int main()
-{
-   foo( 12.3 );     // Double
-   foo( 12.3f );    // Float
-}
-```
-
-Functions can be overloaded using type of parameter, number of parameters. But not by return type.<br>
-Following is an ambigious match
-
-```cpp
-void foo( int i )
-void foo( const int& i )
-```
 
 # Chapter 9
 ## Assert and static_assert
@@ -581,6 +672,32 @@ int main()
 
 
 # Chapter 11 - Function Overload and Templates
+```cpp
+void foo( float f )
+{
+    std::cout << "Float\n";
+}
+
+void foo( double f )
+{
+    std::cout << "Double\n";
+}
+
+int main()
+{
+   foo( 12.3 );     // Double
+   foo( 12.3f );    // Float
+}
+```
+
+Functions can be overloaded using type of parameter, number of parameters. But not by return type.<br>
+Following is an ambigious match
+
+```cpp
+void foo( int i )
+void foo( const int& i )
+```
+
 ```cpp
 template< typename T >
 bool foo( T x, T y )
