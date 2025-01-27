@@ -245,8 +245,56 @@ The size if guaranted on any architecture.They are part of header cstdint<br>
 sizeof() return std::size_t type. It is defined in cstddef header file.<br>
 If we create an object which is larger than the max size which size_t can hold, then sizeof will not be able to return proper size.<br>
 
+The precision of a floating point type defines how many significant digits it can represent without information loss.<br>
 Float has 6-7 digits of precision. Double has 15-16 digits of precision.<br>
 Size of float is 4, double is 8. Range of float is less than double
+std::cout has a default precision of 6 -- that is, it assumes all floating point variables are only significant to 6 digits.<br>
+```cpp
+int main()
+{
+    float f = 1.0/3;
+    double d = 1.0/3;
+    std::cout << std::setprecision(17);
+    std::cout << f << std::endl;    // 0.3333333432674408
+    std::cout << d << std::endl;    // 0.33333333333333331
+}
+```
+Rounding errors occur in floating point numbers. Addition operations increase these rounding errors. Comparision operations might not give proper output.<br>
+```cpp
+int main()
+{
+   float f1{ 1.0f };
+   float f2{ 0.1f + 0.1f + 0.1f + 0.1f + 0.1f + 0.1f + 0.1f + 0.1f + 0.1f + 0.1f };
+
+   if( f1 == f2 )
+   {
+       std::cout << "Yes\n";
+   }
+   else
+   {
+       std::cout << "No\n";
+   }
+   std::cout << f1 << ", " << f2 << std::endl;
+   std::cout << std::setprecision( 20 );
+   std::cout << f1 << ", " << f2 << std::endl;
+
+    return 0;
+}
+
+//No
+//1, 1
+//1, 1.0000001192092895508
+```
+```cpp
+int main()
+{
+    std::cout << 5.0/0.0 << std::endl;  // inf
+    std::cout << -5.0/0.0 << std::endl; // -inf
+    std::cout << 0.0/INFINITY << std::endl; // 0
+    std::cout << -0.0/INFINITY << std::endl;    // -0
+    std::cout << 0.0/0.0 << std::endl;  // -nan
+}
+```
 TODO - setprecision and cout of float 
 
 ```cpp
