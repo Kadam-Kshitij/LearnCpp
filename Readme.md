@@ -833,6 +833,13 @@ int main()
     // foo( 23.5 ); // CTE - Use of delete function
 }
 ```
+Steps in overloaded function match finding
+1) Tries to find exact match
+2) Trie to find match using numeric prmotions.
+3) Tries to find match vis numeric conversions.
+4) Tries to find match via user defined conversions.
+5) Trie sto find a matching function which uses ellipses.
+6) Gives up.
 
 # Chapter 12 - Reference and Poiters
 ## Reference
