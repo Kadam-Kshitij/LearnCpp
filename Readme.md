@@ -543,8 +543,7 @@ int main()
 // Print 66, 77, 88
 // 66, 77
 // Print 11, 77, 88
-'''
-
+```
 
 ## Inline functions
 `inline void foo( int a, int b )`
