@@ -55,3 +55,18 @@ int main()
     }
 }
 ```
+# Using new with free
+```cpp
+class Base {
+public:
+    Base() { std::cout << "Base\n"; }
+    ~Base() { std::cout << "~Base\n"; }
+};
+
+int main()
+{
+    Base* ptr = new Base();
+    free( ptr ); // Destructor not called
+    // delete ptr;  // Destructor called
+}
+```
