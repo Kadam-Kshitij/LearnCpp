@@ -126,3 +126,9 @@ int main()
     Base obj;
 }
 ```
+# C functions
+| Description | Function | Example |
+|------------ | -------- |----|
+| Use to dynamically allocate memory. Memory is uninitialized | void* malloc(size_t size); | int* ptr = ( int* )( malloc( n * sizeof( int ) ) ); |
+| Use to dynamically allocate memory. Memory is initialized to 0. Slower than malloc. | void* calloc(size_t num, size_t size); | int* ptr = ( int* )( calloc( n, sizeof( int ) ) ); |
+| Used to free memory allocted by malloc/calloc | free(); | |
