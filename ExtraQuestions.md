@@ -70,3 +70,43 @@ int main()
     // delete ptr;  // Destructor called
 }
 ```
+# Singleton Instance
+```cpp
+#include <mutex>
+
+std::mutex mu;
+
+class Singleton {
+    Singleton() {};
+public:
+    Singleton( const Singleton& s ) = delete;
+    Singleton& operator =( const Singleton& s ) = delete;
+
+    static Singleton* instance;
+    static Singleton* getInstance();
+    static void deleteInstance();
+};
+
+Singleton* Singleton::instance{ nullptr };
+
+Singleton* Singleton::getInstance()
+{
+    std::lock_guard< std::mutex > lock( mu );
+    if( !instance )
+    {
+        instance = new Singleton();
+    }
+    return instance;
+}
+
+void Singleton::deleteInstance()
+{
+    std::lock_guard< std::mutex > lock( mu );
+    delete instance;
+}
+
+int main()
+{
+    Singleton* sig = Singleton::getInstance();
+}
+```
