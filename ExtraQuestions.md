@@ -23,3 +23,35 @@ int main()
     bobj.print();   // 2
 }
 ```
+
+# Handeling new operator fails -
+1) Use nothrow version of new - If new fails, ptr will contain nullptr.<br>
+```cpp
+int main()
+{
+    int* ptr = new ( std::nothrow ) int[0x7ffffffff];
+    if( nullptr == ptr )
+    {
+        std::cout << "New operator failed!!!\n";
+        return 0;
+    }
+
+    // std::cout << *ptr << std::endl;
+    delete[] ptr;
+}
+```
+2) Use try catch block
+```cpp
+int main()
+{
+    try
+    {
+        int* ptr = new int[0x7ffffffff];
+        delete[] ptr;
+    }
+    catch( const std::bad_alloc& ex )
+    {
+        std::cout << ex.what(); // std::bad_alloc
+    }
+}
+```
