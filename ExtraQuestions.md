@@ -110,3 +110,19 @@ int main()
     Singleton* sig = Singleton::getInstance();
 }
 ```
+# Prevent heap allocated object creation
+```cpp
+// Make new operator private to prevent dynamic allocation
+class Base {
+    void* operator new( size_t count )
+    {
+    }
+public:
+};
+
+int main()
+{
+    // Base* obj = new Base();  // Not allowed
+    Base obj;
+}
+```
