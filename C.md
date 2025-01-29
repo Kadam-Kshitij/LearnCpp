@@ -142,14 +142,14 @@ int main()
     memmove( ptr + 4, ptr, 6 * sizeof( int ) );
     for( int i = 0; i < 10; ++i )
     {
-        printf( "%d, ", ptr[i] );  // 1, 2, 3, 4, 1, -1, -1, -1, -1, -1,
+        printf( "%d, ", ptr[i] );  // 1, 2, 3, 4, 1, 2, 3, 4, 5, 6
     }
     printf( "\n" );
 
     memset( ptr + 5, -1, 5 * sizeof( int ) );
     for( int i = 0; i < 10; ++i )
     {
-        printf( "%d, ", ptr[i] );  // 1, 2, 3, 4, 1, 2, 3, 4, 5, 6,
+        printf( "%d, ", ptr[i] );  // 1, 2, 3, 4, 1, -1, -1, -1, -1, -1,
     }
     printf( "\n" );
 }
