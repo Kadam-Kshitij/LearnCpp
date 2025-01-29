@@ -126,10 +126,23 @@ int main()
     Base obj;
 }
 ```
-# C functions
-| Description | Function | Example |
-|------------ | -------- |----|
-| Use to dynamically allocate memory. Memory is uninitialized | void* malloc(size_t size); | int* ptr = ( int* )( malloc( n * sizeof( int ) ) ); |
-| Use to dynamically allocate memory. Memory is initialized to 0. Slower than malloc. | void* calloc(size_t num, size_t size); | int* ptr = ( int* )( calloc( n, sizeof( int ) ) ); |
-| Used to free memory allocted by malloc/calloc | free(); | |
-| Resize already allocated memory. When you shrink the memory block, the data up to the new size is preserved. If you increase the size, the new part of the block is uninitialized, and you should initialize it manually. | void* realloc(void* ptr, size_t new_size); | | 
+# Prevent object copy
+Make copy constructor and copy assignment operator private.<br>
+```cpp
+class Base
+{
+    Base( const Base& obj ) = default;
+    Base& operator=( const Base& obj ) = default;
+public:
+    Base() = default;
+};
+
+int main()
+{
+    Base obj1;
+    // Base obj2( obj1 );   // Not allowed
+    Base obj2;
+    // obj2 = obj1;         // Not allowed
+    Base obj3{};
+}
+```
