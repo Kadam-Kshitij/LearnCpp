@@ -102,3 +102,55 @@ int main()
 `int open(const char *pathname, int flags, mode_t mode);`
 
 
+# Memory operations
+`void * memcpy ( void * destination, const void * source, size_t num );` - Used in case of non-overlapping copy.<br>
+`void * memmove ( void * destination, const void * source, size_t num );` - Used in case of Overlapping copy. Bytes are first copied to an intermediate location and then to final position.<br>
+`void * memset ( void * ptr, int value, size_t num );` - Used to set value for series of bytes.<br>
+```cpp
+int main()
+{
+    int* ptr = ( int* )malloc( 10 * sizeof( int ) );
+    for( int i = 0; i < 10; ++i )
+    {
+        ptr[i] = i + 1;
+        printf( "%d, ", ptr[i] );   // 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    }
+    printf( "\n" );
+
+    int* cptr = ( int* )calloc( 10, sizeof( int ) );
+    for( int i = 0; i < 10; ++i )
+    {
+        printf( "%d, ", cptr[i] );  // 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    }
+    printf( "\n" );
+
+    memcpy( cptr + 4, ptr, 6 * sizeof( int ) );
+    for( int i = 0; i < 10; ++i )
+    {
+        printf( "%d, ", cptr[i] );  // 0, 0, 0, 0, 1, 2, 3, 4, 5, 6,
+    }
+    printf( "\n" );
+
+    // memcpy does not give expected output for overlapping copy like below
+//    memcpy( ptr + 4, ptr, 6 * sizeof( int ) );
+//    for( int i = 0; i < 10; ++i )
+//    {
+//        printf( "%d, ", ptr[i] );  // 1, 2, 3, 4, 1, 2, 3, 4, 1, 2,
+//    }
+//    printf( "\n" );
+
+    memmove( ptr + 4, ptr, 6 * sizeof( int ) );
+    for( int i = 0; i < 10; ++i )
+    {
+        printf( "%d, ", ptr[i] );  // 1, 2, 3, 4, 1, -1, -1, -1, -1, -1,
+    }
+    printf( "\n" );
+
+    memset( ptr + 5, -1, 5 * sizeof( int ) );
+    for( int i = 0; i < 10; ++i )
+    {
+        printf( "%d, ", ptr[i] );  // 1, 2, 3, 4, 1, 2, 3, 4, 5, 6,
+    }
+    printf( "\n" );
+}
+```
