@@ -104,7 +104,7 @@ int main()
 
 # Memory operations
 `void * memcpy ( void * destination, const void * source, size_t num );` - Used in case of non-overlapping copy.<br>
-`void * memmove ( void * destination, const void * source, size_t num );` - Used in case of Overlapping copy. Bytes are first copied to an intermediate location and then to final position.<br>
+`void * memmove ( void * destination, const void * source, size_t num );` - Used in case of Overlapping copy. Bytes are first copied to an intermediate location and then to final position. Slower than memcpy.<br>
 `void * memset ( void * ptr, int value, size_t num );` - Used to set value for series of bytes.<br>
 ```cpp
 int main()
