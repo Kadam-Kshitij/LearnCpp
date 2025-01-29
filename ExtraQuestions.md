@@ -146,3 +146,53 @@ int main()
     Base obj3{};
 }
 ```
+
+# Prevent class inheritance
+1) Use final keyword
+```cpp
+class Base final
+{
+};
+
+// CTE 
+class Derived : public Base {};
+```
+2) Make the Base class constructor private and create a static function which can generate and provide Base class instance.<br>
+```cpp
+class Base
+{
+    Base() { std::cout << "Base\n"; }
+public:
+    static Base* instance;
+    static Base* getInstance()
+    {
+        return new Base();
+    }
+};
+Base* Base::instance{ nullptr };
+
+// CTE
+class Derived : public Base
+{
+};
+
+int main()
+{
+    Base* ptr = Base::getInstance();    // Ok
+    Derived obj;    // CTE
+}
+```
+# Calling C function from C++ code
+```cpp
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+     //some functions here
+     //functionOne();
+    //functionsTwo();
+
+#ifdef __cplusplus
+}
+#endif
+```
