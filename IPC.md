@@ -18,6 +18,7 @@ int main()
     // Child process starts executing from here.
     // fpid is zero for child process,
     // and for parent process it is equal to child process pid
+    // and less than zero if fork fails
     if( 0 == fpid )
     {
         pid_t pid = getpid();
