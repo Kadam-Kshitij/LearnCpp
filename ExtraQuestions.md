@@ -206,3 +206,35 @@ int main()
 	foo();
 }
 ```
+# Name Mangling
+Name mangling in C++, means, compiler gives different names to the overloaded functions to avoid ambiguity during functions call at compile time.<br>
+
+# When to use Dynamic cast
+When we want to call a Derived class function which is not available in Base class.<br>
+```cpp
+class Base {
+public:
+    virtual void foo() { std::cout << "Foo\n"; }
+};
+
+class Derived : public Base
+{
+public:
+    void foo() override { std::cout << "Foo Derived\n"; }
+    void goo() { std::cout << "Goo Derived\n"; }
+};
+
+int main()
+{
+    Base* ptr = new Derived();
+
+    Derived* dptr = dynamic_cast< Derived* >( ptr );
+    if( nullptr == dptr )
+    {
+        std::cout << "Cast failed\n";
+        return 0;
+    }
+
+    dptr->goo();
+}
+```
