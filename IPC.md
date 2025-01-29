@@ -39,3 +39,36 @@ int main()
 //Process ID child : 26036
 //Parent Process ID child : 3692
 ```
+
+# Pipe
+pipefd[0] is used to read from and pipefd[1] is used to write.<br>
+```cpp
+int main()
+{
+    int pipefd[2];
+    if( -1 == pipe( pipefd ) )
+    {
+        printf( "Pipe failed" );
+        exit( EXIT_FAILURE );
+    }
+
+    pid_t fpid = fork();
+
+    if( 0 == fpid ) // Child
+    {
+        close( pipefd[1] );
+        char readbuff[100];
+        int readBytes = read( pipefd[0], readbuff, sizeof( readbuff ) );
+        printf( "Child : %s, %d", readbuff, readBytes );
+        close( pipefd[0] );
+    }
+    else    // Parent
+    {
+        close( pipefd[0] );
+        char msg[] = "Hello from parent";
+        write( pipefd[1], msg, strlen( msg ) + 1 );
+        close( pipefd[1] );
+    }
+}
+// Child : Hello from parent, 18
+```
