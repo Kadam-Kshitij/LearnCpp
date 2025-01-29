@@ -183,16 +183,26 @@ int main()
 }
 ```
 # Calling C function from C++ code
+a.c is compiled using command `gcc -o a.o -c a.c -fPIC` and `gcc -o libmy.so a.o -shared -fPIC`
 ```cpp
-#ifdef __cplusplus
+#include <stdio.h>
+
+void foo()
+{
+    printf( "Foo\n" );
+}
+```
+main.cpp is compiled using command `g++ -o b main.cpp -L. -lmy`
+```cpp
+#include <iostream>
+// If extern "C" is not used will get undefined reference error
 extern "C"
 {
-#endif
-     //some functions here
-     //functionOne();
-    //functionsTwo();
-
-#ifdef __cplusplus
+	void foo();
 }
-#endif
+
+int main()
+{
+	foo();
+}
 ```
