@@ -72,6 +72,8 @@ int main()
 
 ## String to numeric conversions
 atoi, atof, atol, atoll `int atoi( const char* str );`
+strtof, strtod, strtold `float strtof( const char* str, char** endptr )`
+strtol, strtoll, strtoul, strtoull `long int strtol (const char* str, char** endptr, int base);` 
 ```cpp
 int main()
 {
@@ -89,3 +91,5 @@ int main()
     printf( "%d", val2 );    // 0
 }
 ```
+
+`int system (const char* command);`
