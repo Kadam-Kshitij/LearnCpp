@@ -92,4 +92,12 @@ int main()
 }
 ```
 
+# Functions
 `int system (const char* command);`<br>
+`void perror( const char* str )`    // Prints the str followed by error depending on the errno set.<br>
+'errno' is a global variable which is set by various libs when failure occurs. Reset value is 0.<br>
+`ssize_t read(int fd, void *buf, size_t count);` Read max count number of bytes from fd and store in buf. Returns bytes read.<br>
+`ssize_t write(int fd, const void *buf, size_t count);` Write count number of bytes from buf to fd. Returns bytes written.<br>
+`int close(int fd);` used to close a file descriptor.<br>
+
+
