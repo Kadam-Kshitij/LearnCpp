@@ -2189,6 +2189,28 @@ int main()
 //~Base
 //~Base
 ```
+```cpp
+class Base {
+public:
+    ~Base() { std::cout << "~Base\n"; }
+};
+
+class Smart {
+    std::unique_ptr< Base > ptr;
+public:
+    Smart() : ptr{ std::make_unique< Base >() }
+    {
+    }
+};
+
+int main()
+{
+    Smart* obj = new Smart();
+    std::cout << "End\n";
+
+    delete obj; // ~Base	If not deleted then smart pointer will also be not deleted
+}
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
