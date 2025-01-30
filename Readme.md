@@ -2145,6 +2145,50 @@ int main()
     std::cout << "End\n";
 }
 ```
+```cpp
+class Base {
+    int val{ 0 };
+public:
+    Base() = default;
+    Base( const int& x ) : val{ x } {}
+    ~Base() { std::cout << "~Base\n"; }
+    void print() const { std::cout << val << std::endl; }
+    void set( const int& x ) { val = x; }
+};
+
+int main()
+{
+    std::unique_ptr< Base > ptr1( new Base( 10 ) );
+    ptr1.reset( new Base( 20 ) );
+    ptr1->print();  // 20
+
+    std::unique_ptr< Base > ptr2( new Base( 30 ) );
+    ptr2.swap( ptr1 );
+    ptr1->print();  // 30
+    ptr2->print();  // 20
+
+    Base* ptr = ptr2.get();
+    ptr->print();   // 20
+
+    Base* p = ptr2.release();
+    if( nullptr == ptr2 )
+    {
+        std::cout << "Null\n";  // Null
+    }
+    p->print(); // 20
+    delete p;
+}
+
+//~Base
+//20
+//30
+//20
+//20
+//Null
+//20
+//~Base
+//~Base
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
