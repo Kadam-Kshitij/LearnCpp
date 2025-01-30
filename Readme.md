@@ -2051,6 +2051,100 @@ int main()
 //hello world
 //End
 ```
+# Chapter 23 - Smart Pointers
+```cpp
+int&& rref = 4;
+const int&& ref = 2;
+```
+R-value reference cannot be initialized with l-values.
+r-value references extend the lifespan of the object they are initialized with to the lifespan of the r-value reference.<br>
+Non-const r-value references allow you to modify the r-value!<br>
+
+Function overload using l ad r value reference
+```cpp
+void foo( const int& x )
+{
+    std::cout << "L-Value\n";
+}
+
+void foo( const int&& x )
+{
+    std::cout << "R-Value\n";
+}
+
+int main()
+{
+    foo( 3 );   // R-Value
+    int x{ 9 };
+    foo( x );   // L-Value
+    int&& ref{ 6 };
+    foo( ref ); // L-Value. Because r-value reference is a l-value
+}
+```
+## Unique Pointer
+```cpp
+class Base {
+    int val{ 0 };
+public:
+    Base() = default;
+    Base( const int& x ) : val{ x } {}
+    ~Base() { std::cout << "~Base\n"; }
+    void print() const { std::cout << val << std::endl; }
+    void set( const int& x ) { val = x; }
+};
+
+std::ostream& operator<<( std::ostream& os, const Base& obj )
+{
+    os << "Operator overload";
+    return os;
+}
+
+void foo( std::unique_ptr< Base > ptr )
+{
+    ptr->print();
+}
+
+void goo( const Base* ptr )
+{
+    ptr->print();
+}
+
+int main()
+{
+    std::unique_ptr< Base > ptr( new Base( 7 ) );
+    ptr->print();   // 7
+
+    // Not allowed, copy constructor is deleted
+    // std::unique_ptr< Base > ptr2 = ptr;
+    std::unique_ptr< Base > ptr2( new Base( 27 ) );
+    // ptr2 = ptr;  // Not allowed - copy assignment is deleted
+
+    // Ownership transferred, ptr is now null.
+    // std::move casts ptr to r value and triggers move constructor
+    ptr2 = std::move( ptr );
+    ptr2->print();
+    if( nullptr == ptr )
+    {
+        std::cout << "ptr is null\n";
+    }
+
+    std::cout << *ptr << std::endl;
+
+    std::unique_ptr< Base > ptr3 = std::make_unique< Base >( 37 );
+    ptr3->print();
+
+    // Misuse of unique pointer. ptr4 and ptr5 both point to same underlying raw pointer
+//    Base* bptr = new Base( 8 );
+//    std::unique_ptr< Base > ptr4( bptr );
+//    std::unique_ptr< Base > ptr5( bptr );
+
+    // foo( ptr3 );    // CTE - Copy constructor is deleted
+    foo( std::move( ptr3 ) );
+
+    goo( ptr2.get() );  // Get the underlying raw pointer
+    std::cout << "End\n";
+}
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
