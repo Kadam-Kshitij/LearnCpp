@@ -2211,6 +2211,34 @@ int main()
     delete obj; // ~Base	If not deleted then smart pointer will also be not deleted
 }
 ```
+```cpp
+class Base {
+    int x, y;
+public:
+    Base( int a, int b ) : x{ a }, y{ b } {}
+    ~Base() { std::cout << "~Base\n"; }
+    void print() { printf( "%d %d\n", x, y ); }
+};
+
+int main()
+{
+    std::shared_ptr< Base > ptr1 = std::make_shared< Base >( 8, 9 );
+    ptr1->print();  // 8 9
+
+    std::shared_ptr< Base > ptr2 = std::make_shared< Base >( 3, 4 );
+    ptr2->print();  // 3 4
+
+    ptr1.swap( ptr2 );
+    ptr1->print();  // 3 4
+    ptr2->print();  // 8 9
+
+    Base* ptr = ptr1.get();
+    ptr->print();   // 3 4
+
+    ptr1.reset( new Base( 88, 77 ) );   // Old pointer deleted
+    ptr1->print();  // 88 77
+}
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
