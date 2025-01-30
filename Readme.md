@@ -2309,6 +2309,31 @@ int main()
 //~B
 //~A
 ```
+```cpp
+class Base {
+public:
+    ~Base() { std::cout << "~Base\n"; }
+};
+
+int main()
+{
+    std::shared_ptr< Base > ptr1( new Base() );
+    std::cout << "Count " << ptr1.use_count() << std::endl; //1
+    {
+        std::shared_ptr< Base > ptr2( ptr1 );
+        std::shared_ptr< Base > ptr3( ptr1 );
+        std::cout << "Count " << ptr1.use_count() << std::endl; //3
+        std::cout << "Count " << ptr2.use_count() << std::endl; //3
+        std::cout << "Count " << ptr3.use_count() << std::endl; //3
+
+        ptr2.reset( new Base() );
+        std::cout << "Count " << ptr1.use_count() << std::endl; //2
+        std::cout << "Count " << ptr2.use_count() << std::endl; //1
+        std::cout << "Count " << ptr3.use_count() << std::endl; //2
+    }
+    std::cout << "Count " << ptr1.use_count() << std::endl; // 1
+}
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
