@@ -2239,6 +2239,76 @@ int main()
     ptr1->print();  // 88 77
 }
 ```
+```cpp
+int main()
+{
+    std::shared_ptr< Base > ptr1 = std::make_shared< Base >( 8, 9 );
+    {
+        std::shared_ptr< Base > ptr2{ ptr1 };
+        std::cout << "D1\n";
+    }
+    std::cout << "D2\n";
+}
+//D1
+//D2
+//~Base
+```
+```cpp
+int main()
+{
+    Base* ptr = new Base( 8 , 9 );
+    std::shared_ptr< Base > ptr1{ ptr };
+    {
+        std::shared_ptr< Base > ptr2{ ptr };
+        std::cout << "D1\n";
+    }
+    std::cout << "D2\n";
+}
+//D1
+//~Base
+//D2
+//~Base
+```
+```cpp
+// A and B will not be deleted if weak_ptr is not used.<br>
+class B;
+
+class A {
+    std::weak_ptr< B > ptr;
+public:
+    ~A() { std::cout << "~A\n"; }
+    void set( std::shared_ptr< B > p )
+    {
+        ptr = p;
+    }
+};
+
+class B {
+    std::weak_ptr< A > ptr;
+public:
+    ~B() { std::cout << "~B\n"; }
+    void set( std::shared_ptr< A > p )
+    {
+        ptr = p;
+    }
+};
+
+
+
+int main()
+{
+    std::shared_ptr< A > ptrA( new A() );
+    std::shared_ptr< B > ptrB( new B() );
+
+    ptrA->set( ptrB );
+    ptrB->set( ptrA );
+
+    std::cout << "End\n";
+}
+//End
+//~B
+//~A
+```
 
 # Chapter 24 - Inheritance
 ## Order of constructor call
