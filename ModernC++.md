@@ -315,10 +315,10 @@ int main()
 }
 ```
 
-| Type | Push/Pop | Iterator | Funtions | Use |
-|------|----------|----------|----------|-----|
-| std::array< int , 6 > | No | Yes | at, data, front, back, [], size, empty, swap | When size if know at compile time and is fixed |
-| std::vector< int > | push_back, pop |
+| Type | Push/Pop | Iterator | Funtions | Modification | Use |
+|------|----------|----------|----------|-----|----------|
+| std::array< int , 6 > | No | Yes | at, data, front, back, [], size, empty, swap |  | When size if know at compile time and is fixed |
+| std::vector< int > | push_back, pop | Yes | at, data, front, back, [], size, empty, swap, capacity | clear, insert, emplace, erase | The elements are stored contiguously. The elements are stored contiguously.  Vectors usually occupy more space than static arrays, because more memory is allocated to handle future growth. This way a vector does not need to reallocate each time an element is inserted, but only when the additional memory is exhausted. |  
 | std::deque< int > | push_back, push_front, pop_back, pop_front |
 | std::list | |
 | std::queue< int > | push, pop |
