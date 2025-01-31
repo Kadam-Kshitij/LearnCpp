@@ -319,10 +319,10 @@ int main()
 |------|----------|----------|----------|-----|----------|
 | std::array< int , 6 > | No | Yes | at, data, front, back, [], size, empty, swap |  | When size if know at compile time and is fixed |
 | std::vector< int > | push_back, pop | Yes | at, data, front, back, [], size, empty, swap, capacity | clear, insert, emplace, erase | The elements are stored contiguously. The elements are stored contiguously.  Vectors usually occupy more space than static arrays, because more memory is allocated to handle future growth. This way a vector does not need to reallocate each time an element is inserted, but only when the additional memory is exhausted. |  
-| std::deque< int > | push_back, push_front, pop_back, pop_front |
+| std::deque< int > | push_back, push_front, pop_back, pop_front | Yes | | empplace, insert, erase, clear | Fast insertions/deletion at both ends of the queue. Not stored contiguously. Typical implementations use a sequence of individually allocated fixed-size arrays, with additional bookkeeping. The storage of a deque is automatically expanded and contracted as needed. Expansion of a deque is cheaper than the expansion of a std::vector because it does not involve copying of the existing elements to a new memory location. |
 | std::list | |
 | std::queue< int > | push, pop | No | front, back, size, swap, empty | emplace( back ) | Implements FIFO. Underlying implementation is std::deque |
-| std::stack< int > | push, pop | No | top, empty, size, swap | emplace( top ) | No | Implements LIFO. Underlying implementation is std::deque |
+| std::stack< int > | push, pop | No | top, empty, size, swap | emplace( top ) | Implements LIFO. Underlying implementation is std::deque |
 | std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop | No | Underlying implementation is std::vector. Order is reverse due to priority. |
 | std::set< int, std::greater< int > > | |
 
