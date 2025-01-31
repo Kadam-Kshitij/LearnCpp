@@ -99,6 +99,8 @@ int main()
     print( vec );   // 20, 300, 20, 300, 30, 40, 60, 30, 40, 60,
 }
 ```
+When the size goes above capacity, the capacity is doubled.<br>
+Vector is totally reallocated when capacity is exceded.<br>
 ```cpp
 int main()
 {
@@ -142,6 +144,7 @@ int main()
 }
 ```
 # Array
+The size of std::array is fixed at compile-time and cannot be modified after initialization.<br>
 ```cpp
 int main()
 {
