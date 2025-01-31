@@ -217,6 +217,56 @@ int main()
     // top, swap, empty, size
 }
 ```
+```cpp
+class Base {
+    int val{};
+public:
+    Base( const int& x ) : val{ x } {}
+    friend std::ostream& operator<<( std::ostream& os, const Base& obj );
+    bool operator>( const Base& obj ) const
+    {
+        return val > obj.get();
+    }
+    int get() const { return val; }
+};
+
+std::ostream& operator<<( std::ostream& os, const Base& obj )
+{
+    os << obj.val;
+    return os;
+}
+
+void print( std::priority_queue< Base, std::vector< Base >, std::greater< Base > > pqu )
+{
+    std::priority_queue< Base, std::vector< Base >, std::greater< Base > > copy{ pqu };
+    while( !copy.empty() )
+    {
+        std::cout << copy.top() << ", ";
+        copy.pop();
+    }
+    std::cout << std::endl;
+}
+
+int main()
+{
+    // Type, Underlying container to store the elemens, Compare operator
+    std::priority_queue< Base, std::vector< Base >, std::greater< Base > > pqu;
+    pqu.emplace(  Base( 109 ) );
+    pqu.push( Base( 59 ) );
+    pqu.push( Base( 69 ) );
+    pqu.push( Base( 39 ) );
+    pqu.push( Base( 49 ) );
+    pqu.push( Base( 68 ) );
+    // Order is reverse due to priority
+    print( pqu );    // 39, 49, 59, 68, 69, 109,
+    emplace( 50 );
+    print( pqu );
+    pqu.emplace( 50 );
+    print( pqu );   // 39, 49, 50, 59, 68, 69, 109,
+
+    std::cout << std::endl;
+}
+```
 # Deque
 Fast insertions/deletion at both ends of the queue.<br>
 Not stored contiguously. Typical implementations use a sequence of individually allocated fixed-size arrays, with additional bookkeeping.<br>
