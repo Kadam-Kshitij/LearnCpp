@@ -265,6 +265,7 @@ int main()
     print( pqu );   // 39, 49, 50, 59, 68, 69, 109,
 
     std::cout << std::endl;
+    // top, swap, empty, size
 }
 ```
 # Deque
