@@ -217,3 +217,12 @@ int main()
     // top, swap, empty, size
 }
 ```
+# Deque
+Fast insertions/deletion at both ends of the queue.<br>
+Not stored contiguously. Typical implementations use a sequence of individually allocated fixed-size arrays, with additional bookkeeping.<br>
+The storage of a deque is automatically expanded and contracted as needed.<br>
+Expansion of a deque is cheaper than the expansion of a std::vector because it does not involve copying of the existing elements to a new memory location.<br>
+`push_front, push_back, pop_back, pop_front`
+`at, [], front, back, size, empty, clear, insert, emplace, erase, swap`
+```
+
