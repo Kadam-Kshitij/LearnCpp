@@ -158,3 +158,32 @@ int main()
     // empty, at, front, back, data, swap 
 }
 ```
+# Queue
+```cpp
+void print( const std::queue< int >& queue )
+{
+    std::queue< int > copy{ queue };
+    while( !copy.empty() )
+    {
+        std::cout << copy.front() << ", ";
+        copy.pop();
+    }
+    std::cout << std::endl;
+}
+
+
+int main()
+{
+    std::queue< int > qu;
+    qu.push( 55 );
+    qu.push( 89 );
+    qu.push( 45 );
+    print( qu );    // 55, 89, 45,
+    qu.pop();
+    print( qu );    // 89, 45,
+    qu.emplace( 877 );  // Creates element in place at the end of queue
+    print( qu );    // 89, 45, 877,
+
+    // front, back, swap, empty, size
+}
+```
