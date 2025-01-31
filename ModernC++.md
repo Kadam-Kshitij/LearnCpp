@@ -159,6 +159,7 @@ int main()
 }
 ```
 # Queue
+Implements FIFO
 ```cpp
 void print( const std::queue< int >& queue )
 {
@@ -185,5 +186,34 @@ int main()
     print( qu );    // 89, 45, 877,
 
     // front, back, swap, empty, size
+}
+```
+# Stack
+Implements LIFO/FILO
+```cpp
+void print( const std::stack< int >& st )
+{
+    std::stack< int > copy{ st };
+    while( !copy.empty() )
+    {
+        std::cout << copy.top() << ", ";
+        copy.pop();
+    }
+    std::cout << std::endl;
+}
+
+int main()
+{
+    std::stack< int > st;
+    st.push( 55 );
+    st.push( 89 );
+    st.push( 45 );
+    print( st );    // 45, 89, 55,
+    st.pop();
+    print( st );    // 89, 55,
+    st.emplace( 877 );  // Creates element in place at the top of stack
+    print( st );    // 877, 89, 55,
+
+    // top, swap, empty, size
 }
 ```
