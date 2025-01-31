@@ -315,9 +315,9 @@ int main()
 }
 ```
 
-| Type | Push/Pop |
-|------|----------|
-| std::array< int , 6 >| No |
+| Type | Push/Pop | Iterator | Funtions | Use |
+|------|----------|----------|----------|-----|
+| std::array< int , 6 > | No | Yes | at, data, front, back, [], size, empty, swap | When size if know at compile time and is fixed |
 | std::vector< int > | push_back, pop |
 | std::deque< int > | push_back, push_front, pop_back, pop_front |
 | std::list | |
