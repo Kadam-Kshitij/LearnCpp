@@ -1,4 +1,5 @@
 # Vector
+```cpp
 void print( const std::vector< int >& vec )
 {
     std::vector< int >::const_iterator it;
@@ -38,3 +39,4 @@ int main()
     std::cout << "Size = " << vec.size() << std::endl;  // 0
     std::cout << "Capacity = " <<  vec.capacity() << std::endl; // 4
 }
+```
