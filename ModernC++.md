@@ -224,5 +224,43 @@ The storage of a deque is automatically expanded and contracted as needed.<br>
 Expansion of a deque is cheaper than the expansion of a std::vector because it does not involve copying of the existing elements to a new memory location.<br>
 `push_front, push_back, pop_back, pop_front`
 `at, [], front, back, size, empty, clear, insert, emplace, erase, swap`
+
+# Set
+```cpp
+class Base {
+    int val{};
+public:
+    Base( const int& x ) : val{ x } {}
+    friend std::ostream& operator<<( std::ostream& os, const Base& obj );
+    bool operator>( const Base& obj ) const
+    {
+        return val > obj.get();
+    }
+    int get() const { return val; }
+};
+
+std::ostream& operator<<( std::ostream& os, const Base& obj )
+{
+    os << obj.val;
+    return os;
+}
+
+int main()
+{
+    std::set< Base, std::greater< Base > > set;
+    set.insert( Base( 109 ) );
+    set.insert( Base( 59 ) );
+    set.insert( Base( 69 ) );
+    set.insert( Base( 39 ) );
+    set.insert( Base( 49 ) );
+    set.insert( Base( 68 ) );
+
+    std::set< Base >::iterator it;
+    for( it = set.begin(); it != set.end(); ++it )
+    {
+        std::cout << *it << ", ";
+    }   // 109, 69, 68, 59, 49, 39,
+    std::cout << std::endl;
+}
 ```
 
