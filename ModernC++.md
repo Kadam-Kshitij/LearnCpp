@@ -321,8 +321,8 @@ int main()
 | std::vector< int > | push_back, pop | Yes | at, data, front, back, [], size, empty, swap, capacity | clear, insert, emplace, erase | The elements are stored contiguously. The elements are stored contiguously.  Vectors usually occupy more space than static arrays, because more memory is allocated to handle future growth. This way a vector does not need to reallocate each time an element is inserted, but only when the additional memory is exhausted. |  
 | std::deque< int > | push_back, push_front, pop_back, pop_front |
 | std::list | |
-| std::queue< int > | push, pop |
-| std::stack< int > | push, pop |
-| std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop |
+| std::queue< int > | push, pop | No | front, back, size, swap, empty | emplace( back ) | Implements FIFO. Underlying implementation is std::deque |
+| std::stack< int > | push, pop | No | top, empty, size, swap | emplace( top ) | No | Implements LIFO. Underlying implementation is std::deque |
+| std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop | No | Underlying implementation is std::vector. Order is reverse due to priority. |
 | std::set< int, std::greater< int > > | |
 
