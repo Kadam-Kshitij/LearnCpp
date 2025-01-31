@@ -323,6 +323,7 @@ int main()
 | std::list | push_back, push_front, pop_back, pop_front | Yes | front, back, size, empty, swap | emplace, emplace_back, emplace_front, insert, erase, clear |std::list is a container that supports constant time insertion and removal of elements from anywhere in the container. Fast random access is not supported. It is usually implemented as a doubly-linked list. |
 | std::queue< int > | push, pop | No | front, back, size, swap, empty | emplace( back ) | Implements FIFO. Underlying implementation is std::deque |
 | std::stack< int > | push, pop | No | top, empty, size, swap | emplace( top ) | Implements LIFO. Underlying implementation is std::deque |
-| std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop | No | Underlying implementation is std::vector. Order is reverse due to priority. |
-| std::set< int, std::greater< int > > | |
+| std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop | No | top, empty, size, swap | emplace | Underlying implementation is std::vector. Order is reverse due to priority. |
+| std::set< int, std::greater< int > > | No | Yes | empty, size, swap, count, find | clear, insert, emplase, erase | Contains a sorted set of unique objects. Search, removal, and insertion operations have logarithmic complexity. Implemented as Red-Black Tree |
+
 
