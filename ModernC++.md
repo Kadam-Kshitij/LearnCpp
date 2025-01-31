@@ -315,3 +315,14 @@ int main()
 }
 ```
 
+| Type | Push/Pop |
+|------|----------|
+| std::array< int , 6 >| No |
+| std::vector< int > | push_back, pop |
+| std::deque< int > | push_back, push_front, pop_back, pop_front |
+| std::list | |
+| std::queue< int > | push, pop |
+| std::stack< int > | push, pop |
+| std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop |
+| std::set< int, std::greater< int > > | |
+
