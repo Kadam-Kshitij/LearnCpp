@@ -325,5 +325,7 @@ int main()
 | std::stack< int > | push, pop | No | top, empty, size, swap | emplace( top ) | Implements LIFO. Underlying implementation is std::deque |
 | std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop | No | top, empty, size, swap | emplace | Underlying implementation is std::vector. Order is reverse due to priority. |
 | std::set< int, std::greater< int > > | No | Yes | empty, size, swap, count, find | clear, insert, emplase, erase | Contains a sorted set of unique objects. Search, removal, and insertion operations have logarithmic complexity. Implemented as Red-Black Tree |
+| std::map< int, std::string, std::greater< int > > | No | Yes | at, [], empty, size, swap, count, find | clear, insert, emplace, erase |  Contains key-value pairs with unique keys. Keys are sorted. Implemented as Red-Black Tree. Search, removal, and insertion operations have logarithmic complexity. |
+
 
 
