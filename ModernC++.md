@@ -328,4 +328,95 @@ int main()
 | std::map< int, std::string, std::greater< int > > | No | Yes | at, [], empty, size, swap, count, find | clear, insert, emplace, erase |  Contains key-value pairs with unique keys. Keys are sorted. Implemented as Red-Black Tree. Search, removal, and insertion operations have logarithmic complexity. |
 
 
+# Algorithm
+```cpp
+int main()
+{
+    std::vector< int > vec{ 4, 5, 6, 7, 8 };
+
+    // for_each
+    std::for_each( vec.begin(), vec.end(), []( int x ) { std::cout << x << " "; } );
+    std::cout << std::endl;
+
+    std::cout << std::boolalpha;
+    std::cout << std::all_of( vec.begin(), vec.end(), []( int x ){ return x > 5; } );
+    std::cout << std::endl;
+
+    std::cout << std::any_of( vec.begin(), vec.end(), []( int x ){ return x > 5; } );
+    std::cout << std::endl;
+
+    std::cout << std::none_of( vec.begin(), vec.end(), []( int x ){ return x > 10; } );
+    std::cout << std::endl;
+
+    std::vector< int >::iterator it = std::find_if( vec.begin(), vec.end(), []( int x ){ return x > 5; } );
+    if( vec.end() == it )
+    {
+        std::cout << "Not found\n";
+    }
+    else
+    {
+        std::cout << *it << std::endl;  // 6
+    }
+
+    // First element for which the condition is true
+    it = std::find( vec.begin(), vec.end(), 7 );
+    if( vec.end() == it )
+    {
+        std::cout << "Not found\n";
+    }
+    else
+    {
+        std::cout << *it << std::endl;  // 7
+    }
+
+    // First element for which the condition is false
+    it = std::find_if_not( vec.begin(), vec.end(), []( int x ){ return x < 5; } );
+    if( vec.end() == it )
+    {
+        std::cout << "Not found\n";
+    }
+    else
+    {
+        std::cout << *it << std::endl;  // 5
+    }
+
+    vec.push_back( 5 ); // 4, 5, 6, 7, 8, 5
+    std::cout << std::count( vec.begin(), vec.end(), 5 ) << std::endl;  // 2
+    std::cout << std::count_if( vec.begin(), vec.end(), []( int x ){ return x > 5; } ) << std::endl;    // 3
+
+    // Swap two ranges
+    std::vector< int > vec2{ 11, 22, 33, 44 };
+    std::swap( vec, vec2 );
+    std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 11,22,33,44,
+    std::cout << std::endl;
+    std::for_each( vec2.begin(), vec2.end(), [](int x){ std::cout << x << ","; } ); // 4,5,6,7,8,5,
+    std::cout << std::endl;
+
+    // Reverse a range of elements
+    std::reverse( vec.begin(), vec.begin() + 3 );
+    std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 33,22,11,44,
+    std::cout << std::endl;
+
+    // Fill range with given value
+    std::fill( vec.begin(), vec.begin() + 3, 100 );
+    std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 100,100,100,44,
+    std::cout << std::endl;
+
+    // Apply function to range and put elements at destination
+    std::transform( vec.begin(), vec.end(), vec.begin(), []( int x ){ return x + 10; } );
+    std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 110,110,110,54,
+    std::cout << std::endl;
+
+    std::copy( vec2.begin(), vec2.end(), vec.begin() );
+    std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 4,5,6,7, // Size remained same
+    std::cout << std::endl;
+
+
+
+//    std::remove_if( vec2.begin(), vec2.end(), []( int x ){ return x%2 == 0; });
+//    std::for_each( vec2.begin(), vec2.end(), [](int x){ std::cout << x << ","; } ); // 4,5,6,7,8,5,
+//    std::cout << std::endl;
+
+}
+```
 
