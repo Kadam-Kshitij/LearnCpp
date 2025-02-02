@@ -72,3 +72,52 @@ int main()
 //Main thread waiting...
 //23
 ```
+## Async
+```cpp
+#include <future>
+
+int foo( int val )
+{
+    std::cout << "Foo " << std::this_thread::get_id() << ", " << val << std::endl;
+    std::this_thread::sleep_for( std::chrono::seconds( 2 ) );
+    return val + 3;
+}
+
+int main()
+{
+    std::cout << "Main " << std::this_thread::get_id() << std::endl;
+    // foo is executed immediately in a seperate thread
+    std::future< int > f = std::async( std::launch::async, foo, 67 );
+    std::this_thread::sleep_for( std::chrono::seconds( 2 ) );
+    int ret = f.get();
+    std::cout << ret << std::endl;
+}
+
+//Main 139673786832704
+//Foo 139673769543424, 67
+//70    // Prints after 2 sec
+```
+```cpp
+#include <future>
+
+int foo( int val )
+{
+    std::cout << "Foo " << std::this_thread::get_id() << ", " << val << std::endl;
+    std::this_thread::sleep_for( std::chrono::seconds( 2 ) );
+    return val + 3;
+}
+
+int main()
+{
+    std::cout << "Main " << std::this_thread::get_id() << std::endl;
+    // foo is executed in same thread when f.get() is called
+    std::future< int > f = std::async( std::launch::deferred, foo, 67 );
+    std::this_thread::sleep_for( std::chrono::seconds( 2 ) );
+    int ret = f.get();
+    std::cout << ret << std::endl;
+}
+
+//Main 140540095170368
+//Foo 140540095170368, 67   // Prints after 2 secs
+//70   // Prints after 4 secs
+```
