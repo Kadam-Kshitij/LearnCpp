@@ -348,6 +348,47 @@ int main()
     print( map );   //26,Z ; 5,E ; 4,D ; 1,A ; 
 }
 ```
+# Iterators
+```cpp
+int main()
+{
+    std::vector< int > vec{ 71, 77, 1, 58, 22, 79, 90 };
+    std::vector< int >::iterator it;
+
+    for( it = vec.begin(); it != vec.end(); ++it )
+    {
+        // *it = 8; // Ok - Allowed
+        std::cout << *it << ", ";
+    }   // 71, 77, 1, 58, 22, 79, 90,
+    std::cout << std::endl;
+
+    std::vector< int >::reverse_iterator itr;
+    for( itr = vec.rbegin(); itr != vec.rend(); ++itr )
+    {
+        // *itr = 8; // Ok - Allowed
+        std::cout << *itr << ", ";
+    }   // 90, 79, 22, 58, 1, 77, 71,
+    std::cout << std::endl;
+
+    std::vector< int >::const_iterator itc;
+    for( itc = vec.cbegin(); itc != vec.cend(); ++itc )
+    {
+        // *itc = 12; // Not allowed
+        std::cout << *itc << ", ";
+    }   // 71, 77, 1, 58, 22, 79, 90,
+    std::cout << std::endl;
+
+    std::vector< int >::const_reverse_iterator itcr;
+    for( itcr = vec.crbegin(); itcr != vec.crend(); ++itcr )
+    {
+        // *itcr
+        = 12; // Not allowed
+        std::cout << *itcr << ", ";
+    }   // 90, 79, 22, 58, 1, 77, 71,
+    std::cout << std::endl;
+}
+```
+
 
 | Type | Push/Pop | Iterator | Funtions | Modification | Use |
 |------|----------|----------|----------|-----|----------|
@@ -360,6 +401,7 @@ int main()
 | std::priority_queue< int, std::vector< int >, std::greater< int > > | push, pop | No | top, empty, size, swap | emplace | Underlying implementation is std::vector. Order is reverse due to priority. |
 | std::set< int, std::greater< int > > | No | Yes | empty, size, swap, count, find | clear, insert, emplase, erase | Contains a sorted set of unique objects. Search, removal, and insertion operations have logarithmic complexity. Implemented as Red-Black Tree |
 | std::map< int, std::string, std::greater< int > > | No | Yes | at, [], empty, size, swap, count, find | clear, insert, emplace, erase |  Contains key-value pairs with unique keys. Keys are sorted. Implemented as Red-Black Tree. Search, removal, and insertion operations have logarithmic complexity. |
+| std::multiset< int, std::greater< int > > | No | Yes | empty, size, swap, count, find | clear, insert, emplase, erase | Contains a sorted set of keys. Multiple keys with same value are allowed. Search, removal, and insertion operations have logarithmic complexity. |
 
 
 # Algorithm
