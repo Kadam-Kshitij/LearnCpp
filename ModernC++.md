@@ -314,6 +314,40 @@ int main()
     std::cout << std::endl;
 }
 ```
+# Map
+```cpp
+#include <map>
+
+void print( std::map< int, std::string, std::greater< int > > map )
+{
+    for( std::pair< int, std::string > i : map )
+    {
+        std::cout << i.first << "," << i.second << " ; ";
+    }
+    std::cout << std::endl;
+}
+
+int main()
+{
+    std::map< int, std::string, std::greater< int > > map;
+    map[1] = "A";
+    map[26] = "Z";
+    map[11] = "K";
+    print( map ); // 26,Z ; 11,K ; 1,A ;
+
+    map.emplace( std::make_pair< int, std::string >( 4, "D" ) );
+    print( map ); // 26,Z ; 11,K ; 4,D ; 1,A ;
+
+    map.erase( 11 );
+    print( map );   // 26,Z ; 4,D ; 1,A ;
+
+    std::map< int, std::string, std::greater< int > >::iterator it = map.find( 26 );
+    std::cout << it->first << "," << it->second << std::endl;   // 26,Z
+
+    map.insert( std::make_pair< int, std::string >( 5, "E" ) );
+    print( map );   //26,Z ; 5,E ; 4,D ; 1,A ; 
+}
+```
 
 | Type | Push/Pop | Iterator | Funtions | Modification | Use |
 |------|----------|----------|----------|-----|----------|
