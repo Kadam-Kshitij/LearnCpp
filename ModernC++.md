@@ -330,6 +330,8 @@ int main()
 
 # Algorithm
 ```cpp
+#include <algorithm>
+
 int main()
 {
     std::vector< int > vec{ 4, 5, 6, 7, 8 };
@@ -407,16 +409,38 @@ int main()
     std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 110,110,110,54,
     std::cout << std::endl;
 
+    // Copy one range to another
     std::copy( vec2.begin(), vec2.end(), vec.begin() );
     std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 4,5,6,7, // Size remained same
     std::cout << std::endl;
+    // Similarly copy_if
 
+    // Sort a given range
+    std::sort( vec.begin(), vec.end(), std::greater< int >() );
+    std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 7,6,5,4,
+    std::cout << std::endl;
+    // stable_sort - Used to Sort a range while preserving the order of equal elements
 
+    // Replace all elemets which satisfy a given condition
+    std::replace_if( vec.begin(), vec.end(), []( int x ){ return x < 7; }, 34 );
+    std::for_each( vec.begin(), vec.end(), [](int x){ std::cout << x << ","; } );   // 7,34,34,34,
+    std::cout << std::endl;
+    // Similarly replace();
 
-//    std::remove_if( vec2.begin(), vec2.end(), []( int x ){ return x%2 == 0; });
-//    std::for_each( vec2.begin(), vec2.end(), [](int x){ std::cout << x << ","; } ); // 4,5,6,7,8,5,
-//    std::cout << std::endl;
+    it = std::max_element( vec2.begin(), vec2.end() );
+    std::cout << "Max element = " << *it << std::endl;  // Max element = 8
+    it = std::min_element( vec2.begin(), vec2.end() );
+    std::cout << "Min element = " << *it << std::endl;  // Max element = 4
 
+    std::cout << std::equal( vec.begin(), vec.end(), vec2.begin() ) << std::endl;   // false
+
+    // Returns iterator part the end of valid range
+    it = std::remove_if( vec2.begin(), vec2.end(), [](int x){ return x >= 7;  } );
+    std::for_each( vec2.begin(), vec2.end(), [](int x){ std::cout << x << ","; } ); // 4,5,6,5,8,5,
+    std::cout << std::endl;
+    vec2.erase( it, vec2.end() );
+    std::for_each( vec2.begin(), vec2.end(), [](int x){ std::cout << x << ","; } ); // 4,5,6,5,
+    std::cout << std::endl;
 }
 ```
 
