@@ -381,8 +381,7 @@ int main()
     std::vector< int >::const_reverse_iterator itcr;
     for( itcr = vec.crbegin(); itcr != vec.crend(); ++itcr )
     {
-        // *itcr
-        = 12; // Not allowed
+        // *itcr = 12; // Not allowed
         std::cout << *itcr << ", ";
     }   // 90, 79, 22, 58, 1, 77, 71,
     std::cout << std::endl;
