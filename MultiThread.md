@@ -190,16 +190,69 @@ Here count > 1. Allows multiple threads to eecute within the critical section.
 
 
 
-============== Thread Barrier ==============
-API -
+# Thread Barrier
+```cpp
 pthread_barrier_t
 pthread_barrier_init( pthread_barrier_t*, , unsigned int count );
 pthread_barrier_wait( pthread_barrier_t* );
 pthread_barrier_destroy( pthread_barrier_t* );
-
+```
 Waits till specified number of threads dont reach the barrier point.
 Eg - Internet download manager.
+```cpp
+pthread_barrier_t bar;
 
+void* foo( void* ptr )
+{
+    int* val = ( int* )ptr;
+    std::cout << "Thread " << *val << " Sleep start" << std::endl;
+    sleep( *val );
+    std::cout << "Thread " << *val << " Sleep done" << std::endl;
+    pthread_barrier_wait( &bar );	// Wait till 3 threads reach this point
+    std::cout << "Thread " << *val << " return" << std::endl;
+}
+
+int main()
+{
+    pthread_t th[6];
+    int* ptr = new int[6];
+    pthread_barrier_init( &bar, NULL, 3 );    // Initialize barrier
+
+    for( int i = 0; i < 6; ++i )
+    {
+        ptr[i] = i;
+        pthread_create( &th[i], NULL, foo, ( void* )&ptr[i] );
+    }
+
+    pthread_join( th[0], NULL );
+    pthread_join( th[1], NULL );
+    pthread_join( th[2], NULL );
+    pthread_join( th[3], NULL );
+    pthread_join( th[4], NULL );
+
+    delete[] ptr;
+    pthread_barrier_destroy( &bar );   // Destroy barrier
+}
+
+//Thread 2 Sleep start
+//Thread 3 Sleep start
+//Thread 4 Sleep start
+//Thread 5 Sleep start
+//Thread 0 Sleep start
+//Thread 1 Sleep start
+//Thread 0 Sleep done
+//Thread 1 Sleep done
+//Thread 2 Sleep done
+//Thread 2 return
+//Thread 1 return
+//Thread 0 return
+//Thread 3 Sleep done
+//Thread 4 Sleep done
+//Thread 5 Sleep done
+//Thread 5 return
+//Thread 4 return
+//Thread 3 return
+```
 
 
 ============== Thread Termination ==============
