@@ -121,3 +121,148 @@ int main()
 //Foo 140540095170368, 67   // Prints after 2 secs
 //70   // Prints after 4 secs
 ```
+# pthreads
+```cpp
+pthread_t 
+pthread_create( pthread_t*, const pthread_attr_t*, <function>, (void*) );
+pthread_join( pthread_t, void** );    // suspend execution of the calling thread until the target thread terminates
+pthread_detach( pthread_t );
+pthread_exit(void* retval);    // Terminaetes the calling thread.
+```
+Function handeling the thread - void* foo( void* )
+Need to convert pointers to void type before sending and getting.
+```cpp
+#include <pthread.h>
+
+void* foo( void* ptr )
+{
+    int* val = ( int* )ptr;
+    ++( *val );
+    sleep(2);
+    std::cout << "val = " << *val << std::endl;
+
+    pthread_exit( ptr );
+}
+
+int main()
+{
+    pthread_t* th = new pthread_t();
+    int val{ 88 };
+    pthread_create( th, NULL, foo, ( void* )&val );
+
+    int* ret{ nullptr };
+    pthread_join( *th, ( void** )&ret );
+    printf( "ret = %d\n", *ret );
+
+    pthread_t* th2 = new pthread_t();
+    pthread_create( th2, NULL, foo, ( void* )val );
+    pthread_detach( *th2 );
+
+    printf( "End" );
+}
+
+//val = 89
+//ret = 89
+//End
+```
+
+
+============== Semaphores ==============
+API -
+sem_t
+sem_init( sem_t*, int pshared, unsigned int count ); 	// Here pshread = 0. If not zero then semaphore can
+														// be shared between processes.
+sem_wait( sem_t* );
+sem_post( sem_t* );
+sem_destroy( sem_t* );
+
+Zero-semaphores -
+Here count is initialized to zero. ( sem_init( &s, 0, 0 ); )
+Use for strict alteration between two threads.
+
+Binary semaphores -
+Count = 1. So it allows only one thread to execute the critical section at a time.
+So it can be called as a mutex.
+
+Counting semaphores -
+Here count > 1. Allows multiple threads to eecute within the critical section.
+
+
+
+
+============== Thread Barrier ==============
+API -
+pthread_barrier_t
+pthread_barrier_init( pthread_barrier_t*, , unsigned int count );
+pthread_barrier_wait( pthread_barrier_t* );
+pthread_barrier_destroy( pthread_barrier_t* );
+
+Waits till specified number of threads dont reach the barrier point.
+Eg - Internet download manager.
+
+
+
+============== Thread Termination ==============
+pthread_exit( void* retval );
+
+
+		
+# Mutex
+```cpp
+pthread_mutex_t 
+pthread_mutex_init( pthread_mutex_t*, const pthread_mutexattr_t* );
+pthread_mutex_lock( pthread_mutex_t* );
+pthread_mutex_unlock( pthread_mutex_t* );
+pthread_mutex_destroy( pthread_mutex_t* );
+```
+
+Code Locking -
+In this a part of code is allowed to be executed only by one thread at a time.
+
+Data Locking -
+In this the data structure contains a mutex. Only one thread can modify the data at a time.<br>
+Two threads may be modifying the same data structure, but if objects are sperate then they can modify the two different objects at the same time.<br>
+
+```cpp
+pthread_mutex_t mu;
+int global{ 0 };
+
+void* foo( void* )
+{
+    for( int i = 0; i < 10000; ++i )
+    {
+        pthread_mutex_lock( &mu );  // Lock Mutex
+        global += 1;
+        pthread_mutex_unlock( &mu );// Unlock Mutex
+    }
+}
+
+int main()
+{
+    pthread_t th[2];
+    pthread_mutex_init( &mu, NULL );    // Initialize mutex
+
+    pthread_create( &th[0], NULL, foo, NULL );
+    pthread_create( &th[1], NULL, foo, NULL );
+
+    pthread_join( th[0], NULL );
+    pthread_join( th[1], NULL );
+
+    std::cout << global << "\n";
+
+    pthread_mutex_destroy( &mu );   // Destroy mutex
+}
+```
+
+============== Condition Variable ==============
+API -
+pthread_cond_t
+pthread_init( pthread_cond_t* , pthread_cond_attr_t* );
+pthread_cond_wait( pthread_cond_t*, pthread_mutex_t* );
+pthread_cond_signal( pthread_cond_t* );
+pthread_cond_broadcast( pthread_cond_t* );
+pthread_destroy( pthread_cond_t* );
+
+When wait signal is triggered, the mutex ownership is changed to be acquired by other thread. The current thread is blocked.
+pthread_cond_signal will unlock one thread that are blocked on the specified cv.
+pthread_cond_broadcast will unlock all threads that are blocked on the specified cv.
