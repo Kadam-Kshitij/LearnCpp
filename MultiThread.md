@@ -350,15 +350,64 @@ int main()
 }
 ```
 
-============== Condition Variable ==============
-API -
+# Condition Variable
+```cpp
 pthread_cond_t
 pthread_init( pthread_cond_t* , pthread_cond_attr_t* );
 pthread_cond_wait( pthread_cond_t*, pthread_mutex_t* );
 pthread_cond_signal( pthread_cond_t* );
 pthread_cond_broadcast( pthread_cond_t* );
 pthread_destroy( pthread_cond_t* );
+```
 
-When wait signal is triggered, the mutex ownership is changed to be acquired by other thread. The current thread is blocked.
-pthread_cond_signal will unlock one thread that are blocked on the specified cv.
-pthread_cond_broadcast will unlock all threads that are blocked on the specified cv.
+When wait signal is triggered, the mutex ownership is changed to be acquired by other thread. The current thread is blocked.<br>
+pthread_cond_signal will unlock one thread that are blocked on the specified cv.<br>
+pthread_cond_broadcast will unlock all threads that are blocked on the specified cv.<br>
+
+```cpp
+pthread_cond_t cv;
+pthread_mutex_t mu;
+int child_done{ 0 };
+
+void* child( void* )
+{
+    pthread_mutex_lock( &mu );
+    // sleep( 2 );  // 1
+    child_done = 1;
+    pthread_cond_signal( &cv );
+    pthread_mutex_unlock( &mu );
+}
+
+void join()
+{
+    // sleep( 2 );  // 2
+    pthread_mutex_lock( &mu );
+    while( 1 != child_done )
+    {
+        std::cout << "Parent waiting" << std::endl;
+        // Should be called only after mutex lock
+        pthread_cond_wait( &cv, &mu );	// Unlocks the lock and waits. Reloaks mutex when signalled
+    }
+    pthread_mutex_unlock( &mu );
+}
+
+int main()
+{
+    pthread_cond_init( &cv, NULL );
+    pthread_mutex_init( &mu, NULL );
+
+    pthread_t th;
+    pthread_create( &th, NULL, child, NULL );
+
+    join();
+
+    std::cout << "End\n";
+}
+
+// 1
+//Parent waiting
+//End
+
+// 2
+//End
+```
