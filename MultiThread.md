@@ -165,30 +165,72 @@ int main()
 //ret = 89
 //End
 ```
-
-
-============== Semaphores ==============
-API -
+# Semaphores
+```cpp
 sem_t
-sem_init( sem_t*, int pshared, unsigned int count ); 	// Here pshread = 0. If not zero then semaphore can
-														// be shared between processes.
+sem_init( sem_t*, int pshared, unsigned int count );
+// Here pshread = 0. If not zero then semaphore can be shared between processes.
 sem_wait( sem_t* );
 sem_post( sem_t* );
 sem_destroy( sem_t* );
+```
+Zero-semaphores -<br>
+Here count is initialized to zero. ( sem_init( &s, 0, 0 ); )<br>
+Use for strict alteration between two threads.<br>
 
-Zero-semaphores -
-Here count is initialized to zero. ( sem_init( &s, 0, 0 ); )
-Use for strict alteration between two threads.
+Binary semaphores -<br>
+Count = 1. So it allows only one thread to execute the critical section at a time. So it can be called as a mutex.<br>
 
-Binary semaphores -
-Count = 1. So it allows only one thread to execute the critical section at a time.
-So it can be called as a mutex.
+Counting semaphores -<br>
+Here count > 1. Allows multiple threads to execute within the critical section.<br>
 
-Counting semaphores -
-Here count > 1. Allows multiple threads to eecute within the critical section.
+```cpp
+sem_t sem;
 
+void* foo( void* ptr )
+{
+    int* val = ( int* )ptr;
 
+    sem_wait( &sem );
+    std::cout << "Thread " << *val << " enter" << std::endl;
+    sleep( *val );
+    std::cout << "Thread " << *val << " end" << std::endl;
+    sem_post( &sem );
+}
 
+int main()
+{
+    pthread_t th[5];
+    int* ptr = new int[5];
+    sem_init( &sem, 0, 2 );    // Initialize semaphore
+
+    for( int i = 0; i < 5; ++i )
+    {
+        ptr[i] = i;
+        pthread_create( &th[i], NULL, foo, ( void* )&ptr[i] );
+    }
+
+    pthread_join( th[0], NULL );
+    pthread_join( th[1], NULL );
+    pthread_join( th[2], NULL );
+    pthread_join( th[3], NULL );
+    pthread_join( th[4], NULL );
+
+    delete[] ptr;
+    sem_destroy( &sem );   // Destroy semaphore
+}
+
+//Thread 4 enter
+//Thread 3 enter
+//Thread 3 end
+//Thread 2 enter
+//Thread 4 end
+//Thread 0 enter
+//Thread 0 end
+//Thread 1 enter
+//Thread 2 end
+//Thread 1 end
+```
 
 # Thread Barrier
 ```cpp
