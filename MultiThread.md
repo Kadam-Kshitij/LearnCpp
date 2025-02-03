@@ -411,3 +411,68 @@ int main()
 // 2
 //End
 ```
+Producer-Consumer problem<br>
+```cpp
+std::queue< int > que;
+pthread_cond_t cv;
+pthread_mutex_t mu;
+int empty{ 1 };
+int global{ 0 };
+
+void* producer( void* )
+{
+    while( global < 50 )
+    {
+        pthread_mutex_lock( &mu );
+        while( 1 != empty )
+            pthread_cond_wait( &cv, &mu );
+
+        while( 3 != que.size() )
+        {
+            que.push( global );
+            ++global;
+            sleep( 1 );
+        }
+        empty = 0;
+        pthread_mutex_unlock( &mu );
+        pthread_cond_signal( &cv );
+    }
+}
+
+void* consumer( void* )
+{
+    while( 1 )
+    {
+        pthread_mutex_lock( &mu );
+        while( 0 != empty )
+            pthread_cond_wait( &cv, &mu );
+
+        while( !que.empty() )
+        {
+            std::cout << "Val - " << que.front() << std::endl;
+            que.pop();
+            sleep( 1 );
+        }
+        empty = 1;
+        pthread_mutex_unlock( &mu );
+        pthread_cond_signal( &cv );
+
+    }
+}
+
+
+int main()
+{
+    pthread_cond_init( &cv, NULL );
+    pthread_mutex_init( &mu, NULL );
+
+    pthread_t thc, thp;
+    pthread_create( &thc, NULL, consumer, NULL );
+    pthread_create( &thp, NULL, producer, NULL );
+
+    pthread_join( thc, NULL );
+    pthread_join( thp, NULL );
+
+    std::cout << "End\n";
+}
+```
