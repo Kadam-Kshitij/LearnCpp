@@ -476,3 +476,90 @@ int main()
     std::cout << "End\n";
 }
 ```
+# Thread Pool
+```cpp
+#define NUMBER_OF_THREADS 5
+#include <thread>
+std::mutex mu;
+std::condition_variable cv;
+std::queue< void ( * )() > que;
+
+void foo() { std::cout << "Foo" << std::endl; sleep(2); }
+void goo() { std::cout << "Goo" << std::endl; sleep(2); }
+void hoo() { std::cout << "Hoo" << std::endl; sleep(2); }
+
+class ThreadPool {
+    std::thread th[NUMBER_OF_THREADS];
+    std::thread thmain;
+    std::vector< std::thread > vec;
+    int availableThreads{ 0 };
+
+public:
+    ThreadPool()
+    {
+    }
+
+    void initThreads()
+    {
+        for( int i = 0; i < NUMBER_OF_THREADS; ++i )
+        {
+            th[i] = std::thread( &ThreadPool::waitingFunction, this );
+        }
+        thmain = std::thread( &ThreadPool::assignJob, this );
+    }
+
+    void waitingFunction()
+    {
+        while( 1 )
+        {
+            std::unique_lock< std::mutex > ul( mu );
+            // std::cout << "Waiting" << std::endl;
+            availableThreads++;
+            cv.wait( ul );
+            availableThreads--;
+            void ( *fp )() = que.front();
+            que.pop();
+            ul.unlock();
+            fp();
+        }
+    }
+
+    void assignJob()
+    {
+        while( 1 )
+        {
+            // std::cout << "checking" << std::endl;
+            std::unique_lock< std::mutex > ul( mu );
+            if( availableThreads > 0 && que.size() > 0 )
+            {
+                cv.notify_one();
+            }
+            ul.unlock();
+            usleep(100000);
+        }
+    }
+};
+
+int main()
+{
+
+    ThreadPool* pool = new ThreadPool();
+    pool->initThreads();
+
+    void ( *fptr[] )() = { foo, goo, hoo };
+
+    for( int i = 0; i < 50; ++i )
+    {
+        int r = rand() % 3;
+        mu.lock();
+        // std::cout << "Adding function " << std::endl;
+        que.push( fptr[r] );
+        mu.unlock();
+        usleep(100000);
+    }
+
+    sleep(100);
+
+    std::cout << "End\n";
+}
+```
