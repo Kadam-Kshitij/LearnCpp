@@ -192,8 +192,9 @@ Here count > 1. Allows multiple threads to eecute within the critical section.
 
 # Thread Barrier
 ```cpp
+
 pthread_barrier_t
-pthread_barrier_init( pthread_barrier_t*, , unsigned int count );
+pthread_barrier_init( pthread_barrier_t*, const pthread_barrierattr_t *attr , unsigned int count );
 pthread_barrier_wait( pthread_barrier_t* );
 pthread_barrier_destroy( pthread_barrier_t* );
 ```
