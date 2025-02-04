@@ -72,3 +72,61 @@ int main()
 }
 // Child : Hello from parent, 18
 ```
+# Signal
+```cpp
+#include <signal.h>
+int global{ 0 };
+
+void sigHandler( int sig )
+{
+    std::cout << "Hander " << sig << std::endl;
+    std::exit( EXIT_FAILURE );
+}
+
+int main()
+{
+    signal( SIGINT, sigHandler );
+
+    while(1)
+    {
+        std::cout << "Main, ";
+        ++global;
+        if( 10 == global )
+            raise( SIGINT );
+        usleep(500000);
+    }
+
+    std::cout << "End\n";
+}
+//Main, Main, Main, Main, Main, Main, Main, Main, Main, Main, Hander 2
+```
+```cpp
+#include <signal.h>
+
+void sigHandler( int sig )
+{
+    std::cout << "Hander " << sig << std::endl;
+    std::exit( EXIT_FAILURE );
+}
+
+int main()
+{
+    std::cout << "pid = " << getpid() << std::endl;
+    signal( SIGINT, sigHandler );   // Signal to raise, Handler function void (*fptr)( int )
+
+    while(1)
+    {
+        std::cout << "Main" << std::endl;
+        usleep(500000);
+    }
+
+    std::cout << "End\n";
+}
+
+// Second program
+int main()
+{
+    kill( 7902 , SIGINT );    // Pid of process to send the signal to, signal to send
+    std::cout << "end\n";
+}
+```
