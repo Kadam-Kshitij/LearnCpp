@@ -563,3 +563,46 @@ int main()
     std::cout << "End\n";
 }
 ```
+# Philosophers problem
+```cpp
+#define NUM_PHILOSOPHERS 5
+std::mutex mu[NUM_PHILOSOPHERS];
+std::thread th[NUM_PHILOSOPHERS];
+
+void foo( int i )
+{
+    int id = i;
+    while( 1 )
+    {
+        try
+        {
+            std::lock( mu[id], mu[(id + 1 )%NUM_PHILOSOPHERS] );
+            std::lock_guard< std::mutex > lk1( mu[id], std::adopt_lock );
+            std::lock_guard< std::mutex > lk2( mu[(id + 1) % NUM_PHILOSOPHERS], std::adopt_lock );
+            std::cout << "Philosopher " << id << " acquired lock" << std::endl;
+            sleep( 1 );
+        }
+        catch( ... )
+        {
+            std::cout << "Philosopher " << id << " caught exception" << std::endl;
+        }
+        sleep(1);
+    }
+}
+
+int main()
+{
+    for( int i = 0; i < NUM_PHILOSOPHERS; ++i )
+    {
+        int* ptr = new int( i );
+        th[i] = std::thread( foo, *ptr );
+    }
+
+    for( int i = 0; i < NUM_PHILOSOPHERS; ++i )
+    {
+        th[i].join();
+    }
+
+    std::cout << "End\n";
+}
+```
