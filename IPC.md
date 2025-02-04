@@ -130,3 +130,52 @@ int main()
     std::cout << "end\n";
 }
 ```
+# FIFO
+```cpp
+#define FIFO_FILE_NAME "/tmp/myfifo"
+
+int main()
+{
+    if( -1 == mkfifo( FIFO_FILE_NAME, 0666 ) )
+    {
+        perror( "Error : " );
+        exit( EXIT_FAILURE );
+    }
+
+    int filefd = open( FIFO_FILE_NAME, O_WRONLY );
+    if( -1 == filefd )
+    {
+        perror( "Error : " );
+        exit( EXIT_FAILURE );
+    }
+
+    char msg[] = "Hello from process 1";
+    write( filefd, msg, strlen( msg ) + 1 );
+
+    close( filefd );
+
+    if( -1 == unlink( FIFO_FILE_NAME ) )
+    {
+        perror( "Error : " );
+        exit( EXIT_FAILURE );
+    }
+}
+```
+```cpp
+int main()
+{
+    std::cout << "Opening" << std::endl;
+    int filefd = open( FIFO_FILE_NAME, O_RDONLY );
+    if( -1 == filefd )
+    {
+        perror( "Error : " );
+        exit( EXIT_FAILURE );
+    }
+    std::cout << "reading" << std::endl;
+
+    char buff[100];
+    read( filefd, buff, 100 );
+
+    printf( "%s", buff );
+}
+```
