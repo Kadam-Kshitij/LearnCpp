@@ -179,3 +179,11 @@ int main()
     printf( "%s", buff );
 }
 ```
+
+
+1) Shared Memory - Allows multiple process to aceess common memory space. Transfer speed is very high. Synchonization is required while accessing the memory. Used when high speed data transfer is required. shmget, shmat, shmdt, shmctl. The data remains in the memory till removed.
+2) Pipes/FIFO - One way communication between processes. Moderate speed. Data is passed byte by byte. Used for simpler communcation. pipe, mkfifo, unlink
+3) Signals - Used to send notifications to other processes. No data transfer happens. signal, raise, kill
+4) Sockets - Used for end to end communication between processes on smme or different machines. Moderate to High speed. socket ( Create a socket ), bind ( attach socket to a ip and port ), listen ( listen to incomming requests ), accept ( accept a incomming request ), connect ( used by client to connect to the server ), send ( send data over the socket ), close ( terminate socket ).
+5) Msg queue - A queue to exchange messages between processes. Moderate to High. FIFO. msgget, msgsnd, msgrcv, msgctl.
+6) Semaphores - Used to synchonize multiple processes. No data transfer. sem_open, sem_post, sem_wait, sem_close, sem_unlink.
