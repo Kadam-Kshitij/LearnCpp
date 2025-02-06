@@ -238,3 +238,85 @@ int main()
     dptr->goo();
 }
 ```
+# Overload new and delete operator
+```cpp
+class Base {
+    int val{};
+    double vald{};
+public:
+    Base(){ std::cout << "Base()" << std::endl; }
+    Base( int x, double y ) : val{ x }, vald{ y }
+    {
+        std::cout << "Base" << std::endl;
+    }
+    ~Base()
+    {
+        std::cout << "~Base" << std::endl;
+    }
+
+    void* operator new( size_t count )
+    {
+        std::cout << "New : " << count << std::endl;
+        void* rptr = malloc( count );
+        if( NULL == rptr )
+        {
+            throw std::bad_alloc();
+        }
+        return rptr;
+    }
+
+    void operator delete( void* ptr )
+    {
+        std::cout << "Delete" << std::endl;
+        free( ptr );
+    }
+
+    void* operator new[]( size_t count )
+    {
+        std::cout << "New : " << count << std::endl;
+        void* rptr = malloc( count );
+        if( NULL == rptr )
+        {
+            throw std::bad_alloc();
+        }
+        return rptr;
+    }
+
+    void operator delete[]( void* ptr )
+    {
+        std::cout << "Delete" << std::endl;
+        free( ptr );
+    }
+
+    void print() const
+    {
+        std::cout << val << ", " << vald << std::endl;
+    }
+};
+
+int main()
+{
+    Base* obj = new Base( 34, 56.5 );
+    obj->print();
+    delete obj;
+    std::cout << "----\n";
+
+    Base* objarr = new Base[2];
+    objarr[0].print();
+    delete[] objarr;
+}
+
+//New : 16
+//Base
+//34, 56.5
+//~Base
+//Delete
+//----
+//New : 40
+//Base()
+//Base()
+//0, 0
+//~Base
+//~Base
+//Delete
+```
