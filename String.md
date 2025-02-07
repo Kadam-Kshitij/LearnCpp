@@ -70,3 +70,23 @@ int main()
     // Hello Hello Hello Hello Hello Hello Hello Hello Hello, 100, 53
 }
 ```
+# Find character in string
+```cpp
+int main()
+{
+    char str[] = "Hello Pello Qello Hello Hello Hello Hello Hello Hello";
+    // Returns pointer to first occurance of character in a string
+    char* ch = strchr( str, 'Q' );
+
+    if( !ch )
+        std::cout << "Not found\n";
+    else
+        std::cout << ch << std::endl;   // Qello Hello Hello Hello Hello Hello Hello
+
+    ch = strchr( str, 'Z' );
+    if( !ch )
+        std::cout << "Not found\n"; // Not found
+    else
+        std::cout << ch << std::endl;
+}
+```
