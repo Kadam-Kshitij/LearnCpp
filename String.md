@@ -71,11 +71,14 @@ int main()
 }
 ```
 # Find character in string
+strrchr - Get the last occurance of character in a string.<br>
+strstr - ( str1, str2 ) - Returns pointer to first occurance of str2 in str1. Else returns NULL pointer.<br>
 ```cpp
 int main()
 {
     char str[] = "Hello Pello Qello Hello Hello Hello Hello Hello Hello";
-    // Returns pointer to first occurance of character in a string
+    // Returns pointer to first occurance of character in a string.
+    // Returns Null if not present.
     char* ch = strchr( str, 'Q' );
 
     if( !ch )
@@ -89,4 +92,33 @@ int main()
     else
         std::cout << ch << std::endl;
 }
+```
+# Other functions 
+strcat( dest, src ) - Replace terminating char of dest with starting char of src. Adding terminating char to the new string formed. Check size to prevent overflow.<br>
+strncat( dest, src, num ) - Appends the first num characters of source to destination, plus a terminating null-character.<br>
+strncmp( str1, str2, num ) - Return 0 if equal. Return < 0 if first mismatch char in str1 < str2. Else > 0.<br>
+
+# Split string
+```cpp
+int main()
+{
+    char str[] = "This is a string, Hello!";
+    char tk[] = " , !.";
+    char* token;
+
+    token = strtok( str, tk );
+    while( NULL != token )
+    {
+        std::cout << token << std::endl;
+        token = strtok( NULL, tk );
+    }
+
+    return 0;
+}
+
+//This
+//is
+//a
+//string
+//Hello
 ```
