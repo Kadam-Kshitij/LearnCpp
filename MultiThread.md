@@ -609,7 +609,7 @@ int main()
 
 # Thread cancel
 `int pthread_cancel(pthread_t thread);`<br>
-`void pthread_testcancel(void);` If no cancel request is pending or cancel is disabled, then this function will cancel the thread.<br>
+`void pthread_testcancel(void);` If no cancel request is pending or cancel is disabled, then this function will do nothing else cancel the thread.<br>
 If cancellation is disables, thread will not stop if cancel request is sent.<br>
 If enables and asynchronous cancel request id received, data corruption, memory leaks, deadlocks can take place.<br>
 Hence use DEFERRED cancellation, where cancellation will happen when code reaches a cancellation point.<br>
