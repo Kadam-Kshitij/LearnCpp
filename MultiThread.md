@@ -606,3 +606,47 @@ int main()
     std::cout << "End\n";
 }
 ```
+
+# Thread cancel
+`int pthread_cancel(pthread_t thread);`<br>
+`void pthread_testcancel(void);` If no cancel request is pending or cancel is disabled, then this function will cancel the thread.<br>
+If cancellation is disables, thread will not stop if cancel request is sent.<br>
+If enables and asynchronous cancel request id received, data corruption, memory leaks, deadlocks can take place.<br>
+Hence use DEFERRED cancellation, where cancellation will happen when code reaches a cancellation point.<br>
+Multiple cancelltion cleanup functions can be used, which execute in FIFO order.<br>
+```cpp
+void cleanup( void* arg )
+{
+    std::cout << "CleanUp\n";
+}
+
+void* foo( void* )
+{
+    pthread_setcancelstate( PTHREAD_CANCEL_ENABLE, 0 );
+    pthread_setcanceltype( PTHREAD_CANCEL_DEFERRED, 0 );
+
+    pthread_cleanup_push( cleanup, NULL );
+
+    for( int i = 0; i < 2000000000; ++i )
+    {
+        std::cout << "Foo " << i << std::endl;
+        // sleep(1);
+    }
+    pthread_testcancel();
+
+    pthread_cleanup_pop(0); // 0 means do not run cleanup.
+}
+
+int main()
+{
+    pthread_t th;
+    pthread_create( &th, NULL, foo, NULL );
+
+    sleep(4);
+
+    pthread_cancel( th );
+    pthread_join( th, NULL );
+
+    std::cout << "End\n";
+}
+```
