@@ -177,6 +177,48 @@ sem_destroy( sem_t* );
 Zero-semaphores -<br>
 Here count is initialized to zero. ( sem_init( &s, 0, 0 ); )<br>
 Use for strict alteration between two threads.<br>
+```cpp
+sem_t sem;
+
+void* fooE( void* )
+{
+    while(1)
+    {
+        std::cout << "Even" << std::endl;
+        sleep(2);
+        sem_post( &sem );
+        usleep(500000);
+        sem_wait( &sem );
+    }
+}
+
+void* fooO( void* )
+{
+    while(1)
+    {
+        sem_wait( &sem );
+        std::cout << "Odd" << std::endl;
+        sleep(2
+              );
+        sem_post( &sem );
+        usleep(500000);
+    }
+}
+
+int main()
+{
+    sem_init( &sem, 0, 0 );
+
+    pthread_t th[2];
+    pthread_create( &th[0], NULL, fooE, NULL );
+    pthread_create( &th[1], NULL, fooO, NULL );
+
+    pthread_join( th[0], NULL );
+    pthread_join( th[1], NULL );
+
+    sem_destroy( &sem );
+}
+```
 
 Binary semaphores -<br>
 Count = 1. So it allows only one thread to execute the critical section at a time. So it can be called as a mutex.<br>
