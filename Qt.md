@@ -48,7 +48,8 @@ int main( int argc, char** argv )
 
 // With Direct connection
 // A direct connection means that the slot is called immediately when the signal
-// is emitted, and it is executed in the same thread that emitted the signal. Faster
+// is emitted, and it is executed in the same thread that emitted the signal. Faster.
+// Used when signal and slots are in same threads.
 //Main : 140641248048960
 //Base1 : 140641248048960
 //Base2 : 140641248048960
@@ -56,9 +57,11 @@ int main( int argc, char** argv )
 // With Queued Connection
 // A queued connection means that the slot is called asynchronously when the event 
 //loop is running in the receiver's thread. The signal will be placed in the event 
-//queue of the receiver's thread, and the slot will be executed later when the event 
-//loop processes that event. Slower.
+//queue of the receiver's thread, and the slot will be executed later when the event
+//loop processes that event. Slower. Used when signal/slot are in different threads.
 //Main : 140183707064128
 //Base1 : 140183707064128
 //Base2 : 140183622772480
+
+// BlockingQueuedConnection - Same as Queued but sender thread is blocked until the slot is executed.
 ```
