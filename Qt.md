@@ -16,6 +16,7 @@ class Base2 : public QObject {
 public slots:
     void slotBase2()
     {
+        sleep(1);
         std::cout << "Base2 : " << std::this_thread::get_id() << std::endl;
     }
     void base2()
@@ -50,18 +51,25 @@ int main( int argc, char** argv )
 // A direct connection means that the slot is called immediately when the signal
 // is emitted, and it is executed in the same thread that emitted the signal. Faster.
 // Used when signal and slots are in same threads.
-//Main : 140641248048960
-//Base1 : 140641248048960
-//Base2 : 140641248048960
+//Main : 139776383104832
+//Base1 : 139776383104832
+//Base2 : 139776383104832
+//Base1 end
 
 // With Queued Connection
 // A queued connection means that the slot is called asynchronously when the event 
 //loop is running in the receiver's thread. The signal will be placed in the event 
 //queue of the receiver's thread, and the slot will be executed later when the event
 //loop processes that event. Slower. Used when signal/slot are in different threads.
-//Main : 140183707064128
-//Base1 : 140183707064128
-//Base2 : 140183622772480
+//Main : 140250582894400
+//Base1 : 140250582894400
+//Base1 end
+//Base2 : 140250498602752
 
 // BlockingQueuedConnection - Same as Queued but sender thread is blocked until the slot is executed.
+//Main : 140367347578688
+//Base1 : 140367347578688
+//Base2 : 140367263287040
+//Base1 end
+
 ```
