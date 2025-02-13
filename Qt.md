@@ -72,4 +72,7 @@ int main( int argc, char** argv )
 //Base2 : 140367263287040
 //Base1 end
 
+// UniqueConnection
+// Ensures that a signal is only connected to a particular slot once, even if the same signal is
+// connected multiple times. If the signal is already connected to the slot, the connection is ignored.
 ```
