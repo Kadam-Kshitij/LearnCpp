@@ -81,3 +81,7 @@ int main( int argc, char** argv )
 
 Event loop checks for events and queues them in event queue and connects them to appropriate handlers.<br>
 `return a.exec();  // Starts the event loop`
+
+The Q_OBJECT macro tells the Meta-Object Compiler (moc) to process the class and generate additional code needed for signal-slot connections,<br>
+type information, and other features. The moc tool is part of the Qt build process and generates a corresponding .moc file,<br> 
+which contains the necessary information for these features.<br>
