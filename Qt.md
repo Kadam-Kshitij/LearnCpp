@@ -75,6 +75,9 @@ int main( int argc, char** argv )
 // UniqueConnection
 // Ensures that a signal is only connected to a particular slot once, even if the same signal is
 // connected multiple times. If the signal is already connected to the slot, the connection is ignored.
-// QObject::connect( obj1, &Base::signalBase1, obj2, &Base2::slotBase2, Qt::UniqueConnection );
+// QObject::connect( obj1, &Base::signalBase1, obj2, &Base2::slotBase2, Qt::DirectConnection );
 // QObject::connect( obj1, &Base::signalBase1, obj2, &Base2::slotBase2, Qt::UniqueConnection );
 ```
+
+Event loop checks for events and queues them in event queue and connects them to appropriate handlers.<br>
+`return a.exec();  // Starts the event loop`
