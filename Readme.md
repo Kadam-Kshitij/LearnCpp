@@ -1542,6 +1542,46 @@ lam(); // Here output is Lam45
 ```
 In case of capture by reference ,can lead to dangling reference if variable gets<br>
 deleted before lambda call.<br>
+```cpp
+int main()
+{
+    int a = 4, b = 8;
+    auto lam = [&](){ a = 5; b = 9; };
+    lam();
+    std::cout << a << "," << b << std::endl;    // 5, 9
+
+    // auto lam1 = [=](){ a = 20; b = 30; }; // CTE - Assignment to readonly variables
+    auto lam1 = [&a,b](){ a = 20; int b = 30; };
+    lam1();
+    std::cout << a << "," << b << std::endl;
+
+
+    int x = 90;
+    auto lam2 = [=](){ std::cout << x << std::endl; };
+    x = 100;
+    lam2(); // 90
+
+    auto lam3 = [&](){ std::cout << x << std::endl; };
+    x = 110;
+    lam3(); // 110
+
+    auto lam4 = [=]() mutable { ++x; };
+    lam4();
+    std::cout << x << std::endl;    // 110
+    // Modification happens to a copy of x inside lambda. Outside value remains same.
+
+    // If no capture clause is specified, then no outside vars are available inside.
+    // Excep the ones sent via args
+    int z = 80;
+    auto lam5 = []( int val ){ val = 90; std::cout << val << std::endl; };  // 90
+    lam5( z );
+    std::cout << z << std::endl;    // 80
+
+    auto lam6 = []( int& val ){ val = 1200; std::cout << val << std::endl; };  // 1200
+    lam6( z );
+    std::cout << z << std::endl;    // 1200
+}
+```
 
 # Chapter 21 - Operator Overloading
 ## Overload subscript operator
