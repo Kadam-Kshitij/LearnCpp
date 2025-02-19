@@ -1520,6 +1520,8 @@ va_copy( v2, v1 ); // No need to start v2. Only end. If we have removed few args
 Anyonomous functions that can be defined inside another function<br>
 Syntax -<br>
 `[capture_clause](args)->return value{ commands };`<br>
+`[capture_clause](args)->return value const { commands };`<br>
+In const lambdas we cannot modify the captured values. 
 
 capture_clause allows capturing nearby variables in <br>
 [&] - Capture all by reference<br>
@@ -1580,6 +1582,26 @@ int main()
     auto lam6 = []( int& val ){ val = 1200; std::cout << val << std::endl; };  // 1200
     lam6( z );
     std::cout << z << std::endl;    // 1200
+}
+```
+```cpp
+int main()
+{
+    int z = 90;
+    auto lam = []( int x ) -> int { std::cout << x << std::endl; ++x; return x; };  // 90
+
+    int( *fptr )( int ) = lam;
+
+    std::cout << fptr( z ) << std::endl;    // 91
+
+
+    int k = 60;
+    auto lam1 = [k]( int x ) -> int { std::cout << k << std::endl; ++x; return x; };    // 60
+    k = 80;
+
+    std::function< int( int ) > fp = lam1;
+
+    std::cout << fp( k ) << std::endl;    // 81
 }
 ```
 
