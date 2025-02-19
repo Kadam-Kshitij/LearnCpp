@@ -1519,7 +1519,7 @@ va_copy( v2, v1 ); // No need to start v2. Only end. If we have removed few args
 ## Lambdas
 Anyonomous functions that can be defined inside another function<br>
 Syntax -<br>
-[capture_clause](args)->return value{ commands };<br>
+`[capture_clause](args)->return value{ commands };`<br>
 
 capture_clause allows capturing nearby variables in <br>
 [&] - Capture all by reference<br>
@@ -1529,7 +1529,7 @@ capture_clause allows capturing nearby variables in <br>
 [&a, =] - Illegal, default capture should be first<br>
 [a, &b] - Capture a by value and b by reference<br>
 Variables captured by value are const by default. Add mutable keyword to allow modification<br>
-[a]() mutable -> return_value {};<br>
+`[a]() mutable -> return_value {};`<br>
 Variables captures by refence are not const except if the original var is const. So no mutable required.<br>
 <br>
 Lambdas are captures when they are defined.<br>
