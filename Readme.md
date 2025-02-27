@@ -194,6 +194,21 @@ int main()
 
 TODO : Function like macros
 #define MAX(a,b) ((a)>(b)?(a):(b))
+```cpp
+#define  OPERATE(x,y) { x = x + 2; y = y + 2; }
+#define INCREMENT(x) ( x += 1 )
+
+int main()
+{
+    int x = 34, y = 78;
+    OPERATE(x,y);
+    std::cout << x << ", " << y << std::endl;
+    INCREMENT(x);
+    std::cout << x << ", " << y << std::endl;
+}/*
+36, 80
+37, 80*/
+```
 
 ## Forward declaration
 ```cpp
