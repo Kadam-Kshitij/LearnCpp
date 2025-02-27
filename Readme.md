@@ -113,7 +113,7 @@ Used to prevent including same header file twice which can cause CTE
 #endif // ___UNIQUE_NAME___
 
 Another way is by using
-#pragma ones
+#pragma once
 ```
 
 ## Preprocessor directives
@@ -153,7 +153,7 @@ int main()
 void foo()
 {
 #ifdef ABC
-    std::cout << "ABC Foo\n";
+    std::cout << "ABC - Foo\n";
 #else
     std::cout << "ABC Foo\n";   // Printed
 #endif
@@ -164,7 +164,7 @@ void goo()
 {
 #define ABC
 #ifdef ABC
-    std::cout << "ABC Goo\n";   // Printed
+    std::cout << "ABC - Goo\n";   // Printed
 #else
     std::cout << "ABC Goo\n";
 #endif
