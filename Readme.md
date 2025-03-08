@@ -1674,8 +1674,10 @@ int main()
 ## Overload parenthesis operator
 Functors are classes that operate like functions. Multiplefunctors can be created. Allows class object to be called like a dunction call.<br>
 ```cpp
+#include <iostream>
+
 class Base {
-    int num{};
+    int num{ 100 };
 public:
     int operator()( const int& val )
     {
@@ -1686,6 +1688,11 @@ public:
     void operator()()
     {
         std::cout << "No input function\n";
+    }
+
+    void operator()() const // Needed for const objects
+    {
+        std::cout << "No input const function\n";
     }
 
     void print() const
@@ -1701,6 +1708,9 @@ int main()
     obj.print();    // 23
     obj();          // No input function
     std::cout << ret << std::endl;  // 23
+
+    const Base obj2;
+    obj2(); // No input const function
 }
 ```
 
