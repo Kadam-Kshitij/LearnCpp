@@ -1621,6 +1621,41 @@ int main()
 ```
 
 # Chapter 21 - Operator Overloading
+## Overload * and -> operator
+```cpp
+#include <iostream>
+
+class Base {
+    int val{ 90 };
+public:
+    int& operator*()
+    {
+        return val;
+    }
+
+    Base* operator->()
+    {
+        return this;
+    }
+
+    void print()
+    {
+        std::cout << val << std::endl;
+    }
+};
+
+int main()
+{
+    Base obj;
+    std::cout << *obj << std::endl; // 90
+    *obj = 100;
+    std::cout << *obj << std::endl; // 100
+
+    obj->print();   // 100
+}
+
+```
+
 ## Overload subscript operator
 ```cpp
 #include <vector>
