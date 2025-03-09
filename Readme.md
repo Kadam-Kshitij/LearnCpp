@@ -1621,6 +1621,8 @@ int main()
 ```
 
 # Chapter 21 - Operator Overloading
+Operators which cannot be overloaded :: ?: . .* sizeof typeid 
+
 ## Overload * and -> operator
 ```cpp
 #include <iostream>
