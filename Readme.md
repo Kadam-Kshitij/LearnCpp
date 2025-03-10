@@ -652,7 +652,7 @@ int main()
 
 `std::cerr` is unbuffered like cout. So it output immediately.<br>
 Also it outputs the buffer on differnt error stream.<br>
-command > file 2>&1 // Used to redirect both to file
+command > file 2>&1 // Used to redirect both to file.<br>
 command > file 2> file2 // Used to redirect output to file and error to file2
 
 # Chapter 10 - Conversions
