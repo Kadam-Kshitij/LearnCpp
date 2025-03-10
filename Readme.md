@@ -632,7 +632,7 @@ Random number between [91,120]<br>
 ## Assert and static_assert
 assert condition is checked when program runs. If false, the program terminates.<br>
 static_assert condition is checked at compile time. If false, CTE occurs.<br>
-assert should not be part of release build. Add statement #define NDEBUG at the top to remove assert from release build.<br>
+If NDEBUG is defined then assert will not do anything. For release build, NDEBUG is defined and so assert will not cause any effect.<br>
 
 ```cpp
 #include <cassert>
