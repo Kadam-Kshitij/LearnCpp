@@ -123,7 +123,7 @@ Another way is by using
 #define ABC	// Object like macros without substitution text. Used for conditional compilation
 #define ABC "def"	// Object like macros with substitution text. Used to replace text
 
-#ifdef, #ifndef, #else, #elif #endif	// Conditional compilation
+#ifdef, #ifndef, #else, #elif #endif #elif defined(MACRO)	// Conditional compilation
 #if 0	// Dont compile
 #if 1 	// Compile
 #undef <macro> // Undefine a macro
