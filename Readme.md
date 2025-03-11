@@ -928,6 +928,19 @@ const int* ptr4 = &z;
 
 nullptr has type std::nullptr_t (defined in header <cstddef>).<br>
 
+```cpp
+int main()
+{
+    int a = 10;
+    int& ref = a;
+
+    // int*& rptr = &ref;  // CTE - reference do not have a memory location
+    int* ptr = &ref;
+    std::cout << ptr << ", " << &a << std::endl;    // Prints same address
+    *ptr = 20;
+    std::cout << a; // 20
+}
+```
 
 # Chapter 14 - Introduction to Classes
 
