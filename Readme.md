@@ -856,6 +856,26 @@ Steps in overloaded function match finding
 5) Trie sto find a matching function which uses ellipses.
 6) Gives up.
 
+```cpp
+void foo( double d )
+{
+    std::cout << "foo double\n";
+}
+
+void foo( int d )
+{
+    std::cout << "foo int\n";
+}
+
+int main()
+{
+    foo(2.5);   // foo double
+    foo(2);     // foo int
+    foo(2.5f);  // foo double   // Checks for best match
+    foo('c');   // foo int      // Checks for best match
+}
+```
+
 # Chapter 12 - Reference and Poiters
 ## Reference
 lvalue - An expression which has a specific memory location.<br>
