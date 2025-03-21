@@ -3558,6 +3558,22 @@ void Base< float, size >::print() const
     std::cout << "foo float " << x << ", " << size << std::endl;
 }
 
+template<>
+class Base< std::string, 100 > {
+    std::string x;
+public:
+    Base(const std::string& _x ) : x{ _x }
+    {
+    }
+
+    void print() const;
+};
+
+void Base< std::string, 100 >::print() const
+{
+    std::cout << "foo string " << x << ", " << 100 << std::endl;
+}
+
 int main()
 {
     Base< int, 10 > obj( 9 );
@@ -3568,11 +3584,15 @@ int main()
 
     Base< float, 7 > obj2( 9.9f );
     obj2.print();
+
+    Base< std::string, 100 > obj3( "abc" );
+    obj3.print();
 }
 
-//foo 10 9, 10
-//foo 9, 5
-//foo float 9.9, 7
+// foo 10 9, 10
+// foo 9, 5
+// foo float 9.9, 7
+// foo string abc, 100
 ```
 
 # Chapter 27 - Exceptions
