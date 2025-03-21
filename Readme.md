@@ -3505,6 +3505,75 @@ int main()
 //45, 10
 //45, 5
 ```
+Partial class specialization
+```cpp
+template< typename T, int size >
+class Base {
+    T x;
+public:
+    Base(const T& _x ) : x{ _x }
+    {
+    }
+
+    void print() const;
+};
+
+template< typename T, int size >
+void Base< T, size >::print() const
+{
+    std::cout << "foo " << x << ", " << size << std::endl;
+}
+
+template< typename T >
+class Base< T, 10 > {
+    T x;
+public:
+    Base(const T& _x ) : x{ _x }
+    {
+    }
+
+    void print() const;
+};
+
+template< typename T>
+void Base< T, 10 >::print() const
+{
+    std::cout << "foo 10 " << x << ", " << 10 << std::endl;
+}
+
+template< int size >
+class Base< float, size > {
+    float x;
+public:
+    Base(const float& _x ) : x{ _x }
+    {
+    }
+
+    void print() const;
+};
+
+template< int size >
+void Base< float, size >::print() const
+{
+    std::cout << "foo float " << x << ", " << size << std::endl;
+}
+
+int main()
+{
+    Base< int, 10 > obj( 9 );
+    obj.print();
+
+    Base< int, 5 > obj1( 9 );
+    obj1.print();
+
+    Base< float, 7 > obj2( 9.9f );
+    obj2.print();
+}
+
+//foo 10 9, 10
+//foo 9, 5
+//foo float 9.9, 7
+```
 
 # Chapter 27 - Exceptions
 Exceptions of funcdamental type can be caught by value. Non-fundamental type should be caught by const reference.<br>
