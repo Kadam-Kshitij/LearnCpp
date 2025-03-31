@@ -1546,6 +1546,9 @@ Stack memory is allocated/deallocated automatically by compiler. Heap is done by
 Heap is slower and costly.<br>
 Stack is contigious. Heap is randomly allocated.<br>
 
+To check stack size `ulimit -s`
+To increase the stack size use `ulimit -s 8192`
+
 ## Command line args
 int main( int argc, char** argv )<br>
 int main( int argc, char* argv[] )<br>
