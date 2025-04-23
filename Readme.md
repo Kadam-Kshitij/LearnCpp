@@ -994,6 +994,40 @@ Data members can be returned by const lvalue reference to prevent expensive copy
 `int& foo(){ return m_x; } // In this case if calling function modifies the reference, the actual class variable will be modified`<br>
 const member functions cannot return non-const reference to data members.<br>
 <br>
+```cpp
+#include <iostream>
+
+class Base {
+    int x;
+public:
+    Base( int _x ) : x{ _x }
+    {
+    }
+
+    void print()
+    {
+        std::cout << x << std::endl;
+    }
+
+    int& foo()
+    {
+        return x;
+    }
+};
+
+int main()
+{
+
+    Base obj( 9 );
+    obj.print();    // 9
+
+    int& ref = obj.foo();
+
+    ref = 20;
+    obj.print();    // 20
+}
+```
+
 If class has public member functions,
 
 ```cpp
