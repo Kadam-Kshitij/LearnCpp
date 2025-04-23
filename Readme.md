@@ -2779,12 +2779,12 @@ public:
 
 class B : public A {
 public:
-    virtual void foo() const { std::cout << "B\n"; }
+    void foo() const override { std::cout << "B\n"; }
 };
 
 class C : public B {
 public:
-    virtual void foo() const { std::cout << "C\n"; }
+    void foo() const override { std::cout << "C\n"; }
 };
 
 int main()
@@ -2801,6 +2801,9 @@ int main()
     // is called through a pointer or reference to a class type object.
     A obj{ c }; // Copies A portion of c into obj
     obj.foo();  // A
+
+    A* ptr = &b;
+    ptr->foo();     // B
 }
 ```
 Compile-time polymorphism refers to forms of polymorphism that are resolved by the compiler. These include function overload resolution, as well as template resolution.<br>
