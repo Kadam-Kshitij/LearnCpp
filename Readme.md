@@ -3635,6 +3635,9 @@ int main()
 // foo string abc, 100
 ```
 
+Function templates cannot be partially template specialized. Only classes can be.<br>
+For functions need to write overloaded functions.<br>
+
 # Chapter 27 - Exceptions
 Exceptions of funcdamental type can be caught by value. Non-fundamental type should be caught by const reference.<br>
 No type conversion is done for exceptions (so an int exception will not be converted to match a catch block with a double parameter).<br>
