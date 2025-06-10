@@ -2,26 +2,27 @@
 ```cpp
 // Mutable keyword in C++
 // Used to modify a member variable inside a const member function
+#include <iostream>
+
 class Base {
-    mutable int val{ 67 };
+    mutable int x{ 78 };
+    int y { 99 };
 public:
     void foo() const
     {
-        val = 2;
-    }
-
-    void print() const
-    {
-        std::cout << val << std::endl;
+        ++x;
+        std::cout << x << std::endl;    // 79
+        // ++y;				// CTE - Cannot modify y inside a const member function
+        std::cout << y << std::endl;    // 99
     }
 };
 
 int main()
 {
-    const Base bobj;
-    bobj.foo();
-    bobj.print();   // 2
+    Base obj;
+    obj.foo();
 }
+
 ```
 
 # Handeling new operator fails -
