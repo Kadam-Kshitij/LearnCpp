@@ -3245,25 +3245,27 @@ int main()
 
 ## Diamond problem
 ```cpp
+#include <iostream>
+
 class Base {
 public:
     Base() { std::cout << "Base\n"; }
 };
 
-class Derived1 : public Base {
+class Derived1 : virtual public Base {
 public:
-    Derived1() : Base{} { std::cout << "Derived1\n"; }
+    Derived1() : Base() { std::cout << "Derived1\n"; }
 };
 
-class Derived2 : public Base {
+class Derived2 : virtual public Base {
 public:
-    Derived2() : Base{} { std::cout << "Derived2\n"; }
+    Derived2() : Base() { std::cout << "Derived2\n"; }
 };
 
 class Derived3 : public Derived1, public Derived2
 {
 public:
-    Derived3() : Derived1{}, Derived2{} { std::cout << "Derived3\n"; }
+    Derived3() : Base(), Derived1(), Derived2() { std::cout << "Derived3\n"; }
 };
 
 int main()
@@ -3271,10 +3273,8 @@ int main()
     Derived3 d3;
 }
 
-// Base call is constructed twice.
 //Base
 //Derived1
-//Base
 //Derived2
 //Derived3
 ```
