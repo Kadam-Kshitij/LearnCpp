@@ -3252,6 +3252,46 @@ public:
     Base() { std::cout << "Base\n"; }
 };
 
+class Derived1 : public Base {
+public:
+    Derived1() : Base() { std::cout << "Derived1\n"; }
+};
+
+class Derived2 : public Base {
+public:
+    Derived2() : Base() { std::cout << "Derived2\n"; }
+};
+
+class Derived3 : public Derived1, public Derived2
+{
+public:
+    Derived3() : Derived1(), Derived2() { std::cout << "Derived3\n"; }
+};
+
+int main()
+{
+    Derived3 d3;
+}
+
+//Base
+//Derived1
+//Base
+//Derived2
+//Derived3
+```
+Solution
+For the constructor of the most derived class, virtual base classes are always created before non-virtual base classes, which ensures all bases get created before their derived classes.<br>
+D1 and D2 still have call to Base constructor. They are used when creating D1 or D2 objects. Ignored when creating D3 object.<br>
+D3 is responsible to construct the Base.<br>
+All classes inheriting a virtual base class will have a virtual table, even if they would normally not have one otherwise, and thus instances of the class will be larger by a pointer.<br>
+```cpp
+#include <iostream>
+
+class Base {
+public:
+    Base() { std::cout << "Base\n"; }
+};
+
 class Derived1 : virtual public Base {
 public:
     Derived1() : Base() { std::cout << "Derived1\n"; }
@@ -3275,45 +3315,6 @@ int main()
 
 //Base
 //Derived1
-//Derived2
-//Derived3
-```
-Solution
-For the constructor of the most derived class, virtual base classes are always created before non-virtual base classes, which ensures all bases get created before their derived classes.<br>
-D1 and D2 still have call to Base constructor. They are used when creating D1 or D2 objects. Ignored when creating D3 object.<br>
-D3 is responsible to construct the Base.<br>
-All classes inheriting a virtual base class will have a virtual table, even if they would normally not have one otherwise, and thus instances of the class will be larger by a pointer.<br>
-```cpp
-class Base {
-public:
-    Base() { std::cout << "Base\n"; }
-};
-
-class Derived1 : virtual public Base {
-public:
-    Derived1() : Base{} { std::cout << "Derived1\n"; }
-};
-
-class Derived2 : virtual public Base {
-public:
-    Derived2() : Base{} { std::cout << "Derived2\n"; }
-};
-
-class Derived3 : public Derived1, public Derived2
-{
-public:
-    Derived3() : Base{}, Derived1{}, Derived2{} { std::cout << "Derived3\n"; }
-};
-
-int main()
-{
-    Derived3 d3;
-}
-
-//Base
-//Base
-//Derived1
-//Base
 //Derived2
 //Derived3
 ```
