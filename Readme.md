@@ -1018,13 +1018,17 @@ public:
 int main()
 {
 
-    Base obj( 9 );
-    obj.print();    // 9
+    Base* obj = new Base( 9 );
+    obj->print();    // 9
 
-    int& ref = obj.foo();
+    int& ref = obj->foo();
 
     ref = 20;
-    obj.print();    // 20
+    obj->print();    // 20
+
+    std::cout << ref << std::endl;  // 20
+    delete obj;
+    std::cout << ref << std::endl;  // 0
 }
 ```
 
