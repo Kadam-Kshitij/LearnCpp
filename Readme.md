@@ -1137,6 +1137,7 @@ then the int will get converted to class object.<br>
 Similarly a function is returning class object by value, but the function is actually returing int,<br>
 then implicit conversion from int to class will happen.<br>
 If explicit keyword is used, then such implicit conversions are not allowed.<br>
+explicit has meaning for constructors with only one argument. Or multi argument constructor with default values.<br>
 
 # Chapter 15 - More on classes
 ## this pointer
