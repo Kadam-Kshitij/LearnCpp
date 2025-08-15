@@ -321,3 +321,10 @@ int main()
 //~Base
 //Delete
 ```
+
+# Extra Questions
+```
+int* ptr = new int{ 90 };
+```
+Here ptr is allocated on the stack, and points to a memory location on the heap.
+
